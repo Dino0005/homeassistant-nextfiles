@@ -1,4 +1,21 @@
 (() => {
+  // Detect base path for API calls (works with Ingress and MyFritz)
+  const getBasePath = () => {
+    const path = window.location.pathname;
+    // If we're in an ingress path, use it as base
+    if (path.includes('/api/hassio_ingress/')) {
+      const match = path.match(/^(\/api\/hassio_ingress\/[^\/]+)/);
+      return match ? match[1] : '';
+    }
+    return '';
+  };
+  
+  const BASE_PATH = getBasePath();
+  
+  const apiCall = (endpoint) => {
+    return BASE_PATH + endpoint;
+  };
+
   const $ = id => document.getElementById(id);
   const drop = $('dropzone');
   const choose = $('choose');
@@ -80,7 +97,7 @@
       form.append('folder', currentFolder);
     }
     try {
-      const r = await fetch('/api/upload', { method: 'POST', body: form });
+      const r = await fetch(apiCall('/api/upload'), { method: 'POST', body: form });
       const j = await r.json();
       if (j.ok) {
         selectedFile = null;
@@ -124,7 +141,7 @@
     if (currentViewFile) {
       const params = new URLSearchParams();
       params.set('filepath', currentViewFile);
-      window.open('/api/download?' + params.toString(), '_blank');
+      window.open(apiCall('/api/download') + '?' + params.toString(), '_blank');
     }
   });
   fileViewerModal.addEventListener('click', (e) => {
@@ -168,7 +185,7 @@
     const ext = filename.split('.').pop().toLowerCase();
     const params = new URLSearchParams();
     params.set('filepath', filepath);
-    const viewUrl = '/api/view?' + params.toString();
+    const viewUrl = apiCall('/api/view') + '?' + params.toString();
     
     try {
       // Images
@@ -230,7 +247,7 @@
 
   async function createFolder(folderPath) {
     try {
-      const res = await fetch('/api/create-folder', {
+      const res = await fetch(apiCall('/api/create-folder'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ folder: folderPath })
@@ -390,7 +407,7 @@
       const params = new URLSearchParams();
       if (currentFolder) params.set('folder', currentFolder);
       
-      const r = await fetch('/api/list?' + params.toString());
+      const r = await fetch(apiCall('/api/list') + '?' + params.toString());
       const data = await r.json();
       
       filesData = data.items || [];
@@ -516,7 +533,7 @@
         { label: t('download-btn'), action: () => {
           const params = new URLSearchParams();
           params.set('filepath', item.path);
-          window.open('/api/download?' + params.toString(), '_blank');
+          window.open(apiCall('/api/download') + '?' + params.toString(), '_blank');
         }}
       );
     }
@@ -569,7 +586,7 @@
       : t('delete-confirm') + item.name + '?';
     if (!confirm(confirmMsg)) return;
     
-    const res = await fetch('/api/delete', { 
+    const res = await fetch(apiCall('/api/delete'), { 
       method:'POST', 
       headers:{'Content-Type':'application/json'}, 
       body: JSON.stringify({ filepath: item.path }) 
@@ -607,7 +624,7 @@
     shareBtn.textContent = t('creating');
     
     try {
-      const res = await fetch('/api/share', { 
+      const res = await fetch(apiCall('/api/share'), { 
         method:'POST', 
         headers:{'Content-Type':'application/json'}, 
         body: JSON.stringify({ filepath: filepath, ttl_minutes: ttlMinutes }) 
@@ -651,7 +668,7 @@
     sharesList.innerHTML = '<div class="empty-state" style="padding: 40px 20px;"><div class="empty-state-icon" style="font-size: 36px;">🔗</div><div>' + t('loading-shares') + '</div></div>';
     
     try {
-      const res = await fetch('/api/shares/list');
+      const res = await fetch(apiCall('/api/shares/list'));
       const data = await res.json();
       
       if (!data.shares || data.shares.length === 0) {
@@ -700,7 +717,7 @@
           if (!confirm(t('revoke-confirm'))) return;
           
           try {
-            const res = await fetch('/api/shares/revoke', {
+            const res = await fetch(apiCall('/api/shares/revoke'), {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ token: btn.dataset.token })
