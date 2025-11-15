@@ -6,8 +6,10 @@ from flask import Flask, request, send_from_directory, jsonify, send_file
 from itsdangerous import URLSafeTimedSerializer
 from itsdangerous import BadSignature, SignatureExpired
 from werkzeug.utils import secure_filename
+from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime, timedelta
 import sqlite3
+import mimetypes
 
 # Config from env
 STORAGE = os.environ.get('NEXTFILES_STORAGE_PATH', '/data/storage')
@@ -21,7 +23,7 @@ DEFAULT_TTL = int(os.environ.get('NEXTFILES_DEFAULT_TTL', '1440'))
 REQUIRE_API_TOKEN = str(os.environ.get('NEXTFILES_REQUIRE_API_TOKEN', 'false')).lower() == 'true'
 API_TOKEN = os.environ.get('NEXTFILES_API_TOKEN', '')
 AUTO_CLEANUP_DAYS = int(os.environ.get('NEXTFILES_AUTO_CLEANUP_DAYS', '0'))
-CLEANUP_INTERVAL = int(os.environ.get('NEXTFILES_CLEANUP_INTERVAL', '60'))  # minutes
+CLEANUP_INTERVAL = int(os.environ.get('NEXTFILES_CLEANUP_INTERVAL', '60'))
 
 os.makedirs(STORAGE, exist_ok=True)
 
@@ -36,6 +38,20 @@ logger.addHandler(fh)
 logger.info("NextFiles starting. Storage: %s", STORAGE)
 
 app = Flask(__name__, static_folder='static', static_url_path='')
+
+# Fix for Ingress/reverse proxy - CRITICAL for Home Assistant Ingress
+app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_for=1,
+    x_proto=1,
+    x_host=1,
+    x_prefix=1
+)
+
+# Log ingress info
+INGRESS_ENTRY = os.environ.get('INGRESS_ENTRY', '')
+if INGRESS_ENTRY:
+    logger.info(f"Ingress path: {INGRESS_ENTRY}")
 
 # DB init
 def init_db():
@@ -82,9 +98,7 @@ def check_api_token():
 
 def sanitize_path(path):
     """Sanitize and validate path to prevent directory traversal"""
-    # Remove leading/trailing slashes and normalize
     path = path.strip('/')
-    # Secure each component
     parts = [secure_filename(p) for p in path.split('/') if p and p != '..']
     return '/'.join(parts)
 
@@ -113,7 +127,6 @@ def upload():
     if filename == '':
         return jsonify({"error":"invalid filename"}), 400
     
-    # Get optional folder from form data
     folder = request.form.get('folder', '').strip()
     if folder:
         folder = sanitize_path(folder)
@@ -186,7 +199,6 @@ def list_files():
                 "mtime": os.path.getmtime(path)
             })
     
-    # Sort: folders first, then by mtime desc
     items.sort(key=lambda x: (x['type'] == 'file', -x['mtime']))
     return jsonify({"items": items, "current_folder": folder})
 
@@ -226,11 +238,7 @@ def view_file():
     
     logger.info("View requested: %s", filepath)
     
-    # Determine MIME type
-    import mimetypes
     mimetype, _ = mimetypes.guess_type(full_path)
-    
-    # Send file inline (for preview)
     return send_file(full_path, mimetype=mimetype, as_attachment=False)
 
 # Create share link
@@ -335,10 +343,8 @@ def delete():
         logger.info("Deleted file %s and removed related shares", filepath)
         return jsonify({"ok": True})
     elif os.path.isdir(full_path):
-        # Delete folder and all contents
         import shutil
         shutil.rmtree(full_path)
-        # Remove shares for files in this folder
         db_execute('DELETE FROM shares WHERE filename LIKE ?', (filepath + '%',))
         logger.info("Deleted folder %s and removed related shares", filepath)
         return jsonify({"ok": True})
@@ -383,4 +389,4 @@ t.start()
 logger.info("Cleanup thread started (interval %d minutes)", CLEANUP_INTERVAL)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8099)
+    app.run(host='0.0.0.0', port=8099, debug=False)
