@@ -1,6 +1,6 @@
 {
   "name": "NextFiles",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "slug": "nextfiles",
   "description": "Shared file storage + expiring share links for Home Assistant (Ingress).",
   "arch": ["armv7", "armhf", "aarch64", "amd64"],
