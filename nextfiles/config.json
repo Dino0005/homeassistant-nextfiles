@@ -1,0 +1,35 @@
+{
+  "name": "NextFiles",
+  "version": "0.4.1",
+  "slug": "nextfiles",
+  "description": "Shared file storage + expiring share links for Home Assistant (Ingress).",
+  "arch": ["armv7", "armhf", "aarch64", "amd64"],
+  "startup": "services",
+  "boot": "auto",
+  "map": ["config:rw", "ssl:rw"],
+  "options": {
+    "host_path": "/share/nextfiles",
+    "default_link_ttl_minutes": 1440,
+    "require_api_token": false,
+    "api_token": "",
+    "token_secret": "change-this-to-a-random-secret-key",
+    "auto_cleanup_days": 0,
+    "cleanup_interval_minutes": 60
+  },
+  "schema": {
+    "host_path": "str",
+    "default_link_ttl_minutes": "int",
+    "require_api_token": "bool",
+    "api_token": "str",
+    "token_secret": "str",
+    "auto_cleanup_days": "int",
+    "cleanup_interval_minutes": "int"
+  },
+  "ports": {},
+  "webui": {
+    "ingress": true,
+    "panel_title": "NextFiles",
+    "panel_icon": "mdi:folder"
+  },
+  "ingress": true
+}
