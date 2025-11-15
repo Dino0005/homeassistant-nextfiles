@@ -2,11 +2,20 @@
   // Detect base path for API calls (works with Ingress and MyFritz)
   const getBasePath = () => {
     const path = window.location.pathname;
-    // If we're in an ingress path, use it as base
+    
+    // Check if we're in any ingress path
+    if (path.includes('/ingress')) {
+      // Extract everything up to /ingress (inclusive)
+      const match = path.match(/^(.+\/ingress)/);
+      return match ? match[1] : '';
+    }
+    
+    // Check for standard HA ingress path
     if (path.includes('/api/hassio_ingress/')) {
       const match = path.match(/^(\/api\/hassio_ingress\/[^\/]+)/);
       return match ? match[1] : '';
     }
+    
     return '';
   };
   
