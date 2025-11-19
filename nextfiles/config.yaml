@@ -36,4 +36,4 @@ schema:
     - str
   max_upload_size: str
   memory_limit: str
-image: ghcr.io/{arch}-addon-nextfiles
+#image: ghcr.io/dino0005/nextfiles-{arch}
