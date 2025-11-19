@@ -1,0 +1,39 @@
+name: Nextfiles
+version: "1.0.0"
+slug: nextfiles
+description: Self-hosted file storage solution with integrated database for Home Assistant
+url: https://github.com/Dino0005/homeassistant-nextfiles
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+startup: services
+boot: auto
+ports:
+  8080/tcp: 8080
+ports_description:
+  8080/tcp: Web interface
+map:
+  - share:rw
+options:
+  admin_user: admin
+  admin_password: null
+  trusted_domains:
+    - localhost
+  trusted_proxies:
+    - 172.30.33.0/24
+  max_upload_size: 512M
+  memory_limit: 512M
+schema:
+  admin_user: str
+  admin_password: password
+  trusted_domains:
+    - str
+  trusted_proxies:
+    - str
+  max_upload_size: str
+  memory_limit: str
+image: ghcr.io/{arch}-addon-nextfiles
