@@ -34,27 +34,60 @@ admin_user: admin
 admin_password: "la-tua-password-sicura"
 trusted_domains:
   - homeassistant.local
-  - 192.168.1.100
+  - nextfiles.tuodominio.com  # Se usi reverse proxy
 trusted_proxies:
-  - 172.30.33.0/24
-max_upload_size: 512M
-memory_limit: 512M
+  - 172.30.33.0/24  # Rete interna Home Assistant
+  - 127.0.0.1       # Necessario se usi Caddy o altro proxy locale
+max_upload_size: 1G
+memory_limit: 1G
 ```
 
 ### Opzioni
 
 - **admin_user** (obbligatorio): Username dell'amministratore
 - **admin_password** (obbligatorio): Password dell'amministratore (DEVE essere configurata prima del primo avvio)
-- **trusted_domains** (opzionale): Lista dei domini fidati per accedere a Nextfiles
-- **trusted_proxies** (opzionale): Lista dei proxy fidati (necessario per reverse proxy)
-- **max_upload_size** (opzionale, default: 512M): Dimensione massima file caricabili
-- **memory_limit** (opzionale, default: 512M): Limite memoria PHP
+- **trusted_domains** (opzionale): Lista dei domini fidati per accedere a Nextfiles. Aggiungi il tuo dominio pubblico se usi un reverse proxy
+- **trusted_proxies** (opzionale): Lista dei proxy fidati. Usa `172.30.33.0/24` per la rete interna e `127.0.0.1` se usi Caddy o altro proxy locale
+- **max_upload_size** (opzionale, default: 512M): Dimensione massima file caricabili. Valori consigliati: 512M (uso normale), 1G-2G (file grandi), 10G+ (video/backup)
+- **memory_limit** (opzionale, default: 512M): Limite memoria PHP. Dovrebbe essere almeno la metà di max_upload_size
 
 ## Accesso HTTPS con Reverse Proxy
 
-Per accesso sicuro HTTPS, usa un reverse proxy come Nginx Proxy Manager:
+### Configurazione con Caddy 2
 
-1. Installa [Nginx Proxy Manager](https://github.com/hassio-addons/addon-nginx-proxy-manager)
+Per accesso sicuro HTTPS tramite Caddy, aggiungi questo blocco al tuo **Caddyfile**:
+
+```caddyfile
+# Nextfiles
+https://nextfiles.tuodominio.com {
+  reverse_proxy http://localhost:8080 {
+    header_up X-Forwarded-For {remote_host}
+    header_up X-Forwarded-Proto {scheme}
+    header_up X-Forwarded-Host {host}
+    header_up X-Real-IP {remote_host}
+    header_up X-Forwarded-Ssl on
+    
+    # Timeout per upload grandi
+    transport http {
+      read_timeout 3600s
+      write_timeout 3600s
+    }
+  }
+}
+```
+
+Poi configura Nextfiles:
+1. Aggiungi il dominio alla lista `trusted_domains`
+2. Aggiungi `127.0.0.1` ai `trusted_proxies`
+3. Ricarica Caddy: `caddy reload`
+
+**Nota:** Se usi MyFRITZ! (es. `nextfiles.xyz.myfritz.net`), il subdomain funziona automaticamente senza configurazione DNS aggiuntiva!
+
+### Configurazione con Nginx Proxy Manager
+
+Per accesso sicuro HTTPS, usa [Nginx Proxy Manager](https://github.com/hassio-addons/addon-nginx-proxy-manager):
+
+1. Installa Nginx Proxy Manager
 2. Crea un Proxy Host che punta a `nextfiles:8080`
 3. Abilita SSL
 4. Aggiungi il dominio alla lista `trusted_domains` in Nextfiles
@@ -87,14 +120,25 @@ L'add-on può essere aggiornato tramite l'interfaccia di Home Assistant. I tuoi 
 
 - Verifica di aver configurato `admin_password`
 - Controlla i log dell'add-on per errori specifici
+- Verifica che il tuo sistema abbia almeno 2GB di RAM disponibili
 
 ### Errore "trusted domain"
 
 Aggiungi il dominio o IP che stai usando alla lista `trusted_domains` nella configurazione.
 
+**Esempio con Caddy:**
+```yaml
+trusted_domains:
+  - nextfiles.tuodominio.com
+trusted_proxies:
+  - 127.0.0.1
+```
+
 ### Upload falliti
 
-Aumenta `max_upload_size` nella configurazione.
+- Aumenta `max_upload_size` nella configurazione
+- Verifica che `memory_limit` sia almeno la metà di `max_upload_size`
+- Se usi Caddy, controlla che i timeout siano configurati correttamente nel Caddyfile
 
 ### Problemi di permessi
 
