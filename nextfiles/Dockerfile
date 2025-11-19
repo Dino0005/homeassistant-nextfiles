@@ -10,8 +10,6 @@ ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 
 # Install requirements
 RUN apk add --no-cache \
-    bash \
-    bashio \
     apache2 \
     apache2-ssl \
     php83 \
