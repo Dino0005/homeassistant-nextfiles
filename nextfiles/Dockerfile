@@ -10,6 +10,8 @@ ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 
 # Install requirements
 RUN apk add --no-cache \
+    bash \
+    bashio \
     apache2 \
     apache2-ssl \
     php83 \
@@ -40,7 +42,8 @@ RUN apk add --no-cache \
     php83-gmp \
     sqlite \
     curl \
-    bash
+    bash \
+    s6-overlay
 
 # Download and extract Nextcloud
 WORKDIR /var/www
