@@ -20,6 +20,12 @@ mkdir -p "${DATA_DIR}/data"
 mkdir -p "${DATA_DIR}/config"
 mkdir -p "${DATA_DIR}/apps"
 
+# Ensure apache user exists
+if ! id apache &>/dev/null; then
+    addgroup -g 48 apache
+    adduser -D -u 48 -G apache -s /sbin/nologin apache
+fi
+
 # Set permissions
 chown -R apache:apache "${DATA_DIR}"
 chmod -R 755 "${DATA_DIR}"
@@ -66,25 +72,32 @@ fi
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
 DOMAIN_INDEX=0
-for domain in $(bashio::config 'trusted_domains'); do
-    sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_domains ${DOMAIN_INDEX} --value="${domain}" || true
-    DOMAIN_INDEX=$((DOMAIN_INDEX + 1))
-done
+while read -r domain; do
+    if [[ -n "${domain}" ]]; then
+        sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_domains ${DOMAIN_INDEX} --value="${domain}" 2>/dev/null || true
+        DOMAIN_INDEX=$((DOMAIN_INDEX + 1))
+    fi
+done < <(bashio::config 'trusted_domains | .[]')
 
 # Configure trusted proxies
 bashio::log.info "Configuring trusted proxies..."
 PROXY_INDEX=0
-for proxy in $(bashio::config 'trusted_proxies'); do
-    sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_proxies ${PROXY_INDEX} --value="${proxy}" || true
-    PROXY_INDEX=$((PROXY_INDEX + 1))
-done
+while read -r proxy; do
+    if [[ -n "${proxy}" ]]; then
+        sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_proxies ${PROXY_INDEX} --value="${proxy}" 2>/dev/null || true
+        PROXY_INDEX=$((PROXY_INDEX + 1))
+    fi
+done < <(bashio::config 'trusted_proxies | .[]')
+
+# Get first trusted domain for overwrite.cli.url
+FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
 
 # Set overwrite protocol
-sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwriteprotocol --value="https" || true
-sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwrite.cli.url --value="https://$(bashio::config 'trusted_domains | .[0]')" || true
+sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwriteprotocol --value="https" 2>/dev/null || true
+sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwrite.cli.url --value="https://${FIRST_DOMAIN}" 2>/dev/null || true
 
 # Disable maintenance mode if enabled
-sudo -u apache php "${NEXTCLOUD_DIR}/occ" maintenance:mode --off || true
+sudo -u apache php "${NEXTCLOUD_DIR}/occ" maintenance:mode --off 2>/dev/null || true
 
 # Set permissions
 chown -R apache:apache "${NEXTCLOUD_DIR}"
