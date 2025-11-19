@@ -1,4 +1,0 @@
-flask
-itsdangerous
-gunicorn
-python-dotenv
