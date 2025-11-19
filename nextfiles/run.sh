@@ -1,33 +1,93 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashio
 set -e
 
-if [ -f /data/options.json ]; then
-  HOST_PATH=$(jq -r .host_path /data/options.json)
-  REQUIRE_API_TOKEN=$(jq -r .require_api_token /data/options.json)
-  API_TOKEN=$(jq -r .api_token /data/options.json)
-  TOKEN_SECRET=$(jq -r .token_secret /data/options.json)
-  DEFAULT_TTL=$(jq -r .default_link_ttl_minutes /data/options.json)
-  AUTO_CLEANUP_DAYS=$(jq -r .auto_cleanup_days /data/options.json)
-  CLEANUP_INTERVAL=$(jq -r .cleanup_interval_minutes /data/options.json)
+# Get configuration
+ADMIN_USER=$(bashio::config 'admin_user')
+ADMIN_PASSWORD=$(bashio::config 'admin_password')
+TRUSTED_DOMAINS=$(bashio::config 'trusted_domains')
+TRUSTED_PROXIES=$(bashio::config 'trusted_proxies')
+MAX_UPLOAD=$(bashio::config 'max_upload_size')
+MEMORY_LIMIT=$(bashio::config 'memory_limit')
+
+# Set data directory
+DATA_DIR="/share/nextfiles"
+NEXTCLOUD_DIR="/var/www/nextcloud"
+
+# Create data directory if it doesn't exist
+bashio::log.info "Setting up data directory: ${DATA_DIR}"
+mkdir -p "${DATA_DIR}/data"
+mkdir -p "${DATA_DIR}/config"
+mkdir -p "${DATA_DIR}/apps"
+
+# Set permissions
+chown -R apache:apache "${DATA_DIR}"
+chmod -R 755 "${DATA_DIR}"
+
+# Update PHP settings from config
+bashio::log.info "Updating PHP configuration..."
+sed -i "s|memory_limit = .*|memory_limit = ${MEMORY_LIMIT}|g" /etc/php83/php.ini
+sed -i "s|upload_max_filesize = .*|upload_max_filesize = ${MAX_UPLOAD}|g" /etc/php83/php.ini
+sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" /etc/php83/php.ini
+
+# Check if Nextcloud is already installed
+if [ ! -f "${DATA_DIR}/config/config.php" ]; then
+    bashio::log.info "First run detected. Installing Nextcloud..."
+    
+    # Check if admin password is set
+    if [ -z "${ADMIN_PASSWORD}" ]; then
+        bashio::log.fatal "Admin password is not set! Please configure it in the add-on options."
+        exit 1
+    fi
+    
+    # Run Nextcloud installation
+    cd "${NEXTCLOUD_DIR}"
+    sudo -u apache php occ maintenance:install \
+        --database="sqlite" \
+        --database-name="nextcloud" \
+        --data-dir="${DATA_DIR}/data" \
+        --admin-user="${ADMIN_USER}" \
+        --admin-pass="${ADMIN_PASSWORD}"
+    
+    bashio::log.info "Nextcloud installed successfully!"
+    
+    # Move config to persistent storage
+    cp "${NEXTCLOUD_DIR}/config/config.php" "${DATA_DIR}/config/config.php"
+    rm -f "${NEXTCLOUD_DIR}/config/config.php"
+    ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
+    
+else
+    bashio::log.info "Existing installation detected. Linking config..."
+    # Link existing config
+    rm -f "${NEXTCLOUD_DIR}/config/config.php"
+    ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
 fi
 
-: ${HOST_PATH:="/share/nextfiles"}
-: ${REQUIRE_API_TOKEN:=false}
-: ${API_TOKEN:=""}
-: ${TOKEN_SECRET:="change-this-to-a-random-secret-key"}
-: ${DEFAULT_TTL:=1440}
-: ${AUTO_CLEANUP_DAYS:=0}
-: ${CLEANUP_INTERVAL:=60}
+# Configure trusted domains
+bashio::log.info "Configuring trusted domains..."
+DOMAIN_INDEX=0
+for domain in $(bashio::config 'trusted_domains'); do
+    sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_domains ${DOMAIN_INDEX} --value="${domain}" || true
+    DOMAIN_INDEX=$((DOMAIN_INDEX + 1))
+done
 
-mkdir -p "$HOST_PATH"
-chown -R 1000:1000 "$HOST_PATH" || true
+# Configure trusted proxies
+bashio::log.info "Configuring trusted proxies..."
+PROXY_INDEX=0
+for proxy in $(bashio::config 'trusted_proxies'); do
+    sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_proxies ${PROXY_INDEX} --value="${proxy}" || true
+    PROXY_INDEX=$((PROXY_INDEX + 1))
+done
 
-export NEXTFILES_STORAGE_PATH="$HOST_PATH"
-export NEXTFILES_REQUIRE_API_TOKEN="$REQUIRE_API_TOKEN"
-export NEXTFILES_API_TOKEN="$API_TOKEN"
-export TOKEN_SECRET="$TOKEN_SECRET"
-export NEXTFILES_DEFAULT_TTL="${DEFAULT_TTL}"
-export NEXTFILES_AUTO_CLEANUP_DAYS="${AUTO_CLEANUP_DAYS}"
-export NEXTFILES_CLEANUP_INTERVAL="${CLEANUP_INTERVAL}"
+# Set overwrite protocol
+sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwriteprotocol --value="https" || true
+sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwrite.cli.url --value="https://$(bashio::config 'trusted_domains | .[0]')" || true
 
-exec gunicorn --workers 2 --bind 0.0.0.0:8099 app:app
+# Disable maintenance mode if enabled
+sudo -u apache php "${NEXTCLOUD_DIR}/occ" maintenance:mode --off || true
+
+# Set permissions
+chown -R apache:apache "${NEXTCLOUD_DIR}"
+chown -R apache:apache "${DATA_DIR}"
+
+bashio::log.info "Starting Apache web server..."
+exec httpd -D FOREGROUND
