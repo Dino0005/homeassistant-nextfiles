@@ -1,11 +1,12 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
 set -e
+
+bashio::log.info "Starting Nextfiles setup..."
 
 # Get configuration
 ADMIN_USER=$(bashio::config 'admin_user')
 ADMIN_PASSWORD=$(bashio::config 'admin_password')
-TRUSTED_DOMAINS=$(bashio::config 'trusted_domains')
-TRUSTED_PROXIES=$(bashio::config 'trusted_proxies')
 MAX_UPLOAD=$(bashio::config 'max_upload_size')
 MEMORY_LIMIT=$(bashio::config 'memory_limit')
 
