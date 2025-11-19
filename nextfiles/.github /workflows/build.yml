@@ -1,13 +1,97 @@
-build_from:
-  aarch64: ghcr.io/home-assistant/aarch64-base:3.19
-  amd64: ghcr.io/home-assistant/amd64-base:3.19
-  armhf: ghcr.io/home-assistant/armhf-base:3.19
-  armv7: ghcr.io/home-assistant/armv7-base:3.19
-  i386: ghcr.io/home-assistant/i386-base:3.19
-labels:
-  org.opencontainers.image.title: "Nextfiles"
-  org.opencontainers.image.description: "Self-hosted file storage with integrated database"
-  org.opencontainers.image.source: "https://github.com/Dino0005/homeassistant-nextfiles"
-  org.opencontainers.image.licenses: "MIT"
-args:
-  NEXTCLOUD_VERSION: "29.0.8"
+name: Build and Publish Add-on
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  information:
+    name: Gather add-on information
+    runs-on: ubuntu-latest
+    outputs:
+      architectures: ${{ steps.information.outputs.architectures }}
+      build: ${{ steps.information.outputs.build }}
+      description: ${{ steps.information.outputs.description }}
+      name: ${{ steps.information.outputs.name }}
+      slug: ${{ steps.information.outputs.slug }}
+      version: ${{ steps.information.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get add-on information
+        id: information
+        uses: home-assistant/actions/helpers/info@master
+        with:
+          path: "./nextfiles"
+
+  build:
+    name: Build ${{ matrix.arch }} add-on
+    needs: information
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          version="${{ github.ref }}"
+          version="${version##*/}"
+          if [[ "$version" == "main" ]]; then
+            version="dev"
+          fi
+          echo "version=${version}" >> $GITHUB_OUTPUT
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build add-on
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --${{ matrix.arch }} \
+            --target nextfiles \
+            --docker-hub ghcr.io/${{ github.repository_owner }} \
+            --image "nextfiles-{arch}" \
+            --version ${{ steps.version.outputs.version }} \
+            --no-latest
+
+  publish:
+    name: Publish add-on
+    needs: [information, build]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish add-on
+        uses: home-assistant/builder@master
+        with:
+          args: |
+            --all \
+            --target nextfiles \
+            --docker-hub ghcr.io/${{ github.repository_owner }} \
+            --image "nextfiles-{arch}"
