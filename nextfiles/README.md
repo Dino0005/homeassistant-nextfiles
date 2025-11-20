@@ -1,6 +1,10 @@
-# Nextfiles - Home Assistant Add-on
+# Nextfiles (Nextcloud) - Home Assistant Add-on
 
 Self-hosted file storage solution with integrated SQLite database. No external database required!
+
+<div align="center">
+  <img width="562" height="400" alt="Screenshot 2025-11-20 alle 17 53 04" src="https://github.com/user-attachments/assets/81118bf2-0609-4016-8a99-b7cd3b52768a" />
+</div>
 
 ## Caratteristiche
 
@@ -43,8 +47,6 @@ trusted_proxies:
 max_upload_size: 1G
 memory_limit: 1G
 ```
-
-![Configurazione](screenshot2.png)
 
 ### Opzioni
 
