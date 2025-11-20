@@ -23,7 +23,9 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 
 4. Avvia l'add-on
 
-5. Accedi via `http://homeassistant.local:8080` o tramite l'interfaccia di Home Assistant
+5. Accedi tramite:
+   - **Con reverse proxy**: `https://tuodominio.com/nextfiles`
+   - **Accesso diretto locale**: `http://homeassistant.local:8080` (sconsigliato, usa sempre HTTPS)
 
 ## Configurazione
 
@@ -33,14 +35,16 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 admin_user: admin
 admin_password: "la-tua-password-sicura"
 trusted_domains:
-  - homeassistant.local
-  - nextfiles.tuodominio.com  # Se usi reverse proxy
+  - tuodominio.com          # Dominio pubblico (primo = prioritario)
+  - homeassistant.local     # Accesso locale
 trusted_proxies:
   - 172.30.33.0/24  # Rete interna Home Assistant
-  - 127.0.0.1       # Necessario se usi Caddy o altro proxy locale
+  - 127.0.0.1       # Proxy locale (Caddy, Nginx, ecc.)
 max_upload_size: 1G
 memory_limit: 1G
 ```
+
+![Configurazione](screenshot2.png)
 
 ### Opzioni
 
@@ -55,42 +59,67 @@ memory_limit: 1G
 
 ### Configurazione con Caddy 2
 
-Per accesso sicuro HTTPS tramite Caddy, aggiungi questo blocco al tuo **Caddyfile**:
+Per accesso sicuro HTTPS tramite Caddy con path `/nextfiles`:
 
 ```caddyfile
-# Nextfiles
-https://nextfiles.tuodominio.com {
-  reverse_proxy http://localhost:8080 {
-    header_up X-Forwarded-For {remote_host}
-    header_up X-Forwarded-Proto {scheme}
-    header_up X-Forwarded-Host {host}
-    header_up X-Real-IP {remote_host}
-    header_up X-Forwarded-Ssl on
-    
-    # Timeout per upload grandi
-    transport http {
-      read_timeout 3600s
-      write_timeout 3600s
+(https_header) {
+  header {
+    Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    X-XSS-Protection "1; mode=block"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "SAMEORIGIN"
+    Referrer-Policy "same-origin"
+  }
+}
+
+https://tuodominio.com {
+  import https_header
+  
+  # Nextfiles (Nextcloud) su /nextfiles
+  handle /nextfiles* {
+    uri strip_prefix /nextfiles
+    reverse_proxy http://localhost:8080 {
+      header_up Host {host}
+      header_up X-Forwarded-Host {host}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Real-IP {remote_host}
+      header_up X-Forwarded-For {remote_host}
+      header_up X-Forwarded-Ssl on
+      
+      transport http {
+        read_timeout 3600s
+        write_timeout 3600s
+      }
+    }
+  }
+  
+  # Home Assistant
+  handle {
+    reverse_proxy http://localhost:8123 {
+      header_up X-Forwarded-For {remote_host}
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-Host {host}
+      header_up X-Real-IP {remote_host}
     }
   }
 }
 ```
 
-Poi configura Nextfiles:
-1. Aggiungi il dominio alla lista `trusted_domains`
-2. Aggiungi `127.0.0.1` ai `trusted_proxies`
-3. Ricarica Caddy: `caddy reload`
+**Configurazione Nextfiles:**
+```yaml
+trusted_domains:
+  - tuodominio.com  # Il tuo dominio pubblico (es. xyz.myfritz.net)
+  - localhost
+trusted_proxies:
+  - 172.30.33.0/24
+  - 127.0.0.1
+```
 
-**Nota:** Se usi MyFRITZ! (es. `nextfiles.xyz.myfritz.net`), il subdomain funziona automaticamente senza configurazione DNS aggiuntiva!
+Poi:
+1. Ricarica Caddy: `caddy reload`
+2. Riavvia l'add-on Nextfiles
+3. Accedi a: `https://tuodominio.com/nextfiles`
 
-### Configurazione con Nginx Proxy Manager
-
-Per accesso sicuro HTTPS, usa [Nginx Proxy Manager](https://github.com/hassio-addons/addon-nginx-proxy-manager):
-
-1. Installa Nginx Proxy Manager
-2. Crea un Proxy Host che punta a `nextfiles:8080`
-3. Abilita SSL
-4. Aggiungi il dominio alla lista `trusted_domains` in Nextfiles
 
 ## Struttura Dati
 
@@ -126,13 +155,19 @@ L'add-on può essere aggiornato tramite l'interfaccia di Home Assistant. I tuoi 
 
 Aggiungi il dominio o IP che stai usando alla lista `trusted_domains` nella configurazione.
 
-**Esempio con Caddy:**
+**Esempio:**
 ```yaml
 trusted_domains:
-  - nextfiles.tuodominio.com
+  - tuodominio.com     # Accesso pubblico
+  - 192.168.1.100      # IP locale
+  - homeassistant.local
 trusted_proxies:
-  - 127.0.0.1
+  - 127.0.0.1          # Sempre necessario con reverse proxy
 ```
+
+**Con Caddy e path `/nextfiles`**: Usa il dominio principale senza il path.
+- ✅ Corretto: `tuodominio.com`
+- ❌ Sbagliato: `tuodominio.com/nextfiles`
 
 ### Upload falliti
 
