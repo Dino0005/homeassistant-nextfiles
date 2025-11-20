@@ -20,7 +20,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 
 ## Add-ons disponibili
 
-### 🗂️ [Nextfiles](./nextfiles)
+### 🗂️ [Nextfiles (Nextcloud)](./nextfiles)
 
 Self-hosted file storage solution con database integrato per Home Assistant.
 
