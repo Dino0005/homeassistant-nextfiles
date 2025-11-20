@@ -21,7 +21,7 @@ export PATH="/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
 PHP_BIN=$(command -v php || true)
 
 if [ -z "$PHP_BIN" ]; then
-    bashio::log.fatal "PHP non trovato nel PATH! Assicurati che php sia installato nel container."
+    bashio::log.fatal "PHP not found in PATH! Make sure php is installed in the container."
     exit 1
 fi
 
@@ -68,7 +68,7 @@ if [ ! -f "${DATA_DIR}/config/config.php" ]; then
         --data-dir='${DATA_DIR}/data' \
         --admin-user='${ADMIN_USER}' \
         --admin-pass='${ADMIN_PASSWORD}'" \
-        || { bashio::log.fatal 'Errore durante installazione Nextcloud'; exit 1; }
+        || { bashio::log.fatal 'Error during Nextcloud installation'; exit 1; }
 
     bashio::log.info "Nextcloud installed successfully!"
 
@@ -83,7 +83,7 @@ else
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
 fi
 
-# --- FIX PERMESSI CONFIG ---
+# Fix permissions for config directory
 bashio::log.info "Fixing permissions for Nextcloud config directory..."
 chown -R apache:apache "${DATA_DIR}/config"
 chmod -R 755 "${DATA_DIR}/config"
@@ -124,7 +124,11 @@ su -s /bin/bash apache -c \
     2>/dev/null || true
 
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}'" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}/nextfiles'" \
+    2>/dev/null || true
+
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwritewebroot --value='/nextfiles'" \
     2>/dev/null || true
 
 # Disable maintenance mode
