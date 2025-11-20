@@ -3,7 +3,7 @@
 Self-hosted file storage solution with integrated SQLite database. No external database required!
 
 <div align="center">
-  <img width="562" height="400" alt="Screenshot 2025-11-20 alle 17 53 04" src="https://github.com/user-attachments/assets/81118bf2-0609-4016-8a99-b7cd3b52768a" />
+  <img width="817" height="600" alt="Screenshot 2025-11-20 alle 22 16 07" src="https://github.com/user-attachments/assets/026775ec-5371-4d6c-b37d-efd859223d92" />
 </div>
 
 ## Caratteristiche
@@ -15,7 +15,7 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 - 🎨 Interfaccia web completa di Nextcloud
 
 <div align="center">
-<img width="543" height="400" alt="Screenshot 2025-11-20 alle 17 54 54" src="https://github.com/user-attachments/assets/78950a55-7ae0-4cd6-8f6a-1d3e8d492036" />
+<img width="823" height="600" alt="Screenshot 2025-11-20 alle 22 17 14" src="https://github.com/user-attachments/assets/ecd66a68-a155-4571-93b9-c79005b592ce" />
 </div>
 
 ## Installazione
