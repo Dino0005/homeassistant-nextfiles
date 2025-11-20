@@ -14,6 +14,10 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 - ⚡ Configurazione semplificata
 - 🎨 Interfaccia web completa di Nextcloud
 
+<div align="center">
+<img width="543" height="400" alt="Screenshot 2025-11-20 alle 17 54 54" src="https://github.com/user-attachments/assets/78950a55-7ae0-4cd6-8f6a-1d3e8d492036" />
+</div>
+
 ## Installazione
 
 1. Aggiungi questo repository agli add-on di Home Assistant:
