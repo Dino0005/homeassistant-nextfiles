@@ -14,8 +14,8 @@ MEMORY_LIMIT=$(bashio::config 'memory_limit')
 DATA_DIR="/share/nextfiles"
 NEXTCLOUD_DIR="/var/www/nextcloud"
 
-# Configure PATH for apache user (php MUST be included)
-export PATH="/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin:/usr/lib/php83/bin:$PATH"
+# Configure PATH for apache user
+export PATH="/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 # Find PHP binary
 PHP_BIN=$(command -v php || true)
@@ -27,7 +27,7 @@ fi
 
 bashio::log.info "Using PHP binary: ${PHP_BIN}"
 
-# Create data directory if it doesn't exist
+# Create data directories
 bashio::log.info "Setting up data directory: ${DATA_DIR}"
 mkdir -p "${DATA_DIR}/data"
 mkdir -p "${DATA_DIR}/config"
@@ -39,27 +39,26 @@ if ! id apache &>/dev/null; then
     adduser -D -u 48 -G apache -s /sbin/nologin apache
 fi
 
-# Set permissions
+# Fix permissions for /share mount
+bashio::log.info "Fixing permissions on /share/nextfiles..."
 chown -R apache:apache "${DATA_DIR}"
 chmod -R 755 "${DATA_DIR}"
 
-# Update PHP settings from config
+# Update PHP settings
 bashio::log.info "Updating PHP configuration..."
 sed -i "s|memory_limit = .*|memory_limit = ${MEMORY_LIMIT}|g" /etc/php83/php.ini
 sed -i "s|upload_max_filesize = .*|upload_max_filesize = ${MAX_UPLOAD}|g" /etc/php83/php.ini
 sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" /etc/php83/php.ini
 
-# Check if Nextcloud is already installed
+# First installation check
 if [ ! -f "${DATA_DIR}/config/config.php" ]; then
     bashio::log.info "First run detected. Installing Nextcloud..."
     
-    # Check if admin password is set
     if [ -z "${ADMIN_PASSWORD}" ]; then
         bashio::log.fatal "Admin password is not set! Please configure it in the add-on options."
         exit 1
     fi
-    
-    # Run Nextcloud installation
+
     cd "${NEXTCLOUD_DIR}"
 
     su -s /bin/bash apache -c \
@@ -70,19 +69,28 @@ if [ ! -f "${DATA_DIR}/config/config.php" ]; then
         --admin-user='${ADMIN_USER}' \
         --admin-pass='${ADMIN_PASSWORD}'" \
         || { bashio::log.fatal 'Errore durante installazione Nextcloud'; exit 1; }
-    
+
     bashio::log.info "Nextcloud installed successfully!"
-    
+
     # Move config to persistent storage
     cp "${NEXTCLOUD_DIR}/config/config.php" "${DATA_DIR}/config/config.php"
     rm -f "${NEXTCLOUD_DIR}/config/config.php"
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
-    
+
 else
     bashio::log.info "Existing installation detected. Linking config..."
     rm -f "${NEXTCLOUD_DIR}/config/config.php"
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
 fi
+
+# --- FIX PERMESSI CONFIG ---
+bashio::log.info "Fixing permissions for Nextcloud config directory..."
+chown -R apache:apache "${DATA_DIR}/config"
+chmod -R 755 "${DATA_DIR}/config"
+
+# Fix permissions also on Nextcloud's config dir
+chown apache:apache "${NEXTCLOUD_DIR}/config"
+chmod 755 "${NEXTCLOUD_DIR}/config"
 
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
@@ -108,10 +116,9 @@ while read -r proxy; do
     fi
 done < <(bashio::config 'trusted_proxies | .[]')
 
-# Get first trusted domain for overwrite.cli.url
+# Set overwrite settings
 FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
 
-# Set overwrite protocol
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwriteprotocol --value='https'" \
     2>/dev/null || true
@@ -120,7 +127,7 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}'" \
     2>/dev/null || true
 
-# Disable maintenance mode if enabled
+# Disable maintenance mode
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --off" \
     2>/dev/null || true
