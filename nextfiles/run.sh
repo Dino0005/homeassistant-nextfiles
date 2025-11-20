@@ -93,10 +93,17 @@ chown apache:apache "${NEXTCLOUD_DIR}/config"
 chmod 755 "${NEXTCLOUD_DIR}/config"
 
 # Configure trusted domains
-bashio::log.info "Configuring trusted domains..."
+bashio::log.info "Configuring trusted domains (patched)..."
+
+# Reset trusted_domains (important!)
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete trusted_domains" \
+    2>/dev/null || true
+
 DOMAIN_INDEX=0
 while read -r domain; do
     if [[ -n "${domain}" ]]; then
+        bashio::log.info "Adding trusted domain: ${domain}"
         su -s /bin/bash apache -c \
             "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_domains ${DOMAIN_INDEX} --value='${domain}'" \
             2>/dev/null || true
@@ -125,6 +132,10 @@ su -s /bin/bash apache -c \
 
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}/nextfiles'" \
+    2>/dev/null || true
+
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwritehost --value='${FIRST_DOMAIN}'" \
     2>/dev/null || true
 
 su -s /bin/bash apache -c \
