@@ -56,8 +56,8 @@ memory_limit: 1G
 
 - **admin_user** (obbligatorio): Username dell'amministratore
 - **admin_password** (obbligatorio): Password dell'amministratore (DEVE essere configurata prima del primo avvio)
-- **trusted_domains** (opzionale): Lista dei domini fidati per accedere a Nextfiles. Aggiungi il tuo dominio pubblico se usi un reverse proxy
-- **trusted_proxies** (opzionale): Lista dei proxy fidati. Usa `172.30.33.0/24` per la rete interna e `127.0.0.1` se usi Caddy o altro proxy locale
+- **trusted_domains** (obbligatorio): Lista dei domini fidati per accedere a Nextfiles. Minimo uno richiesto. Aggiungi il tuo dominio pubblico se usi un reverse proxy
+- **trusted_proxies** (obbligatorio con reverse proxy): Lista dei proxy fidati. Obbligatorio se usi Caddy, Nginx o altro reverse proxy. Usa `172.30.33.0/24` per la rete interna e `127.0.0.1` se usi Caddy o altro proxy locale
 - **max_upload_size** (opzionale, default: 512M): Dimensione massima file caricabili. Valori consigliati: 512M (uso normale), 1G-2G (file grandi), 10G+ (video/backup)
 - **memory_limit** (opzionale, default: 512M): Limite memoria PHP. Dovrebbe essere almeno la metà di max_upload_size
 
