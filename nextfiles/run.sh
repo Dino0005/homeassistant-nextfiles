@@ -48,12 +48,12 @@ if [ ! -f "${DATA_DIR}/config/config.php" ]; then
     
     # Run Nextcloud installation
     cd "${NEXTCLOUD_DIR}"
-    sudo -u apache php occ maintenance:install \
-        --database="sqlite" \
-        --database-name="nextcloud" \
-        --data-dir="${DATA_DIR}/data" \
-        --admin-user="${ADMIN_USER}" \
-        --admin-pass="${ADMIN_PASSWORD}"
+    su -s /bin/bash apache -c "php occ maintenance:install \
+        --database='sqlite' \
+        --database-name='nextcloud' \
+        --data-dir='${DATA_DIR}/data' \
+        --admin-user='${ADMIN_USER}' \
+        --admin-pass='${ADMIN_PASSWORD}'"
     
     bashio::log.info "Nextcloud installed successfully!"
     
@@ -74,7 +74,7 @@ bashio::log.info "Configuring trusted domains..."
 DOMAIN_INDEX=0
 while read -r domain; do
     if [[ -n "${domain}" ]]; then
-        sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_domains ${DOMAIN_INDEX} --value="${domain}" 2>/dev/null || true
+        su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set trusted_domains ${DOMAIN_INDEX} --value='${domain}'" 2>/dev/null || true
         DOMAIN_INDEX=$((DOMAIN_INDEX + 1))
     fi
 done < <(bashio::config 'trusted_domains | .[]')
@@ -84,7 +84,7 @@ bashio::log.info "Configuring trusted proxies..."
 PROXY_INDEX=0
 while read -r proxy; do
     if [[ -n "${proxy}" ]]; then
-        sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set trusted_proxies ${PROXY_INDEX} --value="${proxy}" 2>/dev/null || true
+        su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${PROXY_INDEX} --value='${proxy}'" 2>/dev/null || true
         PROXY_INDEX=$((PROXY_INDEX + 1))
     fi
 done < <(bashio::config 'trusted_proxies | .[]')
@@ -93,11 +93,11 @@ done < <(bashio::config 'trusted_proxies | .[]')
 FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
 
 # Set overwrite protocol
-sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwriteprotocol --value="https" 2>/dev/null || true
-sudo -u apache php "${NEXTCLOUD_DIR}/occ" config:system:set overwrite.cli.url --value="https://${FIRST_DOMAIN}" 2>/dev/null || true
+su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set overwriteprotocol --value='https'" 2>/dev/null || true
+su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}'" 2>/dev/null || true
 
 # Disable maintenance mode if enabled
-sudo -u apache php "${NEXTCLOUD_DIR}/occ" maintenance:mode --off 2>/dev/null || true
+su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ maintenance:mode --off" 2>/dev/null || true
 
 # Set permissions
 chown -R apache:apache "${NEXTCLOUD_DIR}"
