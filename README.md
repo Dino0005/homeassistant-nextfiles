@@ -34,10 +34,7 @@ Self-hosted file storage solution con database integrato per Home Assistant.
 
 ## Supporto
 
-Hai trovato un bug o vuoi suggerire una funzionalità? 
-
 - [Apri una issue](https://github.com/Dino0005/homeassistant-nextfiles/issues)
-- [Discussioni](https://github.com/Dino0005/homeassistant-nextfiles/discussions)
 
 ## Licenza
 
