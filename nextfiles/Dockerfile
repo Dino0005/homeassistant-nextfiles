@@ -14,6 +14,8 @@ RUN apk add --no-cache \
     apache2-ssl \
     php83 \
     php83-apache2 \
+    php83-cli \
+    php83-fpm \
     php83-ctype \
     php83-curl \
     php83-dom \
@@ -43,6 +45,11 @@ RUN apk add --no-cache \
     bash \
     s6-overlay
 
+# --- FIX PHP BIN ---
+# Create /usr/bin/php symlink → php83
+RUN ln -sf /usr/bin/php83 /usr/bin/php && \
+    ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm || true
+
 # Download and extract Nextcloud
 WORKDIR /var/www
 RUN curl -sSL https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2 | tar -xj && \
@@ -57,7 +64,7 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
     sed -i 's|#LoadModule headers_module|LoadModule headers_module|g' /etc/apache2/httpd.conf && \
     sed -i 's|#LoadModule env_module|LoadModule env_module|g' /etc/apache2/httpd.conf
 
-# Configure PHP
+# Configure PHP defaults
 RUN sed -i 's|memory_limit = 128M|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|upload_max_filesize = 2M|upload_max_filesize = 512M|g' /etc/php83/php.ini && \
     sed -i 's|post_max_size = 8M|post_max_size = 512M|g' /etc/php83/php.ini && \
