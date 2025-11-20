@@ -14,6 +14,19 @@ MEMORY_LIMIT=$(bashio::config 'memory_limit')
 DATA_DIR="/share/nextfiles"
 NEXTCLOUD_DIR="/var/www/nextcloud"
 
+# Configure PATH for apache user (php MUST be included)
+export PATH="/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin:/usr/local/sbin:/usr/lib/php83/bin:$PATH"
+
+# Find PHP binary
+PHP_BIN=$(command -v php || true)
+
+if [ -z "$PHP_BIN" ]; then
+    bashio::log.fatal "PHP non trovato nel PATH! Assicurati che php sia installato nel container."
+    exit 1
+fi
+
+bashio::log.info "Using PHP binary: ${PHP_BIN}"
+
 # Create data directory if it doesn't exist
 bashio::log.info "Setting up data directory: ${DATA_DIR}"
 mkdir -p "${DATA_DIR}/data"
@@ -48,12 +61,15 @@ if [ ! -f "${DATA_DIR}/config/config.php" ]; then
     
     # Run Nextcloud installation
     cd "${NEXTCLOUD_DIR}"
-    su -s /bin/bash apache -c "php occ maintenance:install \
+
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} occ maintenance:install \
         --database='sqlite' \
         --database-name='nextcloud' \
         --data-dir='${DATA_DIR}/data' \
         --admin-user='${ADMIN_USER}' \
-        --admin-pass='${ADMIN_PASSWORD}'"
+        --admin-pass='${ADMIN_PASSWORD}'" \
+        || { bashio::log.fatal 'Errore durante installazione Nextcloud'; exit 1; }
     
     bashio::log.info "Nextcloud installed successfully!"
     
@@ -64,7 +80,6 @@ if [ ! -f "${DATA_DIR}/config/config.php" ]; then
     
 else
     bashio::log.info "Existing installation detected. Linking config..."
-    # Link existing config
     rm -f "${NEXTCLOUD_DIR}/config/config.php"
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
 fi
@@ -74,7 +89,9 @@ bashio::log.info "Configuring trusted domains..."
 DOMAIN_INDEX=0
 while read -r domain; do
     if [[ -n "${domain}" ]]; then
-        su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set trusted_domains ${DOMAIN_INDEX} --value='${domain}'" 2>/dev/null || true
+        su -s /bin/bash apache -c \
+            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_domains ${DOMAIN_INDEX} --value='${domain}'" \
+            2>/dev/null || true
         DOMAIN_INDEX=$((DOMAIN_INDEX + 1))
     fi
 done < <(bashio::config 'trusted_domains | .[]')
@@ -84,7 +101,9 @@ bashio::log.info "Configuring trusted proxies..."
 PROXY_INDEX=0
 while read -r proxy; do
     if [[ -n "${proxy}" ]]; then
-        su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${PROXY_INDEX} --value='${proxy}'" 2>/dev/null || true
+        su -s /bin/bash apache -c \
+            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${PROXY_INDEX} --value='${proxy}'" \
+            2>/dev/null || true
         PROXY_INDEX=$((PROXY_INDEX + 1))
     fi
 done < <(bashio::config 'trusted_proxies | .[]')
@@ -93,13 +112,20 @@ done < <(bashio::config 'trusted_proxies | .[]')
 FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
 
 # Set overwrite protocol
-su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set overwriteprotocol --value='https'" 2>/dev/null || true
-su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}'" 2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwriteprotocol --value='https'" \
+    2>/dev/null || true
+
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}'" \
+    2>/dev/null || true
 
 # Disable maintenance mode if enabled
-su -s /bin/bash apache -c "php ${NEXTCLOUD_DIR}/occ maintenance:mode --off" 2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --off" \
+    2>/dev/null || true
 
-# Set permissions
+# Final permissions
 chown -R apache:apache "${NEXTCLOUD_DIR}"
 chown -R apache:apache "${DATA_DIR}"
 
