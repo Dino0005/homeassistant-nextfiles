@@ -94,15 +94,24 @@ chmod 755 "${NEXTCLOUD_DIR}/config"
 
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
-DOMAIN_INDEX=0
-while read -r domain; do
-    if [[ -n "${domain}" ]]; then
+
+# Delete existing to reset
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete trusted_domains" \
+    2>/dev/null || true
+
+DOMAIN_COUNT=$(bashio::config 'trusted_domains | length')
+bashio::log.info "Found ${DOMAIN_COUNT} trusted domains in configuration"
+
+for i in $(seq 0 $((DOMAIN_COUNT - 1))); do
+    DOMAIN=$(bashio::config "trusted_domains[${i}]")
+    if [[ -n "${DOMAIN}" ]]; then
+        bashio::log.info "Adding trusted domain [${i}]: ${DOMAIN}"
         su -s /bin/bash apache -c \
-            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_domains ${DOMAIN_INDEX} --value='${domain}'" \
+            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_domains ${i} --value='${DOMAIN}'" \
             2>/dev/null || true
-        DOMAIN_INDEX=$((DOMAIN_INDEX + 1))
     fi
-done < <(bashio::config 'trusted_domains | .[]')
+done
 
 # Configure trusted proxies
 bashio::log.info "Configuring trusted proxies..."
@@ -112,18 +121,20 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete trusted_proxies" \
     2>/dev/null || true
 
-PROXY_INDEX=0
-while read -r proxy; do
-    if [[ -n "${proxy}" ]]; then
-        bashio::log.info "Adding trusted proxy [${PROXY_INDEX}]: ${proxy}"
-        su -s /bin/bash apache -c \
-            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${PROXY_INDEX} --value='${proxy}'" \
-            2>/dev/null || true
-        PROXY_INDEX=$((PROXY_INDEX + 1))
-    fi
-done < <(bashio::config 'trusted_proxies | .[]')
+# Get count of trusted proxies
+PROXY_COUNT=$(bashio::config 'trusted_proxies | length')
+bashio::log.info "Found ${PROXY_COUNT} trusted proxies in configuration"
 
-bashio::log.info "Configured ${PROXY_INDEX} trusted proxies"
+# Add each proxy
+for i in $(seq 0 $((PROXY_COUNT - 1))); do
+    PROXY=$(bashio::config "trusted_proxies[${i}]")
+    if [[ -n "${PROXY}" ]]; then
+        bashio::log.info "Adding trusted proxy [${i}]: ${PROXY}"
+        su -s /bin/bash apache -c \
+            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${i} --value='${PROXY}'" \
+            2>/dev/null || true
+    fi
+done
 
 # Set overwrite settings
 FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
