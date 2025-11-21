@@ -18,6 +18,28 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 <img width="823" height="600" alt="Screenshot 2025-11-20 alle 22 17 14" src="https://github.com/user-attachments/assets/ecd66a68-a155-4571-93b9-c79005b592ce" />
 </div>
 
+## Requisiti
+
+### Versione Home Assistant
+
+Questo add-on **funziona solo** con:
+- ✅ **Home Assistant OS** (raccomandato)
+- ✅ **Home Assistant Supervised**
+
+**NON compatibile** con:
+- ❌ Home Assistant Container (Docker standalone)
+- ❌ Home Assistant Core (installazione Python)
+
+Queste versioni non supportano gli add-on. Per verificare la tua versione, vai su **Impostazioni → Informazioni** e controlla "Tipo di installazione".
+
+### Risorse Hardware
+
+- **RAM**: Minimo 2GB disponibili (4GB raccomandati)
+- **Storage**: Spazio libero su `/share` per i file
+- **CPU**: Qualsiasi
+
+Testato su Home Assistant Yellow con Raspberry Pi CM4 (4 GB RAM, SSD 256 GB)
+
 ## Installazione
 
 1. Aggiungi questo repository agli add-on di Home Assistant:
