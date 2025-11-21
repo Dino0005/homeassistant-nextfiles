@@ -44,6 +44,6 @@ MIT License - vedi [LICENSE](LICENSE) per dettagli.
 
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-production-green.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
-
+[license-shield]: https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles.svg
 [repository-badge]: https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg
 [repository-url]: https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FDino0005%2Fhomeassistant-nextfiles
