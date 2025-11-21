@@ -115,7 +115,7 @@ su -s /bin/bash apache -c \
 PROXY_INDEX=0
 while read -r proxy; do
     if [[ -n "${proxy}" ]]; then
-        bashio::log.info "Adding trusted proxy: ${proxy}"
+        bashio::log.info "Adding trusted proxy [${PROXY_INDEX}]: ${proxy}"
         su -s /bin/bash apache -c \
             "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${PROXY_INDEX} --value='${proxy}'" \
             2>/dev/null || true
@@ -123,8 +123,16 @@ while read -r proxy; do
     fi
 done < <(bashio::config 'trusted_proxies | .[]')
 
+bashio::log.info "Configured ${PROXY_INDEX} trusted proxies"
+
 # Set overwrite settings
 FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
+
+bashio::log.info "Configuring overwrite settings for reverse proxy..."
+
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwritehost --value='${FIRST_DOMAIN}'" \
+    2>/dev/null || true
 
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwriteprotocol --value='https'" \
