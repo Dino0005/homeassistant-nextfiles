@@ -166,9 +166,50 @@ Per fare backup di Nextfiles:
 
 ## Aggiornamento
 
+### Aggiornamento add-on
+
 L'add-on può essere aggiornato tramite l'interfaccia di Home Assistant. I tuoi dati in `/share/nextfiles` sono preservati.
 
+### Aggiornamento Nextcloud
+
+Quando Nextcloud rilascia una nuova versione e vedi l'avviso in **Amministrazione → Panoramica**:
+
+1. **Controlla l'ultima versione disponibile** su [nextcloud.com/changelog](https://nextcloud.com/changelog/)
+2. **Segnala l'aggiornamento** aprendo una [issue su GitHub](https://github.com/Dino0005/homeassistant-nextfiles/issues)
+3. Il maintainer aggiornerà `NEXTCLOUD_VERSION` nel Dockerfile
+4. **Ricostruisci l'add-on** dal pannello di Home Assistant
+5. I tuoi dati e configurazioni vengono mantenuti automaticamente
+
+**Nota:** Gli aggiornamenti di Nextcloud vengono testati prima di essere rilasciati per garantire la compatibilità.
+
 ## Troubleshooting
+
+### Avvisi di Nextcloud (Amministrazione → Panoramica)
+
+Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativa. Ecco quali sono normali e quali no:
+
+#### ✅ Avvisi normali (ignorabili):
+
+**Avvisi tecnici dovuti all'ambiente Docker:**
+- **"Could not check for JavaScript support"** / **"Could not check security headers"** - Nextcloud in Docker non riesce a connettersi a se stesso tramite il dominio esterno. Questo è normale e non influisce sul funzionamento.
+- **"Could not check .well-known"** / **"Could not check .otf files"** - Stesso motivo del precedente. I file funzionano correttamente anche se il check fallisce.
+- **"Webserver not set up to serve .js.map files"** - I source maps JavaScript sono usati solo per debugging avanzato. Non necessari per l'uso normale.
+
+**Avvisi di ottimizzazione (opzionali):**
+- **"SQLite is currently being used"** - Perfetto per uso personale/familiare. Considera MySQL/PostgreSQL solo se hai 10+ utenti attivi contemporaneamente.
+- **"Nessuna cache di memoria configurata"** - Memcache/Redis migliorano le performance ma non sono essenziali per piccole installazioni.
+- **"Database usato per blocco file"** - Correlato alla mancanza di memcache. Ignorabile per uso personale.
+
+**Configurazioni opzionali:**
+- **"Server email non configurato"** - Necessario solo se vuoi ricevere notifiche via email.
+- **"Modulo PHP imagick non attivato"** - Non disponibile in Alpine Linux 3.19. Nextcloud usa la libreria GD come alternativa per generare anteprime.
+- **"Regione telefono non impostata"** - Già configurato automaticamente su "IT" (Italia).
+- **"Finestra di manutenzione"** - Già configurato automaticamente alle 3:00 AM.
+
+#### ⚠️ Avvisi che richiedono attenzione:
+
+- **"Configurazione intestazione reverse proxy errata"** - Se vedi questo, verifica che `trusted_proxies` includa `127.0.0.1` nella configurazione dell'add-on.
+- **"Access through untrusted domain"** - Aggiungi il dominio usato alla lista `trusted_domains`.
 
 ### L'add-on non si avvia
 
