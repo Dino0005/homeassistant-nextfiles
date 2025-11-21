@@ -14,9 +14,6 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 - ⚡ Configurazione semplificata
 - 🎨 Interfaccia web completa di Nextcloud
 
-<div align="center">
-<img width="823" height="600" alt="Screenshot 2025-11-20 alle 22 17 14" src="https://github.com/user-attachments/assets/ecd66a68-a155-4571-93b9-c79005b592ce" />
-</div>
 
 ## Requisiti
 
