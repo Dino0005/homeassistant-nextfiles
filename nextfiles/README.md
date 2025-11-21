@@ -141,7 +141,7 @@ trusted_proxies:
 ```
 
 Poi:
-1. Ricarica Caddy: `caddy reload`
+1. Ricarica Caddy
 2. Riavvia l'add-on Nextfiles
 3. Accedi a: `https://tuodominio.com/nextfiles`
 
