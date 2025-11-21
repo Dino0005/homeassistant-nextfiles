@@ -64,7 +64,13 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
     sed -i 's|Listen 80|Listen 8080|g' /etc/apache2/httpd.conf && \
     sed -i 's|#LoadModule rewrite_module|LoadModule rewrite_module|g' /etc/apache2/httpd.conf && \
     sed -i 's|#LoadModule headers_module|LoadModule headers_module|g' /etc/apache2/httpd.conf && \
-    sed -i 's|#LoadModule env_module|LoadModule env_module|g' /etc/apache2/httpd.conf
+    sed -i 's|#LoadModule env_module|LoadModule env_module|g' /etc/apache2/httpd.conf && \
+    sed -i 's|#LoadModule setenvif_module|LoadModule setenvif_module|g' /etc/apache2/httpd.conf
+
+# Add MIME types for Nextcloud
+RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf && \
+    echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
+    echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
 
 # Configure PHP defaults
 RUN sed -i 's|memory_limit = 128M|memory_limit = 512M|g' /etc/php83/php.ini && \
