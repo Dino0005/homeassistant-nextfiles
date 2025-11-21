@@ -40,13 +40,16 @@ RUN apk add --no-cache \
     php83-posix \
     php83-bcmath \
     php83-gmp \
+    php83-exif \
+    php83-sodium \
+    php83-sysvsem \
+    php83-imagick \
     sqlite \
     curl \
     bash \
     s6-overlay
 
-# --- FIX PHP BIN ---
-# Create /usr/bin/php symlink → php83
+# Create /usr/bin/php symlink to php83
 RUN ln -sf /usr/bin/php83 /usr/bin/php && \
     ln -sf /usr/sbin/php-fpm83 /usr/sbin/php-fpm || true
 
@@ -68,7 +71,8 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
 RUN sed -i 's|memory_limit = 128M|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|upload_max_filesize = 2M|upload_max_filesize = 512M|g' /etc/php83/php.ini && \
     sed -i 's|post_max_size = 8M|post_max_size = 512M|g' /etc/php83/php.ini && \
-    sed -i 's|max_execution_time = 30|max_execution_time = 3600|g' /etc/php83/php.ini
+    sed -i 's|max_execution_time = 30|max_execution_time = 3600|g' /etc/php83/php.ini && \
+    echo "opcache.interned_strings_buffer=16" >> /etc/php83/php.ini
 
 # Copy run script
 COPY run.sh /
