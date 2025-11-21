@@ -43,7 +43,6 @@ RUN apk add --no-cache \
     php83-exif \
     php83-sodium \
     php83-sysvsem \
-    php83-imagick \
     sqlite \
     curl \
     bash \
