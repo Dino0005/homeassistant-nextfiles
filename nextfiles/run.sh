@@ -106,9 +106,16 @@ done < <(bashio::config 'trusted_domains | .[]')
 
 # Configure trusted proxies
 bashio::log.info "Configuring trusted proxies..."
+
+# First, delete existing trusted_proxies to reset
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete trusted_proxies" \
+    2>/dev/null || true
+
 PROXY_INDEX=0
 while read -r proxy; do
     if [[ -n "${proxy}" ]]; then
+        bashio::log.info "Adding trusted proxy: ${proxy}"
         su -s /bin/bash apache -c \
             "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set trusted_proxies ${PROXY_INDEX} --value='${proxy}'" \
             2>/dev/null || true
@@ -148,6 +155,12 @@ su -s /bin/bash apache -c \
 # Set maintenance window (3 AM)
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set maintenance_window_start --value='3' --type=integer" \
+    2>/dev/null || true
+
+# Add missing database indices
+bashio::log.info "Adding missing database indices..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ db:add-missing-indices" \
     2>/dev/null || true
 
 # Disable maintenance mode
