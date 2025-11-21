@@ -35,7 +35,7 @@ Queste versioni non supportano gli add-on. Per verificare la tua versione, vai s
 - **Storage**: Spazio libero su `/share` per i file
 - **CPU**: Qualsiasi
 
-Testato su Home Assistant Yellow con Raspberry Pi CM4 (4 GB RAM, SSD 256 GB)
+Testato con Home Assistant OS su Home Assistant Yellow (Raspberry Pi CM4 con 4 GB RAM), SSD 256 GB
 
 ## Installazione
 
