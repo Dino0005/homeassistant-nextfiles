@@ -10,4 +10,4 @@ labels:
   org.opencontainers.image.source: "https://github.com/Dino0005/homeassistant-nextfiles"
   org.opencontainers.image.licenses: "MIT"
 args:
-  NEXTCLOUD_VERSION: "31.0.11"
+  NEXTCLOUD_VERSION: "32.0.2"
