@@ -5,6 +5,11 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.2] - 2025-11-22
+
+### Aggiornato
+- Nextcloud 29.0.16 → 30.0.17
+
 ## [1.0.1] - 2024-11-15
 
 ### Aggiornato
@@ -52,8 +57,8 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Nextcloud completo con interfaccia web
 - File sharing e sincronizzazione
 - Accesso WebDAV
-- Upload file dimensione configurabile (default a 512M)
-- Limite memoria PHP dimensione configurabile (default a 512M)
+- Upload file dimensione configurabile (default 512M)
+- Limite memoria PHP dimensione configurabile (default 512M)
 - Trusted domains configurabili
 - Trusted proxies per reverse proxy
 - HTTPS tramite reverse proxy
