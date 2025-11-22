@@ -10,10 +10,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Aggiornato
 - Nextcloud 31.0.11 → 32.0.2 (ultima versione stabile)
 
-### Corretto
-- Fix icone sovrapposte nell'interfaccia web
-- Miglioramenti UI e performance
-
 ## [1.0.3] - 2025-11-22
 
 ### Aggiornato
