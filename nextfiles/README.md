@@ -210,6 +210,7 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 - **"Could not check for JavaScript support"** / **"Could not check security headers"** - Nextcloud in Docker non riesce a connettersi a se stesso tramite il dominio esterno. Questo è normale e non influisce sul funzionamento.
 - **"Could not check .well-known"** / **"Could not check .otf files"** - Stesso motivo del precedente. I file funzionano correttamente anche se il check fallisce.
 - **"Webserver not set up to serve .js.map files"** - I source maps JavaScript sono usati solo per debugging avanzato. Non necessari per l'uso normale.
+- **AppAPI deploy daemon not set** (solo Nextcloud 32+) - Necessario solo per installare External Apps avanzate che girano in container Docker separati. Le app normali di Nextcloud (Office, Calendar, Contacts, Photos, ecc.) funzionano senza AppAPI. Nextfiles è un add-on pensato per l'uso personale, questa funzionalità non è necessari, puoi disabilitarela andando su **Applicazioni → Le tue app → App API → Disabilita**.
 
 **Avvisi di ottimizzazione (opzionali):**
 - **"SQLite is currently being used"** - Perfetto per uso personale/familiare. Considera MySQL/PostgreSQL solo se hai 10+ utenti attivi contemporaneamente.
