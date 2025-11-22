@@ -5,10 +5,19 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.4] - 2025-11-22
+
+### Aggiornato
+- Nextcloud 31.0.11 → 32.0.2
+
+### Corretto
+- Fix icone sovrapposte nell'interfaccia web
+- Miglioramenti UI e performance
+
 ## [1.0.3] - 2025-11-22
 
 ### Aggiornato
-- Nextcloud 30.0.17 → 31.0.11 (ultima versione stabile)
+- Nextcloud 30.0.17 → 31.0.11
 
 ### Aggiunto
 - Sezione README su avvisi Nextcloud normali e come interpretarli
