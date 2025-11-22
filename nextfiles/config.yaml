@@ -1,5 +1,5 @@
 name: Nextfiles
-version: "1.0.1"
+version: "1.0.2"
 slug: nextfiles
 description: Self-hosted file storage solution with integrated database for Home Assistant
 url: https://github.com/Dino0005/homeassistant-nextfiles
