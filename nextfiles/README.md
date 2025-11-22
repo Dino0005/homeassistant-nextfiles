@@ -207,21 +207,15 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 #### ✅ Avvisi normali (ignorabili):
 
 **Avvisi tecnici dovuti all'ambiente Docker:**
-- **"Could not check for JavaScript support"** / **"Could not check security headers"** - Nextcloud in Docker non riesce a connettersi a se stesso tramite il dominio esterno. Questo è normale e non influisce sul funzionamento.
-- **"Could not check .well-known"** / **"Could not check .otf files"** - Stesso motivo del precedente. I file funzionano correttamente anche se il check fallisce.
-- **"Webserver not set up to serve .js.map files"** - I source maps JavaScript sono usati solo per debugging avanzato. Non necessari per l'uso normale.
 - **AppAPI deploy daemon not set** (solo Nextcloud 32+) - Necessario solo per installare External Apps avanzate che girano in container Docker separati. Le app normali di Nextcloud (Office, Calendar, Contacts, Photos, ecc.) funzionano senza AppAPI. Nextfiles è un add-on pensato per l'uso personale, questa funzionalità non è necessaria, puoi disabilitarela andando su **Applicazioni → Le tue app → App API → Disabilita**.
 
 **Avvisi di ottimizzazione (opzionali):**
-- **"SQLite is currently being used"** - Perfetto per uso personale/familiare. Considera MySQL/PostgreSQL solo se hai 10+ utenti attivi contemporaneamente.
-- **"Nessuna cache di memoria configurata"** - Memcache/Redis migliorano le performance ma non sono essenziali per piccole installazioni.
-- **"Database usato per blocco file"** - Correlato alla mancanza di memcache. Ignorabile per uso personale.
+- **"SQLite is currently being used"** - Perfetto per uso personale/familiare. MySQL/PostgreSQL più adatto solo se hai 10+ utenti attivi contemporaneamente.
+- **"Nessuna cache di memoria configurata"** - Memcache/Redis migliorano le performance ma non sono essenziali per piccole installazioni. Ignorabile per uso personale.
 
 **Configurazioni opzionali:**
 - **"Server email non configurato"** - Necessario solo se vuoi ricevere notifiche via email.
 - **"Modulo PHP imagick non attivato"** - Non disponibile in Alpine Linux 3.19. Nextcloud usa la libreria GD come alternativa per generare anteprime.
-- **"Regione telefono non impostata"** - Già configurato automaticamente su "IT" (Italia).
-- **"Finestra di manutenzione"** - Già configurato automaticamente alle 3:00 AM.
 
 #### ⚠️ Avvisi che richiedono attenzione:
 
