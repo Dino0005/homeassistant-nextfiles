@@ -212,6 +212,7 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 **Avvisi di ottimizzazione (opzionali):**
 - **"SQLite is currently being used"** - Perfetto per uso personale/familiare. MySQL/PostgreSQL più adatto solo se hai 10+ utenti attivi contemporaneamente.
 - **"Nessuna cache di memoria configurata"** - Memcache/Redis migliorano le performance ma non sono essenziali per piccole installazioni. Ignorabile per uso personale.
+- **"Il database viene usato per il blocco di file transazionale"** - Correlato alla mancanza di memcache. Ignorabile.
 
 **Configurazioni opzionali:**
 - **"Server email non configurato"** - Necessario solo se vuoi ricevere notifiche via email.
