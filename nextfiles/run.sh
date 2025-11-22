@@ -182,6 +182,12 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ db:add-missing-indices" \
     2>/dev/null || true
 
+# Run MIME type migrations (Nextcloud 31+)
+bashio::log.info "Running MIME type migrations..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive" \
+    2>/dev/null || true
+
 # Disable maintenance mode
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --off" \
