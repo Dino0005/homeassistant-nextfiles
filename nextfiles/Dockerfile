@@ -5,7 +5,7 @@ FROM $BUILD_FROM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG NEXTCLOUD_VERSION=29.0.16
+ARG NEXTCLOUD_VERSION=30.0.17
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 
 # Install requirements
