@@ -53,7 +53,7 @@ Testato con Home Assistant OS su Home Assistant Yellow (Raspberry Pi CM4 con 4 G
 5. **Importante**: Controlla i log per verificare l'avvio completo
    - Vai su **Log** nel pannello dell'add-on
    - Attendi fino a vedere la riga: `[XX:XX:XX] INFO: Starting Apache web server...`
-   - **Nota**: Dopo la riga `Maintenance mode already disabled` possono passare **2-3 minuti** prima che Apache si avvii. Questo è normale, soprattutto al primo avvio o dopo aggiornamenti.
+   - **Nota**: Dopo la riga `Maintenance mode already disabled` possono passare **2-3 minuti** prima che Apache si avvii. Questo è normale, al avvio o dopo aggiornamenti.
 
 6. Accedi tramite:
    - **Con reverse proxy**: `https://tuodominio.com/nextfiles`
