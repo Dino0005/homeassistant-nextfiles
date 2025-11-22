@@ -5,6 +5,15 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.3] - 2025-11-22
+
+### Aggiornato
+- Nextcloud 30.0.17 → 31.0.11 (ultima versione stabile)
+
+### Aggiunto
+- Sezione README su avvisi Nextcloud normali e come interpretarli
+- Avviso nel README sui tempi di avvio (2-3 minuti dopo "Maintenance mode disabled")
+
 ## [1.0.2] - 2025-11-22
 
 ### Aggiornato
@@ -13,7 +22,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [1.0.1] - 2025-11-15
 
 ### Aggiornato
-- Nextcloud 29.0.8 → 29.0.16 (ultima versione stabile)
+- Nextcloud 29.0.8 → 29.0.16
 - Documentazione README con sezione avvisi Nextcloud
 - Documentazione README con procedura aggiornamento
 
