@@ -8,7 +8,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [1.0.4] - 2025-11-22
 
 ### Aggiornato
-- Nextcloud 31.0.11 → 32.0.2
+- Nextcloud 31.0.11 → 32.0.2 (ultima versione stabile)
 
 ### Corretto
 - Fix icone sovrapposte nell'interfaccia web
