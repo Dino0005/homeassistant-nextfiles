@@ -105,7 +105,13 @@ Per accesso sicuro HTTPS tramite Caddy con path `/nextfiles`:
 https://tuodominio.com {
   import https_header
   
-  # Nextfiles (Nextcloud) su /nextfiles
+  # Service Discovery per Nextcloud (CalDAV, CardDAV, Federazione)
+  redir /.well-known/carddav /nextfiles/remote.php/dav 301
+  redir /.well-known/caldav /nextfiles/remote.php/dav 301
+  redir /.well-known/webfinger /nextfiles/index.php/.well-known/webfinger 301
+  redir /.well-known/nodeinfo /nextfiles/index.php/.well-known/nodeinfo 301
+  
+  # Nextfiles su /nextfiles
   handle /nextfiles* {
     uri strip_prefix /nextfiles
     reverse_proxy http://localhost:8080 {
@@ -123,7 +129,7 @@ https://tuodominio.com {
     }
   }
   
-  # Home Assistant
+  # Home Assistant (tutto il resto)
   handle {
     reverse_proxy http://localhost:8123 {
       header_up X-Forwarded-For {remote_host}
@@ -144,6 +150,11 @@ trusted_proxies:
   - 172.30.33.0/24
   - 127.0.0.1
 ```
+
+**Note importanti:**
+- I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud
+- Senza questi redirect, vedrai avvisi nella panoramica amministrativa
+- `127.0.0.1` in `trusted_proxies` è obbligatorio per Caddy locale
 
 Poi:
 1. Ricarica Caddy
@@ -221,6 +232,14 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 - Verifica di aver configurato `admin_password`
 - Controlla i log dell'add-on per errori specifici
 - Verifica che il tuo sistema abbia almeno 2GB di RAM disponibili
+- **Attendi pazientemente**: Dopo `Maintenance mode already disabled` possono passare 2-3 minuti prima che Apache si avvii
+
+### L'add-on sembra bloccato all'avvio
+
+Se dopo aver avviato l'add-on non vedi `Starting Apache web server...` nei log dopo 5 minuti:
+1. Controlla se ci sono messaggi di errore nei log
+2. Prova a riavviare l'add-on
+3. Se il problema persiste, potrebbe essere necessario ricostruire l'add-on
 
 ### Errore "trusted domain"
 
