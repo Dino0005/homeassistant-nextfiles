@@ -10,7 +10,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Aggiornato
 - Nextcloud 29.0.16 → 30.0.17
 
-## [1.0.1] - 2024-11-15
+## [1.0.1] - 2025-11-15
 
 ### Aggiornato
 - Nextcloud 29.0.8 → 29.0.16 (ultima versione stabile)
@@ -38,7 +38,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Rimosso
 - `php83-imagick` (non disponibile in Alpine Linux 3.19)
 
-## [1.0.0] - 2024-11-14
+## [1.0.0] - 2025-11-14
 
 ### Aggiunto
 - Prima release pubblica di Nextfiles
