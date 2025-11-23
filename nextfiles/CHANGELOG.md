@@ -115,10 +115,10 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Rimosso
 - `php83-imagick` (non disponibile in Alpine Linux 3.19)
 
-## [1.0.0] - 2024-11-14
+## [1.0.0b] - 2025-11-14
 
 ### Aggiunto
-- Prima release pubblica di Nextfiles
+- Release iniziale di Nextfiles (non pubblica)
 - Database SQLite integrato (nessun add-on esterno necessario)
 - Storage persistente su `/share/nextfiles`
 - Supporto reverse proxy con configurazione automatica
