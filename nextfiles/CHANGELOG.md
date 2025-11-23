@@ -41,17 +41,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - File LICENSE (MIT)
 - File CHANGELOG.md
 
-### Corretto
-- Fix lettura `trusted_domains` da configurazione add-on (usa indici numerici)
-- Fix lettura `trusted_proxies` da configurazione add-on (usa indici numerici)
-- Risolto avviso critico "Configurazione intestazione reverse proxy errata"
-- Configurazione corretta `forwarded_for_headers` per sicurezza
-- Impostazione automatica regione telefono (IT)
-- Impostazione automatica finestra manutenzione (3:00 AM)
-
-### Rimosso
-- `php83-imagick` (non disponibile in Alpine Linux 3.19)
-
 ## [1.0.0] - 2025-11-14
 
 ### Aggiunto
@@ -79,7 +68,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Configurazione path personalizzato (`/nextfiles`)
 
 ### Aggiornato
-- Nextcloud 29.0.8 → 29.0.16 (ultima versione stabile)
 - Documentazione README con sezione avvisi Nextcloud
 - Documentazione README con procedura aggiornamento
 
