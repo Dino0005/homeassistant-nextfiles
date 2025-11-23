@@ -78,17 +78,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - HTTPS tramite reverse proxy
 - Configurazione path personalizzato (`/nextfiles`)
 
----
-
-## Legenda
-
-- `Aggiunto` per le nuove funzionalità
-- `Modificato` per modifiche a funzionalità esistenti
-- `Deprecato` per funzionalità che saranno rimosse
-- `Rimosso` per funzionalità rimosse
-- `Corretto` per bug fix
-- `Sicurezza` per vulnerabilità corrette
-
 ### Aggiornato
 - Nextcloud 29.0.8 → 29.0.16 (ultima versione stabile)
 - Documentazione README con sezione avvisi Nextcloud
