@@ -86,7 +86,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Fix lettura `trusted_proxies` da configurazione add-on (usa indici numerici)
 - Risolto avviso critico "Configurazione intestazione reverse proxy errata"
 - Configurazione corretta `forwarded_for_headers` per sicurezza
-- Impostazione automatica regione telefono (IT)
 - Impostazione automatica finestra manutenzione (3:00 AM)
 
 ### Rimosso
