@@ -39,15 +39,6 @@ if ! id apache &>/dev/null; then
     adduser -D -u 48 -G apache -s /sbin/nologin apache
 fi
 
-# Setup custom_apps directory for persistent app storage
-bashio::log.info "Setting up custom_apps directory..."
-if [ ! -L "/var/www/nextcloud/custom_apps" ]; then
-    # Remove default directory if exists
-    rm -rf /var/www/nextcloud/custom_apps
-    # Create symlink to persistent storage
-    ln -sf "${DATA_DIR}/apps" /var/www/nextcloud/custom_apps
-fi
-
 # Fix permissions for /share mount
 bashio::log.info "Fixing permissions on /share/nextfiles..."
 chown -R apache:apache "${DATA_DIR}"
@@ -185,30 +176,6 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set maintenance_window_start --value='3' --type=integer" \
     2>/dev/null || true
 
-# Enable custom_apps directory
-bashio::log.info "Configuring custom apps directory..."
-# First set the default apps directory (index 0)
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 path --value='/var/www/nextcloud/apps'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 url --value='/apps'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 writable --value=false --type=boolean" \
-    2>/dev/null || true
-
-# Then set custom_apps directory (index 1)
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 path --value='/var/www/nextcloud/custom_apps'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 url --value='/custom_apps'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 writable --value=true --type=boolean" \
-    2>/dev/null || true
-
 # Add missing database indices
 bashio::log.info "Adding missing database indices..."
 su -s /bin/bash apache -c \
@@ -219,12 +186,6 @@ su -s /bin/bash apache -c \
 bashio::log.info "Running MIME type migrations..."
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive" \
-    2>/dev/null || true
-
-# Clear frontend caches (fix JS/CSS issues)
-bashio::log.info "Clearing frontend caches..."
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair" \
     2>/dev/null || true
 
 # Disable maintenance mode
