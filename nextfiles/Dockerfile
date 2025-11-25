@@ -58,6 +58,11 @@ RUN curl -sSL https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLO
     chown -R apache:apache nextcloud && \
     chmod -R 755 nextcloud
 
+# Create custom_apps directory for user-installed apps
+RUN mkdir -p /var/www/nextcloud/custom_apps && \
+    chown -R apache:apache /var/www/nextcloud/custom_apps && \
+    chmod -R 755 /var/www/nextcloud/custom_apps
+
 # Configure Apache
 RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd.conf && \
     sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/httpd.conf && \
@@ -65,12 +70,14 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
     sed -i 's|#LoadModule rewrite_module|LoadModule rewrite_module|g' /etc/apache2/httpd.conf && \
     sed -i 's|#LoadModule headers_module|LoadModule headers_module|g' /etc/apache2/httpd.conf && \
     sed -i 's|#LoadModule env_module|LoadModule env_module|g' /etc/apache2/httpd.conf && \
-    sed -i 's|#LoadModule setenvif_module|LoadModule setenvif_module|g' /etc/apache2/httpd.conf
+    sed -i 's|#LoadModule setenvif_module|LoadModule setenvif_module|g' /etc/apache2/httpd.conf && \
+    sed -i 's|#LoadModule expires_module|LoadModule expires_module|g' /etc/apache2/httpd.conf
 
 # Add MIME types for Nextcloud
 RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf && \
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
-    echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
+    echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf && \
+    echo "AddType text/css .css" >> /etc/apache2/httpd.conf
 
 # Configure PHP defaults
 RUN sed -i 's|memory_limit = 128M|memory_limit = 512M|g' /etc/php83/php.ini && \
