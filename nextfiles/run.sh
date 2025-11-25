@@ -187,6 +187,18 @@ su -s /bin/bash apache -c \
 
 # Enable custom_apps directory
 bashio::log.info "Configuring custom apps directory..."
+# First set the default apps directory (index 0)
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 path --value='/var/www/nextcloud/apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 url --value='/apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 writable --value=false --type=boolean" \
+    2>/dev/null || true
+
+# Then set custom_apps directory (index 1)
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 path --value='/var/www/nextcloud/custom_apps'" \
     2>/dev/null || true
