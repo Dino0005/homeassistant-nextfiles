@@ -38,6 +38,7 @@ RUN apk add --no-cache \
     php83-zip \
     php83-zlib \
     php83-posix \
+    php83-pcntl \
     php83-bcmath \
     php83-gmp \
     php83-exif \
