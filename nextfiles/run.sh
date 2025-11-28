@@ -197,15 +197,5 @@ su -s /bin/bash apache -c \
 chown -R apache:apache "${NEXTCLOUD_DIR}"
 chown -R apache:apache "${DATA_DIR}"
 
-# Configure Nextcloud to use cron for background jobs
-bashio::log.info "Configuring Nextcloud to use cron..."
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ background:cron" \
-    2>/dev/null || true
-
-# Start cron daemon in background
-bashio::log.info "Starting cron daemon..."
-crond -b
-
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
