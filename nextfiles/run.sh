@@ -203,9 +203,28 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ background:cron" \
     2>/dev/null || true
 
-# Start cron daemon in background
+# Verify crontab is configured
+bashio::log.info "Verifying crontab configuration..."
+if [ -f /etc/crontabs/root ]; then
+    bashio::log.info "Crontab found:"
+    cat /etc/crontabs/root
+else
+    bashio::log.error "Crontab file not found!"
+fi
+
+# Start cron daemon in foreground with logging level 2
 bashio::log.info "Starting cron daemon..."
-crond -b
+crond -f -l 2 &
+
+# Give cron a moment to start
+sleep 2
+
+# Verify crond is running
+if pgrep crond > /dev/null; then
+    bashio::log.info "Cron daemon is running (PID: $(pgrep crond))"
+else
+    bashio::log.error "Cron daemon failed to start!"
+fi
 
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
