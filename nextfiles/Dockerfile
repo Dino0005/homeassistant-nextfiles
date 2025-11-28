@@ -89,4 +89,7 @@ RUN echo "*/5 * * * * su -s /bin/sh apache -c '/usr/bin/php /var/www/nextcloud/c
 COPY run.sh /
 RUN chmod a+x /run.sh
 
+# Make sure no s6-overlay services are configured
+RUN rm -rf /etc/services.d /etc/cont-init.d 2>/dev/null || true
+
 CMD ["/run.sh"]
