@@ -4,9 +4,6 @@ FROM $BUILD_FROM
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Remove s6-overlay completely to avoid conflicts
-RUN rm -rf /etc/s6-overlay /etc/services.d /etc/cont-init.d /command /package 2>/dev/null || true
-
 # Setup base
 ARG NEXTCLOUD_VERSION=32.0.2
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
@@ -50,7 +47,6 @@ RUN apk add --no-cache \
     sqlite \
     curl \
     bash \
-    dcron \
     s6-overlay
 
 # Create /usr/bin/php symlink to php83
@@ -85,14 +81,8 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     echo "opcache.interned_strings_buffer=16" >> /etc/php83/php.ini && \
     sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini
 
-# Setup Nextcloud cron job - runs every 5 minutes
-RUN echo "*/5 * * * * su -s /bin/sh apache -c '/usr/bin/php /var/www/nextcloud/cron.php' >/dev/null 2>&1" > /etc/crontabs/root
-
 # Copy run script
 COPY run.sh /
 RUN chmod a+x /run.sh
-
-# Make sure no s6-overlay services are configured
-RUN rm -rf /etc/services.d /etc/cont-init.d 2>/dev/null || true
 
 CMD ["/run.sh"]
