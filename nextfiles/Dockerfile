@@ -82,26 +82,11 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     echo "opcache.interned_strings_buffer=16" >> /etc/php83/php.ini && \
     sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini
 
-# Add Nextcloud cron, executed every 5 minutes as apache user
-RUN echo "*/5 * * * * apache php -f /var/www/nextcloud/cron.php" >> /etc/crontabs/apache
+# Setup Nextcloud cron job - runs every 5 minutes
+RUN echo "*/5 * * * * su -s /bin/sh apache -c '/usr/bin/php /var/www/nextcloud/cron.php' >/dev/null 2>&1" > /etc/crontabs/root
 
 # Copy run script
 COPY run.sh /
 RUN chmod a+x /run.sh
 
-# --- s6-overlay services ---
-
-# Cron service
-RUN mkdir -p /etc/services.d/cron && \
-    echo '#!/bin/sh' > /etc/services.d/cron/run && \
-    echo "exec crond -f -l 8" >> /etc/services.d/cron/run && \
-    chmod +x /etc/services.d/cron/run
-
-# Apache service
-RUN mkdir -p /etc/services.d/apache && \
-    echo '#!/bin/sh' > /etc/services.d/apache/run && \
-    echo "exec /run.sh" >> /etc/services.d/apache/run && \
-    chmod +x /etc/services.d/apache/run
-
-# Start all services with s6
-CMD [ "/init" ]
+CMD ["/run.sh"]
