@@ -47,6 +47,7 @@ RUN apk add --no-cache \
     sqlite \
     curl \
     bash \
+    dcron \
     s6-overlay
 
 # Create /usr/bin/php symlink to php83
@@ -80,6 +81,9 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^max_execution_time *=.*|max_execution_time = 3600|g' /etc/php83/php.ini && \
     echo "opcache.interned_strings_buffer=16" >> /etc/php83/php.ini && \
     sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini
+
+# Setup Nextcloud cron job - runs every 5 minutes
+RUN echo "*/5 * * * * su -s /bin/sh apache -c '/usr/bin/php /var/www/nextcloud/cron.php' >/dev/null 2>&1" > /etc/crontabs/root
 
 # Copy run script
 COPY run.sh /
