@@ -4,6 +4,9 @@ FROM $BUILD_FROM
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Remove s6-overlay completely to avoid conflicts
+RUN rm -rf /etc/s6-overlay /etc/services.d /etc/cont-init.d /command /package 2>/dev/null || true
+
 # Setup base
 ARG NEXTCLOUD_VERSION=32.0.2
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
