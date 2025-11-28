@@ -82,8 +82,9 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     echo "opcache.interned_strings_buffer=16" >> /etc/php83/php.ini && \
     sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini
 
-# Setup Nextcloud cron job - runs every 5 minutes
-RUN echo "*/5 * * * * su -s /bin/sh apache -c '/usr/bin/php /var/www/nextcloud/cron.php' >/dev/null 2>&1" > /etc/crontabs/root
+# Setup Nextcloud cron job - runs every 5 minutes with logging
+RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
+    echo "*/5 * * * * echo \"[CRON] Starting Nextcloud cron.php at \$(date)\" && su -s /bin/sh apache -c 'cd /var/www/nextcloud && /usr/bin/php /var/www/nextcloud/cron.php' && echo \"[CRON] Nextcloud cron.php completed\"" >> /etc/crontabs/root
 
 # Copy run script
 COPY run.sh /
