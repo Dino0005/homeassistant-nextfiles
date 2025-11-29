@@ -5,10 +5,20 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.5] - 2025-11-29
+
+### Aggiornato
+- Aggiornamento ad Alpine Linux 3.22
+
+### Aggiunto
+- Aggiunta estensione PHP PCNTL (risolti i warning nei log)
+- Implementato cron per background jobs automatici (esecuzione ogni 5 minuti)
+- Configurazione automatica di Nextcloud per utilizzare cron invece di AJAX
+
 ## [1.0.4] - 2025-11-22
 
 ### Aggiornato
-- Nextcloud 31.0.11 → 32.0.2 (ultima versione stabile)
+- Nextcloud 31.0.11 → 32.0.2
 
 ## [1.0.3] - 2025-11-22
 
