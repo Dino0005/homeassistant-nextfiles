@@ -92,6 +92,28 @@ chmod -R 755 "${DATA_DIR}/config"
 chown apache:apache "${NEXTCLOUD_DIR}/config"
 chmod 755 "${NEXTCLOUD_DIR}/config"
 
+# Create updater backup folder to avoid warnings
+bashio::log.info "Checking for updater backup folder..."
+APPDATA_FOLDER=$(find "${DATA_DIR}/data" -maxdepth 1 -type d -name "appdata_oc*" 2>/dev/null | head -n 1)
+
+if [ -n "$APPDATA_FOLDER" ]; then
+    # Extract the unique code (e.g., oc7393aorzg2)
+    UNIQUE_CODE=$(basename "$APPDATA_FOLDER" | sed 's/appdata_//')
+    UPDATER_FOLDER="${DATA_DIR}/data/updater-${UNIQUE_CODE}"
+    BACKUPS_FOLDER="${UPDATER_FOLDER}/backups"
+    
+    if [ ! -d "$BACKUPS_FOLDER" ]; then
+        bashio::log.info "Creating updater backup folder: ${BACKUPS_FOLDER}"
+        mkdir -p "$BACKUPS_FOLDER"
+        chown -R apache:apache "$UPDATER_FOLDER"
+        chmod -R 755 "$UPDATER_FOLDER"
+    else
+        bashio::log.info "Updater backup folder already exists"
+    fi
+else
+    bashio::log.info "No appdata folder found yet (first install)"
+fi
+
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
 
