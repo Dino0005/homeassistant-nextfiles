@@ -15,6 +15,10 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Implementato cron per background jobs automatici (esecuzione ogni 5 minuti)
 - Configurazione automatica di Nextcloud per utilizzare cron invece di AJAX
 
+### Corretto
+- Risolti i warning nei log relativi a PHP PCNTL
+- Risolti i warning nei log per la cartella di backup dell'aggiornamento non trovata
+
 ## [1.0.4] - 2025-11-22
 
 ### Aggiornato
