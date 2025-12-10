@@ -26,7 +26,7 @@ Self-hosted file storage solution con database integrato per Home Assistant.
 
 **Caratteristiche:**
 - 📁 Storage su `/share/nextfiles`
-- 🗄️ Database SQLite integrato
+- 🗄️ Database SQLite integrato (per un uso personale/famigliare, uso leggero fino a 5 utenti con app mobile Nextcloud)
 - 🔒 Supporto HTTPS tramite reverse proxy
 - ⚡ Configurazione semplificata
 
