@@ -210,7 +210,7 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 - **AppAPI deploy daemon not set** (solo Nextcloud 32+) - Necessario solo per installare External Apps avanzate che girano in container Docker separati. Le app normali di Nextcloud (Office, Calendar, Contacts, Photos, ecc.) funzionano senza AppAPI. Nextfiles è un add-on pensato per l'uso personale, questa funzionalità non è necessaria, puoi disabilitarela andando su **Applicazioni → Le tue app → App API → Disabilita**.
 
 **Avvisi di ottimizzazione (opzionali):**
-- **"SQLite is currently being used"** - Perfetto per uso personale/familiare. MySQL/PostgreSQL più adatto solo se hai 10+ utenti attivi contemporaneamente.
+- **"SQLite is currently being used"** - Perfetto per uso personale/familiare, per uso leggero fino a 5 utenti con app mobile Nextcloud. MySQL/PostgreSQL è più adatto solo se hai più di 5 utenti attivi contemporaneamente o un uso intesivo del Desktop client.
 - **"Nessuna cache di memoria configurata"** - Memcache/Redis migliorano le performance ma non sono essenziali per piccole installazioni. Ignorabile per uso personale.
 - **"Il database viene usato per il blocco di file transazionale"** - Correlato alla mancanza di memcache. Ignorabile.
 
