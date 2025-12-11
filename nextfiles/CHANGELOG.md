@@ -11,7 +11,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Nextcloud 32.0.2 → 32.0.3
 
 ### Aggiunto
-- Aggiunto maintenance mode durante l'aggiornamneto di Nextcloud
+- Gestione della Modalità di Manutenzione (`Maintenance Mode`). La Modalità di Manutenzione viene ativata per tutte le esecuzioni dello script di avvio successive alla prima installazione, per garantire che tutte le operazioni di configurazione vengano eseguite in sicurezza durante l'**Avvio**, il **Riavvio** o l'**Aggiornamento** dell'add-on.
 
 ## [1.0.5] - 2025-11-29
 
