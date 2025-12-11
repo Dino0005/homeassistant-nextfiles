@@ -82,7 +82,7 @@ else
     rm -f "${NEXTCLOUD_DIR}/config/config.php"
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
 
-    # Enable maintenance mode during upgrades for safety
+    # Enable maintenance mode
     bashio::log.info "Enabling maintenance mode for safe upgrade..."
     su -s /bin/bash apache -c \
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --on" \
