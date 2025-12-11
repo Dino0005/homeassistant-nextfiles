@@ -10,6 +10,9 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Aggiornato
 - Nextcloud 32.0.2 → 32.0.3
 
+### Aggiunto
+- Aggiunto maintenance mode durante l'aggiornamneto di Nextcloud
+
 ## [1.0.5] - 2025-11-29
 
 ### Aggiornato
