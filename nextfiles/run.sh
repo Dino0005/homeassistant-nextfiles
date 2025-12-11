@@ -81,6 +81,12 @@ else
     bashio::log.info "Existing installation detected. Linking config..."
     rm -f "${NEXTCLOUD_DIR}/config/config.php"
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
+
+    # Enable maintenance mode during upgrades for safety
+    bashio::log.info "Enabling maintenance mode for safe upgrade..."
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --on" \
+        2>/dev/null || true
 fi
 
 # Fix permissions for config directory
