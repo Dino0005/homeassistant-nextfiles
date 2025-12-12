@@ -19,7 +19,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 ```
 
 ## Add-ons disponibili
-<img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="64" style="vertical-align:-4px; margin-right:6px;">
+<img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="64">
 
 ### [Nextfiles (Nextcloud)](./nextfiles)
 
