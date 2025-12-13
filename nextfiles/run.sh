@@ -29,15 +29,48 @@ bashio::log.info "MariaDB username: ${MARIADB_USERNAME}"
 
 # Test MariaDB connection
 bashio::log.info "Testing MariaDB connection..."
-if ! mysql -h"${MARIADB_HOST}" -u"${MARIADB_USERNAME}" -p"${MARIADB_PASSWORD}" -e "SELECT 1;" &>/dev/null; then
-    bashio::log.fatal "Cannot connect to MariaDB! Please check your configuration and ensure MariaDB add-on is running."
-    bashio::log.fatal "Make sure you have configured the MariaDB add-on with:"
-    bashio::log.fatal "  - Database: ${MARIADB_DATABASE}"
-    bashio::log.fatal "  - Username: ${MARIADB_USERNAME}"
-    bashio::log.fatal "  - Password: (configured)"
+bashio::log.info "Attempting connection to ${MARIADB_HOST}:3306..."
+bashio::log.info "Using database: ${MARIADB_DATABASE}, username: ${MARIADB_USERNAME}"
+
+# Create a temporary MySQL config file for secure password passing
+MYSQL_CONFIG="/tmp/mysql_client.cnf"
+cat > "${MYSQL_CONFIG}" << EOF
+[client]
+host=${MARIADB_HOST}
+user=${MARIADB_USERNAME}
+password=${MARIADB_PASSWORD}
+EOF
+chmod 600 "${MYSQL_CONFIG}"
+
+# Try connection with config file (more secure than command line)
+CONNECTION_TEST=$(mysql --defaults-extra-file="${MYSQL_CONFIG}" -e "SELECT 1;" 2>&1)
+CONNECTION_RESULT=$?
+
+# Clean up config file
+rm -f "${MYSQL_CONFIG}"
+
+if [ $CONNECTION_RESULT -ne 0 ]; then
+    bashio::log.fatal "Cannot connect to MariaDB!"
+    bashio::log.fatal "Connection error details: ${CONNECTION_TEST}"
+    bashio::log.fatal ""
+    bashio::log.fatal "Troubleshooting checklist:"
+    bashio::log.fatal "1. Is MariaDB add-on running? Check in Home Assistant add-ons page"
+    bashio::log.fatal "2. MariaDB configuration must have:"
+    bashio::log.fatal "   - Database: ${MARIADB_DATABASE}"
+    bashio::log.fatal "   - Username: ${MARIADB_USERNAME}"
+    bashio::log.fatal "   - Password: (must match exactly)"
+    bashio::log.fatal "3. Did you restart MariaDB after configuration changes?"
+    bashio::log.fatal "4. Check MariaDB logs for errors"
+    bashio::log.fatal ""
+    bashio::log.fatal "Testing with ping to ${MARIADB_HOST}..."
+    if ping -c 1 -W 2 "${MARIADB_HOST}" &>/dev/null; then
+        bashio::log.info "Host ${MARIADB_HOST} is reachable via ping"
+    else
+        bashio::log.fatal "Host ${MARIADB_HOST} is NOT reachable via ping!"
+    fi
     exit 1
 fi
-bashio::log.info "MariaDB connection successful!"
+bashio::log.info "✓ MariaDB connection successful!"
 
 # Set data directory
 DATA_DIR="/share/nextfiles"
