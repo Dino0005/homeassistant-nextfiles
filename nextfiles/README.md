@@ -32,7 +32,7 @@ Queste versioni non supportano gli add-on. Per verificare la tua versione, vai s
 ### Add-on MariaDB
 Prima di avviare Nextfiles è necessario installare e configurare l'add-on MariaDB, per il database di Nextcloud.
 
-**Configurazione MariDB**
+**Configurazione MariaDB**
 
 ```yaml
 databases:
