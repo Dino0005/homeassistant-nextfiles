@@ -86,6 +86,10 @@ Testato con Home Assistant OS su Home Assistant Yellow (Raspberry Pi CM4 con 4 G
 ```yaml
 admin_user: admin
 admin_password: "la-tua-password-sicura"
+mariadb_host: core-mariadb
+mariadb_database: nextcloud
+mariadb_username: nextcloud
+mariadb_password: "la-password-del-database-nexcloud-di-MariaDB"
 trusted_domains:
   - tuodominio.com          # Dominio pubblico (primo = prioritario)
   - homeassistant.local     # Accesso locale
