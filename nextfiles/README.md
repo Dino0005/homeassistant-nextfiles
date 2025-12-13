@@ -32,6 +32,8 @@ Queste versioni non supportano gli add-on. Per verificare la tua versione, vai s
 ### Add-on MariaDB
 Prima di avviare Nextfiles è necessario installare e configurare l'add-on MariaDB, per il database di Nextcloud.
 
+**Configurazione MariDB**
+
 ```yaml
 databases:
      - nextcloud
@@ -96,7 +98,7 @@ trusted_domains:
 trusted_proxies:
   - 172.30.33.0/24  # Rete interna Home Assistant
   - 127.0.0.1       # Proxy locale (Caddy, Nginx, ecc.)
-max_upload_size: 1G
+max_upload_size: 2G
 memory_limit: 1G
 ```
 
