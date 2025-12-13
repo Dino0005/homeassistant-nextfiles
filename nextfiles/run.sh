@@ -10,6 +10,35 @@ ADMIN_PASSWORD=$(bashio::config 'admin_password')
 MAX_UPLOAD=$(bashio::config 'max_upload_size')
 MEMORY_LIMIT=$(bashio::config 'memory_limit')
 
+# Get MariaDB configuration
+MARIADB_HOST=$(bashio::config 'mariadb_host')
+MARIADB_DATABASE=$(bashio::config 'mariadb_database')
+MARIADB_USERNAME=$(bashio::config 'mariadb_username')
+MARIADB_PASSWORD=$(bashio::config 'mariadb_password')
+
+# Validate MariaDB configuration
+if [ -z "$MARIADB_HOST" ] || [ -z "$MARIADB_PASSWORD" ]; then
+    bashio::log.fatal "MariaDB configuration incomplete! Please set mariadb_host and mariadb_password."
+    exit 1
+fi
+
+bashio::log.info "Database type: MariaDB"
+bashio::log.info "MariaDB host: ${MARIADB_HOST}"
+bashio::log.info "MariaDB database: ${MARIADB_DATABASE}"
+bashio::log.info "MariaDB username: ${MARIADB_USERNAME}"
+
+# Test MariaDB connection
+bashio::log.info "Testing MariaDB connection..."
+if ! mysql -h"${MARIADB_HOST}" -u"${MARIADB_USERNAME}" -p"${MARIADB_PASSWORD}" -e "SELECT 1;" &>/dev/null; then
+    bashio::log.fatal "Cannot connect to MariaDB! Please check your configuration and ensure MariaDB add-on is running."
+    bashio::log.fatal "Make sure you have configured the MariaDB add-on with:"
+    bashio::log.fatal "  - Database: ${MARIADB_DATABASE}"
+    bashio::log.fatal "  - Username: ${MARIADB_USERNAME}"
+    bashio::log.fatal "  - Password: (configured)"
+    exit 1
+fi
+bashio::log.info "MariaDB connection successful!"
+
 # Set data directory
 DATA_DIR="/share/nextfiles"
 NEXTCLOUD_DIR="/var/www/nextcloud"
@@ -52,7 +81,7 @@ sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" /etc/php83/php.ini
 
 # First installation check
 if [ ! -f "${DATA_DIR}/config/config.php" ]; then
-    bashio::log.info "First run detected. Installing Nextcloud..."
+    bashio::log.info "First run detected. Installing Nextcloud with MariaDB..."
     
     if [ -z "${ADMIN_PASSWORD}" ]; then
         bashio::log.fatal "Admin password is not set! Please configure it in the add-on options."
@@ -61,16 +90,20 @@ if [ ! -f "${DATA_DIR}/config/config.php" ]; then
 
     cd "${NEXTCLOUD_DIR}"
 
+    bashio::log.info "Installing Nextcloud with MariaDB database..."
     su -s /bin/bash apache -c \
         "${PHP_BIN} occ maintenance:install \
-        --database='sqlite' \
-        --database-name='nextcloud' \
+        --database='mysql' \
+        --database-name='${MARIADB_DATABASE}' \
+        --database-host='${MARIADB_HOST}' \
+        --database-user='${MARIADB_USERNAME}' \
+        --database-pass='${MARIADB_PASSWORD}' \
         --data-dir='${DATA_DIR}/data' \
         --admin-user='${ADMIN_USER}' \
         --admin-pass='${ADMIN_PASSWORD}'" \
-        || { bashio::log.fatal 'Error during Nextcloud installation'; exit 1; }
+        || { bashio::log.fatal 'Error during Nextcloud installation with MariaDB'; exit 1; }
 
-    bashio::log.info "Nextcloud installed successfully!"
+    bashio::log.info "Nextcloud installed successfully with MariaDB!"
 
     # Move config to persistent storage
     cp "${NEXTCLOUD_DIR}/config/config.php" "${DATA_DIR}/config/config.php"
@@ -210,6 +243,12 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ db:add-missing-indices" \
     2>/dev/null || true
 
+# Convert database columns to big int (important for MariaDB)
+bashio::log.info "Converting database columns to big int..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ db:convert-filecache-bigint --no-interaction" \
+    2>/dev/null || true
+
 # Run MIME type migrations (Nextcloud 31+)
 bashio::log.info "Running MIME type migrations..."
 su -s /bin/bash apache -c \
@@ -254,5 +293,6 @@ else
     bashio::log.error "Cron daemon failed to start!"
 fi
 
+bashio::log.info "Nextfiles is ready! Using MariaDB database."
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
