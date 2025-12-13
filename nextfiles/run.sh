@@ -32,13 +32,18 @@ bashio::log.info "Testing MariaDB connection..."
 bashio::log.info "Attempting connection to ${MARIADB_HOST}:3306..."
 bashio::log.info "Using database: ${MARIADB_DATABASE}, username: ${MARIADB_USERNAME}"
 
-# First check if mysql command exists
-if ! command -v mysql &>/dev/null; then
-    bashio::log.fatal "MySQL client not found! This is a container build issue."
+# First check if mariadb or mysql command exists
+MYSQL_CMD=""
+if command -v mariadb &>/dev/null; then
+    MYSQL_CMD="mariadb"
+    bashio::log.info "Using MariaDB client: $(which mariadb)"
+elif command -v mysql &>/dev/null; then
+    MYSQL_CMD="mysql"
+    bashio::log.info "Using MySQL client: $(which mysql)"
+else
+    bashio::log.fatal "Neither MariaDB nor MySQL client found! This is a container build issue."
     exit 1
 fi
-
-bashio::log.info "MySQL client found: $(which mysql)"
 
 # Create a temporary MySQL config file for secure password passing
 MYSQL_CONFIG="/tmp/mysql_client.cnf"
@@ -50,6 +55,8 @@ host=${MARIADB_HOST}
 user=${MARIADB_USERNAME}
 password=${MARIADB_PASSWORD}
 port=3306
+ssl=0
+skip-ssl
 EOF
 chmod 600 "${MYSQL_CONFIG}"
 
@@ -57,7 +64,7 @@ bashio::log.info "Config file created, attempting connection..."
 
 # Try connection with config file (more secure than command line)
 set +e  # Don't exit on error, we want to capture it
-CONNECTION_TEST=$(mysql --defaults-extra-file="${MYSQL_CONFIG}" -e "SELECT 1 AS test;" 2>&1)
+CONNECTION_TEST=$(${MYSQL_CMD} --defaults-extra-file="${MYSQL_CONFIG}" -e "SELECT 1 AS test;" 2>&1)
 CONNECTION_RESULT=$?
 set -e  # Re-enable exit on error
 
