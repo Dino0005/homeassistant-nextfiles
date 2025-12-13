@@ -9,7 +9,7 @@ Self-hosted file storage solution with integrated SQLite database. No external d
 ## Caratteristiche
 
 - 📁 Storage su `/share/nextfiles` (persistente attraverso i riavvii)
-- 🗄️ Database SQLite integrato (nessun add-on MariaDB necessario)
+- 🗄️ Database esterno MariaDB/MySQL (add-on MariaDB necessario)
 - 🔒 Supporto HTTPS tramite reverse proxy
 - ⚡ Configurazione semplificata
 - 🎨 Interfaccia web completa di Nextcloud
@@ -28,6 +28,26 @@ Questo add-on **funziona solo** con:
 - ❌ Home Assistant Core (installazione Python)
 
 Queste versioni non supportano gli add-on. Per verificare la tua versione, vai su **Impostazioni → Informazioni** e controlla "Tipo di installazione".
+
+### Add-on MariaDB
+Prima di aviare Nextfiles è necessario installare e configurare l'add-on MariaDB, per il database di Nextcloud.
+
+```yaml
+databases:
+     - nextcloud
+   
+   logins:
+     - username: nextcloud
+       password: Password_del_databae
+   
+   rights:
+     - username: nextcloud
+       database: nextcloud
+```
+Inoltre nella configurazione di MariaDB, scorri fino a **Rete** per aggiungere la porta **3306**
+
+
+`3306/tcp: 3306`
 
 ### Risorse Hardware
 
