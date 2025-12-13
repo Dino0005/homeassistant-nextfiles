@@ -1,7 +1,7 @@
 name: Nextfiles
-version: "1.0.6"
+version: "1.0.7"
 slug: nextfiles
-description: Self-hosted file storage solution with integrated database for Home Assistant
+description: Self-hosted file storage solution with MariaDB database for Home Assistant
 url: https://github.com/Dino0005/homeassistant-nextfiles
 arch:
   - armhf
@@ -21,6 +21,10 @@ map:
 options:
   admin_user: admin
   admin_password: null
+  mariadb_host: core-mariadb
+  mariadb_database: nextcloud
+  mariadb_username: nextcloud
+  mariadb_password: null
   trusted_domains:
     - localhost
   trusted_proxies:
@@ -30,6 +34,10 @@ options:
 schema:
   admin_user: str
   admin_password: password
+  mariadb_host: str
+  mariadb_database: str
+  mariadb_username: str
+  mariadb_password: password
   trusted_domains:
     - str
   trusted_proxies:
