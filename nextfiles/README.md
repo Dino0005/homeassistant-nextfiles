@@ -94,7 +94,7 @@ mariadb_username: nextcloud
 mariadb_password: "la-password-del-database-nexcloud-di-MariaDB"
 trusted_domains:
   - tuodominio.com          # Il tuo dominio pubblico (es. xyz.myfritz.net)
-  - homeassistant.local     # Accesso locale
+  - localhost               # Accesso locale
 trusted_proxies:
   - 172.30.33.0/24  # Rete interna Home Assistant
   - 127.0.0.1       # Proxy locale (Caddy, Nginx, ecc.)
@@ -261,7 +261,7 @@ Aggiungi il dominio o IP che stai usando alla lista `trusted_domains` nella conf
 trusted_domains:
   - tuodominio.com     # Accesso pubblico
   - 192.168.1.100      # IP locale
-  - homeassistant.local
+  - localhost          # Accesso locale
 trusted_proxies:
   - 127.0.0.1          # Sempre necessario con reverse proxy
 ```
