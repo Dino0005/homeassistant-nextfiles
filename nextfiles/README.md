@@ -83,7 +83,7 @@ Testato con Home Assistant OS su Home Assistant Yellow (Raspberry Pi CM4 con 4 G
 
 ## Configurazione
 
-### Configurazione Base
+### Configurazione base di Nextfiles
 
 ```yaml
 admin_user: admin
@@ -93,7 +93,7 @@ mariadb_database: nextcloud
 mariadb_username: nextcloud
 mariadb_password: "la-password-del-database-nexcloud-di-MariaDB"
 trusted_domains:
-  - tuodominio.com          # Dominio pubblico (primo = prioritario)
+  - tuodominio.com          # Il tuo dominio pubblico (es. xyz.myfritz.net)
   - homeassistant.local     # Accesso locale
 trusted_proxies:
   - 172.30.33.0/24  # Rete interna Home Assistant
@@ -167,20 +167,10 @@ https://tuodominio.com {
 }
 ```
 
-**Configurazione Nextfiles:**
-```yaml
-trusted_domains:
-  - tuodominio.com  # Il tuo dominio pubblico (es. xyz.myfritz.net)
-  - localhost
-trusted_proxies:
-  - 172.30.33.0/24
-  - 127.0.0.1
-```
-
 **Note importanti:**
 - I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud
 - Senza questi redirect, vedrai avvisi nella panoramica amministrativa
-- `127.0.0.1` in `trusted_proxies` è obbligatorio per Caddy locale
+- Se hai un Fritzbox, il router dispone di un proprio FQDN predefinito per accedere da remoto, quinidi lo si può usare come dominio, ad es. xyz.myfritz.net
 
 Poi:
 1. Ricarica Caddy
