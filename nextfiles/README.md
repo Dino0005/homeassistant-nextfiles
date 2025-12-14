@@ -155,7 +155,7 @@ https://tuodominio.com {
     }
   }
   
-  # Home Assistant (tutto il resto)
+  # Home Assistant
   handle {
     reverse_proxy http://localhost:8123 {
       header_up X-Forwarded-For {remote_host}
