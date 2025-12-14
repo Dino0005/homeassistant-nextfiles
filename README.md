@@ -23,7 +23,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 
 ### [Nextfiles (Nextcloud)](./nextfiles)
 
-Self-hosted file storage solution con database integrato per Home Assistant.
+Self-hosted file storage solution con database MariaDB per Home Assistant.
 
 **Caratteristiche:**
 - 📁 Storage su `/share/nextfiles`
