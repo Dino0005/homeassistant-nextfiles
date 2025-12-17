@@ -18,7 +18,7 @@ Oppure aggiungi manualmente l'URL:
 https://github.com/Dino0005/homeassistant-nextfiles
 ```
 
-## Add-ons disponibili
+## Add-on disponibili
 <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="64">
 
 ### [Nextfiles (Nextcloud)](./nextfiles)
