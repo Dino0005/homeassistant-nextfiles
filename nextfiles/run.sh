@@ -227,6 +227,12 @@ else
     bashio::log.info "No appdata folder found yet (first install)"
 fi
 
+# Configure APCu as local cache
+bashio::log.info "Configuring APCu as local memory cache..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.local --type=string --value='\\OC\\Memcache\\APCu'" \
+    2>/dev/null || true
+
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
 
@@ -367,6 +373,6 @@ else
     bashio::log.error "Cron daemon failed to start!"
 fi
 
-bashio::log.info "Nextfiles is ready! Using MariaDB database."
+bashio::log.info "Nextfiles is ready! Using MariaDB database with APCu cache."
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
