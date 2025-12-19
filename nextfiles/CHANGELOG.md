@@ -5,6 +5,28 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.8] - 19-12-2024
+
+### Aggiunto
+- **Supporto APCu**: Aggiunta estensione PHP APCu per la cache di memoria locale
+- Configurazione automatica di APCu come cache locale di Nextcloud (`memcache.local`)
+- Configurazione `apc.enable_cli=1` nelle impostazioni PHP per le operazioni CLI
+
+### Modificato
+- Aggiornato Dockerfile per includere il pacchetto `php83-apcu`
+- Migliorato run.sh con configurazione APCu durante l'avvio
+- Migliorata la configurazione della cache con dichiarazione esplicita del tipo (`--type=string`)
+- Aggiornata la descrizione dell'addon per menzionare il supporto cache APCu
+
+### Risolto
+- Risolto l'avviso "Memcache" di Nextcloud nei controlli di sicurezza e configurazione
+- Migliorate le prestazioni per la cache dei metadati e le operazioni sui file
+
+### Dettagli tecnici
+- La cache APCu viene configurata automaticamente al primo avvio e ai successivi riavvii
+- Comando di configurazione: `occ config:system:set memcache.local --type=string --value='\\OC\\Memcache\\APCu'`
+- Non richiede configurazione utente - funziona immediatamente
+
 ## [1.0.7] - 2025-12-13
 
 ### Aggiornato
