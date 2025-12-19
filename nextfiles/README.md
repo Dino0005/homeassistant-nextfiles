@@ -226,7 +226,7 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 - **AppAPI deploy daemon not set** (solo Nextcloud 32+) - Necessario solo per installare External Apps avanzate che girano in container Docker separati. Le app normali di Nextcloud (Office, Calendar, Contacts, Photos, ecc.) funzionano senza AppAPI. Nextfiles è un add-on pensato per l'uso personale, questa funzionalità non è necessaria, puoi disabilitarela andando su **Applicazioni → Le tue app → App API → Disabilita**.
 
 **Avvisi di ottimizzazione (opzionali):**
-- **"Il database viene usato per il blocco di file transazionale"** - Correlato alla mancanza di memcache. Ignorabile.
+- **"Il database viene usato per il blocco di file transazionale"** - Correlato alla mancanza di Redis. Ignorabile.
 
 **Configurazioni opzionali:**
 - **"Server email non configurato"** - Necessario solo se vuoi ricevere notifiche via email.
