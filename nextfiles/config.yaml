@@ -1,7 +1,7 @@
 name: Nextfiles
-version: "1.0.7"
+version: "1.0.8"
 slug: nextfiles
-description: Self-hosted file storage solution with MariaDB database for Home Assistant
+description: Self-hosted file storage solution with MariaDB database and APCu cache for Home Assistant
 url: https://github.com/Dino0005/homeassistant-nextfiles
 arch:
   - armhf
