@@ -1,7 +1,7 @@
 name: Nextfiles
-version: "1.0.8"
+version: "1.0.9"
 slug: nextfiles
-description: Self-hosted file storage solution with MariaDB database and APCu cache support for Home Assistant
+description: Self-hosted file storage solution with MariaDB database, APCu cache and Redis support for Home Assistant
 url: https://github.com/Dino0005/homeassistant-nextfiles
 arch:
   - armhf
@@ -31,6 +31,9 @@ options:
     - 172.30.33.0/24
   max_upload_size: 512M
   memory_limit: 512M
+  redis_host: ""
+  redis_port: 6379
+  redis_password: ""
 schema:
   admin_user: str
   admin_password: password
@@ -44,4 +47,7 @@ schema:
     - str
   max_upload_size: str
   memory_limit: str
+  redis_host: str?
+  redis_port: port?
+  redis_password: password?
 #image: ghcr.io/dino0005/nextfiles-{arch}
