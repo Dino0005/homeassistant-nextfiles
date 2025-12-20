@@ -1,0 +1,30 @@
+name: Redis Lite
+version: "1.0.0"
+slug: redis-lite
+description: Lightweight Redis server for Home Assistant addons caching
+url: https://redis.io
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+startup: services
+boot: auto
+ports:
+  6379/tcp: 6379
+ports_description:
+  6379/tcp: Redis server port
+map:
+  - share:rw
+options:
+  maxmemory: 256mb
+  maxmemory_policy: allkeys-lru
+  save_to_disk: true
+  password: ""
+schema:
+  maxmemory: str
+  maxmemory_policy: list(noeviction|allkeys-lru|allkeys-lfu|volatile-lru|volatile-lfu|allkeys-random|volatile-random|volatile-ttl)
+  save_to_disk: bool
+  password: password?
