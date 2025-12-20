@@ -5,6 +5,38 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.9] - 2025-12-20
+
+### Aggiunto
+- **Supporto Redis**: Aggiunta estensione PHP Redis per caching distribuito e file locking
+- **Auto-detection Redis**: Rileva automaticamente se Redis Lite è disponibile
+- **File locking distribuito**: Usa Redis per gestire i lock sui file (risolve avviso Nextcloud)
+- **Cache distribuita**: Usa Redis come cache distribuita per migliori prestazioni
+- Opzioni configurazione Redis: `redis_host`, `redis_port`, `redis_password`
+- Tool `netcat-openbsd` per verificare connettività Redis
+
+### Modificato
+- Aggiornato Dockerfile per includere `php83-pecl-redis`
+- Migliorato run.sh con rilevamento automatico Redis
+- Aggiornata descrizione addon per menzionare supporto Redis
+- Sistema di cache a tre livelli: APCu (locale) + Redis (distribuito + locking)
+
+### Risolto
+- Risolto l'avviso "Blocco transazionale dei file" quando Redis è disponibile
+- Migliorate prestazioni con accessi concorrenti ai file
+- Cache distribuita per installazioni multi-istanza (futuro)
+
+### Note
+- Redis è **opzionale**: se non configurato, usa solo APCu
+- Compatibile con addon "Redis Lite"
+- Configurazione automatica: basta impostare `redis_host`
+
+### Configurazione Redis consigliata
+```yaml
+redis_host: 1960957c-redis-lite  # ATTENZIONE il prefisso 1960957c può variare. Usa l'hostname che vedi nella sezione Info dell'addon Redis Lite
+redis_port: 6379
+redis_password: ""
+```
 
 ## [1.0.8] - 2025-12-19
 
