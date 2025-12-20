@@ -10,6 +10,11 @@ ADMIN_PASSWORD=$(bashio::config 'admin_password')
 MAX_UPLOAD=$(bashio::config 'max_upload_size')
 MEMORY_LIMIT=$(bashio::config 'memory_limit')
 
+# Get Redis configuration (optional)
+REDIS_HOST=$(bashio::config 'redis_host')
+REDIS_PORT=$(bashio::config 'redis_port')
+REDIS_PASSWORD=$(bashio::config 'redis_password')
+
 # Get MariaDB configuration
 MARIADB_HOST=$(bashio::config 'mariadb_host')
 MARIADB_DATABASE=$(bashio::config 'mariadb_database')
@@ -233,6 +238,46 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.local --type=string --value='\\OC\\Memcache\\APCu'" \
     2>/dev/null || true
 
+# Configure Redis if available
+if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
+    bashio::log.info "=========================================="
+    bashio::log.info "Redis detected at ${REDIS_HOST}:${REDIS_PORT}"
+    bashio::log.info "=========================================="
+    
+    bashio::log.info "Configuring Redis for file locking..."
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.locking --type=string --value='\\OC\\Memcache\\Redis'" \
+        2>/dev/null || true
+    
+    bashio::log.info "Configuring Redis for distributed cache..."
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.distributed --type=string --value='\\OC\\Memcache\\Redis'" \
+        2>/dev/null || true
+    
+    bashio::log.info "Setting Redis connection parameters..."
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis host --type=string --value='${REDIS_HOST}'" \
+        2>/dev/null || true
+    
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis port --type=integer --value='${REDIS_PORT}'" \
+        2>/dev/null || true
+    
+    if [[ -n "${REDIS_PASSWORD}" ]]; then
+        bashio::log.info "Setting Redis password..."
+        su -s /bin/bash apache -c \
+            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis password --type=string --value='${REDIS_PASSWORD}'" \
+            2>/dev/null || true
+    fi
+    
+    bashio::log.info "✓ Redis integration completed!"
+elif [[ -n "${REDIS_HOST}" ]]; then
+    bashio::log.warning "Redis configured but not reachable at ${REDIS_HOST}:${REDIS_PORT}"
+    bashio::log.warning "Continuing without Redis - only APCu cache will be used"
+else
+    bashio::log.info "No Redis configured - using only APCu for local cache"
+fi
+
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
 
@@ -374,5 +419,8 @@ else
 fi
 
 bashio::log.info "Nextfiles is ready! Using MariaDB database with APCu cache."
+if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
+    bashio::log.info "Redis integration active for file locking and distributed cache."
+fi
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
