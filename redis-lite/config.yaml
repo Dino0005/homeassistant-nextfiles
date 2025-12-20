@@ -17,7 +17,7 @@ ports:
 ports_description:
   6379/tcp: Redis server port
 options:
-  maxmemory: 256mb
+  maxmemory: 128mb
   maxmemory_policy: allkeys-lru
   save_to_disk: true
   password: ""
