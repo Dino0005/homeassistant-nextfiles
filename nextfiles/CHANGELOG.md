@@ -5,6 +5,27 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.0.9] - 2025-12-20
+
+### Aggiunto
+- **Supporto Imagick**: Aggiunta estensione PHP Imagick e libreria ImageMagick
+- Supporto per formati immagine avanzati (HEIC, WebP, SVG)
+- Migliorata qualità delle anteprime e generazione favicon
+- Supporto elaborazione avanzata di PDF
+
+### Modificato
+- Aggiornato Dockerfile per includere `php83-imagick` e `imagemagick`
+- Aggiornata descrizione addon per menzionare supporto Imagick
+
+### Risolto
+- Risolto l'avviso "Modulo Imagick PHP" nei controlli di sicurezza
+- Migliorate prestazioni nell'elaborazione e generazione anteprime immagini
+
+### Note
+- Imagick è consigliato per hardware con almeno 2GB RAM
+- Aggiunge circa 70-80 MB di spazio disco
+- Ottimizzato per Home Assistant Yellow e hardware simili
+
 ## [1.0.8] - 2025-12-19
 
 ### Aggiunto
