@@ -45,6 +45,8 @@ RUN apk add --no-cache \
     php83-sodium \
     php83-sysvsem \
     php83-apcu \
+    php83-imagick \
+    imagemagick \
     mariadb-client \
     curl \
     bash \
