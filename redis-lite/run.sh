@@ -51,16 +51,24 @@ save ""
 EOF
 fi
 
-# Configure password if set
+# Configure password and security
 if bashio::config.has_value 'password'; then
     bashio::log.info "Password authentication enabled"
+    # Usiamo le virgolette intorno a ${PASSWORD} per gestire caratteri speciali
     cat >> /etc/redis.conf << EOF
 
 # Security
-requirepass ${PASSWORD}
+requirepass "${PASSWORD}"
 EOF
 else
-    bashio::log.info "No password set - Redis accessible without authentication"
+    bashio::log.info "No password set - Disabling protected mode to allow external connections"
+    # Se non c'è password, dobbiamo disabilitare esplicitamente il protected-mode
+    # altrimenti Redis rifiuterà le connessioni da Nextcloud
+    cat >> /etc/redis.conf << EOF
+
+# Security
+protected-mode no
+EOF
 fi
 
 # Ensure data directory exists and has correct permissions
