@@ -7,8 +7,10 @@ bashio::log.info "Starting Redis Lite..."
 # Get configuration
 MAXMEMORY=$(bashio::config 'maxmemory')
 MAXMEMORY_POLICY=$(bashio::config 'maxmemory_policy')
-SAVE_TO_DISK=$(bashio::config 'save_to_disk')
-PASSWORD=$(bashio::config 'password')
+
+# Apply defaults if not set
+[ -z "$MAXMEMORY" ] && MAXMEMORY="128mb"
+[ -z "$MAXMEMORY_POLICY" ] && MAXMEMORY_POLICY="allkeys-lru"
 
 # Create Redis configuration file
 bashio::log.info "Creating Redis configuration..."
@@ -51,19 +53,18 @@ save ""
 EOF
 fi
 
-# Configure password and security
+# Configure password/security
 if bashio::config.has_value 'password'; then
+    PASSWORD=$(bashio::config 'password')
     bashio::log.info "Password authentication enabled"
-    # Usiamo le virgolette intorno a ${PASSWORD} per gestire caratteri speciali
     cat >> /etc/redis.conf << EOF
 
 # Security
 requirepass "${PASSWORD}"
 EOF
 else
-    bashio::log.info "No password set - Disabling protected mode to allow external connections"
-    # Se non c'è password, dobbiamo disabilitare esplicitamente il protected-mode
-    # altrimenti Redis rifiuterà le connessioni da Nextcloud
+    bashio::log.info "No password set - Redis accessible without authentication"
+    bashio::log.warning "Protected mode disabled - ensure port is not exposed externally!"
     cat >> /etc/redis.conf << EOF
 
 # Security
@@ -71,7 +72,7 @@ protected-mode no
 EOF
 fi
 
-# Ensure data directory exists and has correct permissions
+# Ensure data directory exists with correct permissions
 mkdir -p /data/redis
 chown -R redis:redis /data/redis
 chmod 755 /data/redis
