@@ -118,7 +118,7 @@ password: ""
 
 ### Nextfiles non si connette a Redis
 - Verifica che Redis Lite sia avviato
-- Controlla che l'host sia `core-redis-lite`
+- Controlla nella configurazione di Nextfiles che `redis_host` sia configurato correttamente.
 - Se usi una password, verificala in entrambi gli addon
 
 ### Prestazioni lente
