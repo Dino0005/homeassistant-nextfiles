@@ -57,14 +57,25 @@ password: ""
 
 Dopo aver installato e avviato Redis Lite, configura Nextfiles:
 
-1. Aggiungi nelle opzioni di Nextfiles:
+### Trova l'hostname corretto di Redis Lite
+
+1. Vai su **Impostazioni → Componenti aggiuntivi**
+2. Clicca su **Redis Lite**
+3. Vai sulla tab **Info**
+4. Copia l'**hostname** che appare (es. `1960957c-redis-lite` o simile)
+
+### Configura Nextfiles
+
+Nelle opzioni di Nextfiles, aggiungi:
 ```yaml
-redis_host: core-redis-lite
+redis_host: 1960957c-redis-lite  # Usa l'hostname che hai copiato sopra
 redis_port: 6379
 redis_password: ""  # se hai impostato una password
 ```
 
-2. Riavvia Nextfiles
+**IMPORTANTE**: L'hostname potrebbe essere diverso dal prefisso `1960957c`. Verifica sempre l'hostname esatto nella sezione Info dell'addon.
+
+Riavvia Nextfiles dopo aver salvato la configurazione.
 
 ## 📊 Requisiti di sistema
 
