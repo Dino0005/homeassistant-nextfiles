@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG NEXTCLOUD_VERSION=32.0.3
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 
-# Install requirements (MariaDB support included + APCu for caching)
+# Install requirements (MariaDB support included + APCu for caching + Redis support)
 RUN apk add --no-cache \
     apache2 \
     apache2-ssl \
@@ -45,7 +45,9 @@ RUN apk add --no-cache \
     php83-sodium \
     php83-sysvsem \
     php83-apcu \
+    php83-pecl-redis \
     mariadb-client \
+    netcat-openbsd \
     curl \
     bash \
     dcron \
