@@ -14,22 +14,29 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - **Cache distribuita**: Usa Redis come cache distribuita per migliori prestazioni
 - Opzioni configurazione Redis: `redis_host`, `redis_port`, `redis_password`
 - Tool `netcat-openbsd` per verificare connettività Redis
+- Riuso credenziali MariaDB per operazioni di manutenzione database
 
 ### Modificato
 - Aggiornato Dockerfile per includere `php83-pecl-redis`
 - Migliorato run.sh con rilevamento automatico Redis
 - Aggiornata descrizione addon per menzionare supporto Redis
+- Ottimizzata gestione credenziali MariaDB (singola creazione, riuso, cleanup finale)
 - Sistema di cache a tre livelli: APCu (locale) + Redis (distribuito + locking)
+- Disattivato l'app Circles per prevenire errori di migrazione durante l'avvio
 
 ### Risolto
 - Risolto l'avviso "Blocco transazionale dei file" quando Redis è disponibile
+- Risolti errori MigrationException dovuti a l'app Circles, durante maintenance repair
 - Migliorate prestazioni con accessi concorrenti ai file
+- Pulizia automatica job bloccati in database MariaDB
 - Cache distribuita per installazioni multi-istanza (futuro)
 
 ### Note
 - Redis è **opzionale**: se non configurato, usa solo APCu
 - Compatibile con addon "Redis Lite"
 - Configurazione automatica: basta impostare `redis_host`
+- App Circles è stata disabilitata per evitare conflitti di migrazione durante maintenance repair
+- Pulizia automatica tabella `oc_jobs` per rimuovere job Circles bloccati
 
 ### Configurazione Redis consigliata
 ```yaml
