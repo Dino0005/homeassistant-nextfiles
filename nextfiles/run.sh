@@ -75,8 +75,8 @@ set -e  # Re-enable exit on error
 
 bashio::log.info "Connection attempt finished with exit code: ${CONNECTION_RESULT}"
 
-# Clean up config file
-rm -f "${MYSQL_CONFIG}"
+# Don't remove config file yet - we'll reuse it later for cleanup
+# Config file will be removed at the end of the script
 
 if [ $CONNECTION_RESULT -ne 0 ]; then
     bashio::log.fatal "=========================================="
@@ -454,5 +454,10 @@ bashio::log.info "Nextfiles is ready! Using MariaDB database with APCu cache."
 if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
     bashio::log.info "Redis integration active for file locking and distributed cache."
 fi
+
+# Clean up MySQL config file
+bashio::log.info "Cleaning up temporary files..."
+rm -f "${MYSQL_CONFIG}"
+
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
