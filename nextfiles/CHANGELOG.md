@@ -42,7 +42,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ```yaml
 redis_host: 1960957c-redis-lite  # ATTENZIONE il prefisso 1960957c può variare. Usa l'hostname che vedi nella sezione Info dell'addon Redis Lite
 redis_port: 6379
-redis_password: ""
+redis_password: "Password Redis"
 ```
 
 ## [1.0.8] - 2025-12-19
