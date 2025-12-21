@@ -232,37 +232,42 @@ else
     bashio::log.info "No appdata folder found yet (first install)"
 fi
 
-# --- SBLOCCO CIRCLES E CONFIGURAZIONE APCu ---
-bashio::log.info "Cleaning up old locks and configuring APCu..."
-
-# Rimuove il blocco di Circles (Risolve l'errore MigrationException)
-su -s /bin/bash apache -c "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_lock" 2>/dev/null || true
-
 # Configure APCu as local cache
 bashio::log.info "Configuring APCu as local memory cache..."
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.local --type=string --value='\\OC\\Memcache\\APCu'" \
     2>/dev/null || true
 
-# --- CONFIGURAZIONE REDIS (Inizio blocco IF) ---
+# Clean up Circles migration lock BEFORE repair (prevents errors during repair)
+bashio::log.info "Cleaning up Circles migration lock before repair..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_lock" \
+    2>/dev/null || true
+
+# Configure Redis if available
 if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
     bashio::log.info "=========================================="
     bashio::log.info "Redis detected at ${REDIS_HOST}:${REDIS_PORT}"
     bashio::log.info "=========================================="
     
-    # Cancelliamo la vecchia configurazione per evitare errori WRONGPASS/NOAUTH
-    su -s /bin/bash apache -c "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete redis" 2>/dev/null || true
-    
-    bashio::log.info "Configuring Redis for file locking and cache..."
+    bashio::log.info "Configuring Redis for file locking..."
     su -s /bin/bash apache -c \
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.locking --type=string --value='\\OC\\Memcache\\Redis'" \
         2>/dev/null || true
     
+    bashio::log.info "Configuring Redis for distributed cache..."
     su -s /bin/bash apache -c \
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set memcache.distributed --type=string --value='\\OC\\Memcache\\Redis'" \
         2>/dev/null || true
     
     bashio::log.info "Setting Redis connection parameters..."
+    
+    # Delete any existing redis configuration to start clean
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete redis" \
+        2>/dev/null || true
+    
+    # Create redis array configuration
     su -s /bin/bash apache -c \
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis host --type=string --value='${REDIS_HOST}'" \
         2>/dev/null || true
@@ -276,16 +281,14 @@ if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null
         su -s /bin/bash apache -c \
             "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis password --type=string --value='${REDIS_PASSWORD}'" \
             2>/dev/null || true
+    else
+        bashio::log.info "No Redis password configured"
     fi
     
     bashio::log.info "✓ Redis integration completed!"
-
-# --- (Raggiungibilità Fallita) ---
 elif [[ -n "${REDIS_HOST}" ]]; then
     bashio::log.warning "Redis configured but not reachable at ${REDIS_HOST}:${REDIS_PORT}"
     bashio::log.warning "Continuing without Redis - only APCu cache will be used"
-
-# --- (Nessun Redis configurato) ---
 else
     bashio::log.info "No Redis configured - using only APCu for local cache"
 fi
@@ -389,7 +392,13 @@ su -s /bin/bash apache -c \
 # Run MIME type migrations (Nextcloud 31+)
 bashio::log.info "Running MIME type migrations..."
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive --no-interaction" \
+    2>/dev/null || true
+
+# Clean up Circles migration lock after repair (if it exists)
+bashio::log.info "Cleaning up Circles migration lock..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_lock" \
     2>/dev/null || true
 
 # Disable maintenance mode
