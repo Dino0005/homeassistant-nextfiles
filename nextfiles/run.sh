@@ -390,11 +390,11 @@ su -s /bin/bash apache -c \
     2>/dev/null || true
 
 # Run MIME type migrations (Nextcloud 31+)
-# ---  CIRCLES MIGRATION & MIME TYPES ---
+# ---  CIRCLES MIGRATION & MIME TYPES (VERSIONE SINCRONIZZATA) ---
 bashio::log.info "Running database deep clean and maintenance repair..."
 
-# 1. Pulizia via MariaDB: Eliminiamo i job fantasma che bloccano tutto
-bashio::log.info "MariaDB: Deleting stuck Circles jobs from oc_jobs table..."
+# 1. Pulizia via MariaDB
+bashio::log.info "MariaDB: Deleting stuck Circles jobs..."
 ${MYSQL_CMD} --defaults-extra-file="${MYSQL_CONFIG}" -e "DELETE FROM ${MARIADB_DATABASE}.oc_jobs WHERE class LIKE '%Circles%';" 2>/dev/null || true
 
 # 2. Rimuoviamo i lock dalle impostazioni via OCC
@@ -402,7 +402,12 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_0 circles migration_22_0_1 circles migration_lock" \
     2>/dev/null || true
 
-# 3. Ora eseguiamo il repair completo (MIME types e indici)
+# 3. ATTESA: Diamo tempo a Redis e al DB di respirare
+# Senza questo, Redis (essendo velocissimo) potrebbe mantenere un lock in memoria
+bashio::log.info "Waiting 5 seconds for Redis and Database synchronization..."
+sleep 5
+
+# 4. Ora eseguiamo il repair completo
 bashio::log.info "Running Nextcloud maintenance repair..."
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive --no-interaction" \
