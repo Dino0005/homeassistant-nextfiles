@@ -391,14 +391,25 @@ su -s /bin/bash apache -c \
 
 # Run MIME type migrations (Nextcloud 31+)
 bashio::log.info "Running MIME type migrations..."
+# Force complete any pending Circles migration first
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_0 circles migration_22_0_1 circles migration_lock" \
+    2>/dev/null || true
+# Now run the full repair
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive --no-interaction" \
     2>/dev/null || true
 
 # Clean up Circles migration lock after repair (if it exists)
-bashio::log.info "Cleaning up Circles migration lock..."
+bashio::log.info "Cleaning up Circles migration locks after repair..."
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_lock" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_0" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_1" \
     2>/dev/null || true
 
 # Disable maintenance mode
