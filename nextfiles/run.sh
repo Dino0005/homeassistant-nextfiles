@@ -390,24 +390,27 @@ su -s /bin/bash apache -c \
     2>/dev/null || true
 
 # Run MIME type migrations (Nextcloud 31+)
-# ---  CIRCLES MIGRATION & MIME TYPES (VERSIONE SINCRONIZZATA) ---
-bashio::log.info "Running database deep clean and maintenance repair..."
+# --- 3. FIX: CIRCLES MIGRATION CON ATTESA (SYNC REDIS) ---
+bashio::log.info "Running database deep clean and synchronization..."
 
-# 1. Pulizia via MariaDB
+# 1. Pulizia MariaDB: Rimuoviamo i job appesi
 bashio::log.info "MariaDB: Deleting stuck Circles jobs..."
 ${MYSQL_CMD} --defaults-extra-file="${MYSQL_CONFIG}" -e "DELETE FROM ${MARIADB_DATABASE}.oc_jobs WHERE class LIKE '%Circles%';" 2>/dev/null || true
 
-# 2. Rimuoviamo i lock dalle impostazioni via OCC
+# 2. Rimuoviamo i lock dalle impostazioni (OCC)
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_0 circles migration_22_0_1 circles migration_lock" \
     2>/dev/null || true
 
-# 3. ATTESA: Diamo tempo a Redis e al DB di respirare
-# Senza questo, Redis (essendo velocissimo) potrebbe mantenere un lock in memoria
-bashio::log.info "Waiting 5 seconds for Redis and Database synchronization..."
-sleep 5
+# 3. PULIZIA LOCK DI SISTEMA: Chiediamo a Nextcloud di svuotare i lock in Redis
+bashio::log.info "Clearing system file locks..."
+su -s /bin/bash apache -c "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:data-fingerprint" 2>/dev/null || true
 
-# 4. Ora eseguiamo il repair completo
+# 4. PAUSA STRATEGICA: 10 secondi per permettere a Redis e MariaDB di allinearsi
+bashio::log.info "Waiting 10 seconds for Redis/DB sync to avoid Race Condition..."
+sleep 10
+
+# 5. Ora eseguiamo il repair completo
 bashio::log.info "Running Nextcloud maintenance repair..."
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:repair --include-expensive --no-interaction" \
