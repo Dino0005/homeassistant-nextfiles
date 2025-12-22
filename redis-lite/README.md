@@ -134,6 +134,31 @@ password: ""
 - **Persistenza**: File salvato in `/data/redis/dump.rdb`
 - **Log level**: notice (bilanciato)
 
+## 🔄 Aggiornamento Redis Lite
+
+### Procedura corretta:
+
+1. **Ferma Nextfiles** (o altri addon che usano Redis)
+2. **Ferma Redis Lite**
+3. **Rebuilda Redis Lite** (per ottenere l'ultima versione da Alpine)
+4. **Avvia Redis Lite**
+5. **Avvia Nextfiles**
+
+### Perché questa sequenza?
+
+Durante l'aggiornamento di Redis, le connessioni attive vengono interrotte. Fermare Nextfiles (o altri addon che usano Redis) prima previene:
+- Errori di connessione nei log
+- Perdita di lock sui file
+- Perdita di sessioni utente
+- Possibili deadlock su operazioni file
+
+### Note sull'aggiornamento automatico
+
+- Redis si aggiorna **solo** quando ricostruisci l'addon
+- Alpine 3.22 fornisce Redis 8.4.x
+- L'aggiornamento **non è automatico** - richiede rebuild manuale
+- Verifica la versione nei log di avvio di Redis Lite
+
 ## 🆘 Supporto
 
 Per problemi o domande:
