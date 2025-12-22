@@ -20,7 +20,7 @@ Addon Redis leggero e ottimizzato per l'uso con altri addon di Home Assistant, c
 
 ### Opzioni disponibili
 
-#### `maxmemory` (default: `256mb`)
+#### `maxmemory` (default: `1286mb`)
 Memoria massima utilizzabile da Redis. Esempi:
 - `128mb` - Per sistemi con poca RAM
 - `256mb` - Consigliato per uso normale
@@ -42,15 +42,15 @@ Salva i dati su disco per persistenza:
 - `false` - Solo memoria, più veloce ma dati volatili
 
 #### `password` (opzionale)
-Password per proteggere l'accesso a Redis. Lascia vuoto per nessuna autenticazione.
+Password per proteggere l'accesso a Redis (consigliato). Lascia vuoto per nessuna autenticazione.
 
 ### Esempio di configurazione
 
 ```yaml
-maxmemory: 256mb
+maxmemory: 128mb
 maxmemory_policy: allkeys-lru
 save_to_disk: true
-password: ""
+password: "password per Redis"
 ```
 
 ## 🔌 Uso con Nextfiles
