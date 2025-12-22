@@ -1,6 +1,7 @@
 # Redis Lite per Home Assistant
 
 Addon Redis leggero e ottimizzato per l'uso con altri addon di Home Assistant, come Nextcloud/Nextfiles.
+**Versione Redis**: 8.4 (da Alpine Linux 3.22 repository)
 
 ## 🎯 Caratteristiche
 
