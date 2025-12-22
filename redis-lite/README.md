@@ -87,7 +87,7 @@ Riavvia Nextfiles dopo aver salvato la configurazione.
 
 ### Per Nextcloud/Nextfiles
 ```yaml
-maxmemory: 256mb
+maxmemory: 128mb
 maxmemory_policy: allkeys-lru
 save_to_disk: true
 password: ""
