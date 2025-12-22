@@ -1,6 +1,6 @@
 # Registro delle modifiche - Redis Lite
 
-## [1.0.0] - 20-12-2025
+## [1.0.0] 2025-12-20
 
 ### Prima release
 
