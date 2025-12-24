@@ -4,6 +4,10 @@ set -e
 
 bashio::log.info "Starting Redis Lite..."
 
+# Get Redis version
+REDIS_VERSION=$(redis-server --version | awk '{print $3}' | cut -d'=' -f2)
+bashio::log.info "Redis version: ${REDIS_VERSION}"
+
 # Get configuration
 MAXMEMORY=$(bashio::config 'maxmemory')
 MAXMEMORY_POLICY=$(bashio::config 'maxmemory_policy')
