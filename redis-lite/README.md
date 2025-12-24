@@ -135,6 +135,18 @@ password: ""
 - Considera `save_to_disk: false` per velocità massima
 - Cambia policy in `allkeys-lfu`
 
+### Messaggio: "WARNING Memory overcommit must be enabled!"
+Nei log di avvio potresti visualizzare un avviso riguardante vm.overcommit_memory.
+
+Perché accade? Redis richiede al kernel Linux il permesso di gestire la memoria in modo ottimizzato per i salvataggi su disco (RDB). In ambiente Home Assistant (Specialmente su HA OS), l'add-on non ha i permessi privilegiati per modificare i parametri del kernel dell'host.
+
+È un problema? No. Per l'utilizzo con Nextcloud (dove il database Redis è molto piccolo, solitamente < 5MB), **questo avviso è totalmente ignorabile**. Non influisce sulle prestazioni né sulla stabilità del sistema.
+
+### Messaggio: "Can't save in background: fork: Out of memory"
+Questo errore (molto raro) si presenta solo se la RAM del tuo dispositivo è completamente esaurita.
+
+**Soluzione**: Verifica il consumo di RAM degli altri add-on di Home Assistant o aumenta il limite di memoria se possibile.
+
 ## 📝 Note tecniche
 
 - **Porta**: 6379 (standard Redis)
