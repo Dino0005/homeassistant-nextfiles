@@ -1,7 +1,7 @@
 name: Redis Lite
 version: "1.0.0"
 slug: redis-lite
-description: Lightweight Redis 8.4 server for Home Assistant addons caching
+description: Lightweight Redis 8.0.4 server for Home Assistant addons caching
 url: https://redis.io
 arch:
   - armhf
