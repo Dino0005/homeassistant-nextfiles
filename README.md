@@ -37,7 +37,7 @@ Self-hosted file storage solution con database MariaDB per Home Assistant.
 ### [Redis Lite](./redis-lite)
 <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="64">
 
-Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles. Redis version: 8.4 (from Alpine Linux 3.22 repository)
+Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles. Redis version: 8.0.4 (from Alpine Linux 3.22 repository)
 
 **Caratteristiche**
 - ✅ **Leggero**: Solo Redis server, nessun extra
