@@ -118,18 +118,18 @@ memory_limit: 1G
 Per accesso sicuro HTTPS tramite Caddy con path `/nextfiles`:
 
 ```caddyfile
-(https_header) {
+# Snippet con header di sicurezza base
+(security_headers) {
   header {
     Strict-Transport-Security "max-age=31536000; includeSubDomains"
-    X-XSS-Protection "1; mode=block"
     X-Content-Type-Options "nosniff"
     X-Frame-Options "SAMEORIGIN"
     Referrer-Policy "same-origin"
+    -Server
   }
 }
 
 https://tuodominio.com {
-  import https_header
   
   # Service Discovery per Nextcloud (CalDAV, CardDAV, Federazione)
   redir /.well-known/carddav /nextfiles/remote.php/dav 301
@@ -137,10 +137,15 @@ https://tuodominio.com {
   redir /.well-known/webfinger /nextfiles/index.php/.well-known/webfinger 301
   redir /.well-known/nodeinfo /nextfiles/index.php/.well-known/nodeinfo 301
   
-  # Nextfiles su /nextfiles
+  # NEXTFILES (Nextcloud) su /nextfiles
   handle /nextfiles* {
+    # Header di sicurezza specifici per Nextcloud
+    import security_headers
+    
     uri strip_prefix /nextfiles
+    
     reverse_proxy http://localhost:8080 {
+      # Header forwarding per Nextcloud
       header_up Host {host}
       header_up X-Forwarded-Host {host}
       header_up X-Forwarded-Proto {scheme}
@@ -148,6 +153,10 @@ https://tuodominio.com {
       header_up X-Forwarded-For {remote_host}
       header_up X-Forwarded-Ssl on
       
+      # Rimuove header indesiderati dal backend
+      header_down -X-Powered-By
+      
+      # Timeout estesi per operazioni lunghe
       transport http {
         read_timeout 3600s
         write_timeout 3600s
@@ -155,19 +164,28 @@ https://tuodominio.com {
     }
   }
   
-  # Home Assistant
+  # HOME ASSISTANT (root path)
   handle {
+    # Header di sicurezza per Home Assistant
+    import security_headers
+    
     reverse_proxy http://localhost:8123 {
+      # Header forwarding per Home Assistant
       header_up X-Forwarded-For {remote_host}
       header_up X-Forwarded-Proto {scheme}
       header_up X-Forwarded-Host {host}
       header_up X-Real-IP {remote_host}
+      header_up X-Original-URL {uri}
+      
+      # Rimuove header indesiderati dal backend
+      header_down -X-Powered-By
     }
   }
 }
 ```
 
 **Note importanti:**
+- Sostituisci `https://tuodominio.com` con il tuo dominio 
 - I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud
 - Senza questi redirect, vedrai avvisi nella panoramica amministrativa
 - Se hai un Fritzbox, il router dispone di un proprio FQDN predefinito per accedere da remoto, quinidi lo si può usare come dominio, ad es. xyz.myfritz.net
