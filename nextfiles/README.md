@@ -139,7 +139,7 @@ https://tuodominio.com {
   
   # NEXTFILES (Nextcloud) su /nextfiles
   handle /nextfiles* {
-    # Header di sicurezza specifici per Nextcloud
+    # Header di sicurezza per Nextcloud
     import security_headers
     
     uri strip_prefix /nextfiles
@@ -168,6 +168,7 @@ https://tuodominio.com {
   handle {
     # Header di sicurezza per Home Assistant
     import security_headers
+    header Content-Security-Policy "upgrade-insecure-requests;"
     
     reverse_proxy http://localhost:8123 {
       # Header forwarding per Home Assistant
