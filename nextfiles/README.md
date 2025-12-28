@@ -100,6 +100,7 @@ trusted_proxies:
   - 127.0.0.1       # Proxy locale (Caddy, Nginx, ecc.)
 max_upload_size: 2G
 memory_limit: 1G
+default_phone_region: IT    # Inserire il codice ISO 3166-1 della regione telefonica, ad esempio: `IT` (Italia)
 ```
 
 ### Opzioni
@@ -110,6 +111,10 @@ memory_limit: 1G
 - **trusted_proxies** (obbligatorio con reverse proxy): Lista dei proxy fidati. Obbligatorio se usi Caddy, Nginx o altro reverse proxy. Usa `172.30.33.0/24` per la rete interna e `127.0.0.1` se usi Caddy o altro proxy locale
 - **max_upload_size** (opzionale, default: 512M): Dimensione massima file caricabili. Valori consigliati: 512M (uso normale), 1G-2G (file grandi), 10G+ (video/backup)
 - **memory_limit** (opzionale, default: 512M): Limite memoria PHP. Dovrebbe essere almeno la metà di max_upload_size
+- **default_phone_region** (default: `IT`): Codice ISO 3166-1 della regione telefonica predefinita per la formattazione dei numeri di telefono. Esempi: `IT` (Italia), `US` (Stati Uniti), `GB` (Regno Unito), `DE` (Germania), `FR` (Francia), `ES` (Spagna)
+- **redis_host** (opzionale): Hostname del server Redis per caching avanzato
+- **redis_port** (opzionale, default: `6379`): Porta del server Redis
+- **redis_password** (opzionale): Password per Redis se configurata
 
 ## Accesso HTTPS con Reverse Proxy
 
