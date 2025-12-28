@@ -34,6 +34,7 @@ options:
   redis_host: ""
   redis_port: 6379
   redis_password: ""
+  default_phone_region: IT
 schema:
   admin_user: str
   admin_password: password
@@ -50,4 +51,5 @@ schema:
   redis_host: str?
   redis_port: port?
   redis_password: password?
+  default_phone_region: str
 #image: ghcr.io/dino0005/nextfiles-{arch}
