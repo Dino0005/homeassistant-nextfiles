@@ -100,6 +100,9 @@ trusted_proxies:
   - 127.0.0.1       # Proxy locale (Caddy, Nginx, ecc.)
 max_upload_size: 2G
 memory_limit: 1G
+redis_host: xxxxxxxc-redis-lite # (opzionale): Hostname del server Redis, es. 1960957c-redis-lite o simile
+redis_port: 6379                # (opzionale) default: `6379` la porta del server Redis
+redis_password: pasword_Redis   # (opzionale) inserire la password di Redis
 default_phone_region: IT    # Inserire il codice ISO 3166-1 della regione telefonica, ad esempio: `IT` (Italia)
 ```
 
