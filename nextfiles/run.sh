@@ -9,6 +9,7 @@ ADMIN_USER=$(bashio::config 'admin_user')
 ADMIN_PASSWORD=$(bashio::config 'admin_password')
 MAX_UPLOAD=$(bashio::config 'max_upload_size')
 MEMORY_LIMIT=$(bashio::config 'memory_limit')
+DEFAULT_PHONE_REGION=$(bashio::config 'default_phone_region')
 
 # Get Redis configuration (optional)
 REDIS_HOST=$(bashio::config 'redis_host')
@@ -367,9 +368,10 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set forwarded_for_headers 1 --value='HTTP_X_REAL_IP'" \
     2>/dev/null || true
 
-# Set default phone region (Italy)
+# Set default phone region (configurabile)
+bashio::log.info "Setting default phone region to: ${DEFAULT_PHONE_REGION}"
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set default_phone_region --value='IT'" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set default_phone_region --value='${DEFAULT_PHONE_REGION}'" \
     2>/dev/null || true
 
 # Set maintenance window (3 AM)
