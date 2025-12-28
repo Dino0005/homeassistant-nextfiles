@@ -15,6 +15,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Opzioni configurazione Redis: `redis_host`, `redis_port`, `redis_password`
 - Tool `netcat-openbsd` per verificare connettività Redis
 - Riuso credenziali MariaDB per operazioni di manutenzione database
+- Impostazione della regione del telefono predefinita dalla cofiguraznione di Nextfiles
 
 ### Modificato
 - Aggiornato Dockerfile per includere `php83-pecl-redis`
