@@ -1,9 +1,15 @@
-# Changelog
+https://github.com/Dino0005/homeassistant-nextfiles/tree/main/nextfiles# Changelog
 
 Tutte le modifiche importanti a questo progetto saranno documentate in questo file.
 
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
+
+## [1.1.0] - 2025-12-31
+
+### Aggiunto
+- **Supporto Imagick**: Attivata l'estensione nativa php83-pecl-imagick per la generazione di anteprime ad alta qualità.
+- **Anteprime Avanzate**: L'add-on include ora il modulo PHP Imagick, FFmpeg e Ghostscript. Questo permette a Nextcloud di generare anteprime di alta qualità per immagini (inclusi i formati HEIC), video e documenti PDF.
 
 ## [1.0.9] - 2025-12-20
 
