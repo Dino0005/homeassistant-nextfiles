@@ -46,12 +46,20 @@ RUN apk add --no-cache \
     php83-sysvsem \
     php83-apcu \
     php83-pecl-redis \
+    php83-pecl-imagick \
     mariadb-client \
     netcat-openbsd \
     curl \
     bash \
     dcron \
-    s6-overlay
+    s6-overlay \
+    ffmpeg \
+    imagemagick \
+    imagemagick-pdf \
+    imagemagick-heic \
+    imagemagick-svg \
+    imagemagick-webp \
+    ghostscript
 
 # Create /usr/bin/php symlink to php83
 RUN ln -sf /usr/bin/php83 /usr/bin/php && \
