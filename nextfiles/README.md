@@ -257,7 +257,6 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 
 **Configurazioni opzionali:**
 - **"Server email non configurato"** - Necessario solo se vuoi ricevere notifiche via email.
-- **"Modulo PHP imagick non attivato"** - Alpine non ha un pacchetto precompilato di Imagick per PHP 8.3. Imagick è opzionale, Nextcloud usa la libreria GD come alternativa per generare anteprime.
 
 #### ⚠️ Avvisi che richiedono attenzione:
 
