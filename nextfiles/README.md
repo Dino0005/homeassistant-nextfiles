@@ -152,13 +152,8 @@ https://tuodominio.com {
     
     uri strip_prefix /nextfiles
     
-    reverse_proxy http://localhost:8080 {
-      # Header forwarding per Nextcloud
-      header_up Host {host}
-      header_up X-Forwarded-Host {host}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Real-IP {remote_host}
-      header_up X-Forwarded-For {remote_host}
+   reverse_proxy http://localhost:8080 {
+      # Header custom specifici per Nextcloud
       header_up X-Forwarded-Ssl on
       
       # Rimuove header indesiderati dal backend
@@ -174,16 +169,12 @@ https://tuodominio.com {
   
   # HOME ASSISTANT (root path)
   handle {
-    # Header di sicurezza per Home Assistant
     import security_headers
     header Content-Security-Policy "default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https:; worker-src 'self' blob:; child-src 'self' blob:; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' wss: https:; object-src 'none'; base-uri 'self'; upgrade-insecure-requests;"
+    header Link "</static/icons/favicon.ico>; rel=icon"
     
     reverse_proxy http://localhost:8123 {
-      # Header forwarding per Home Assistant
-      header_up X-Forwarded-For {remote_host}
-      header_up X-Forwarded-Proto {scheme}
-      header_up X-Forwarded-Host {host}
-      header_up X-Real-IP {remote_host}
+      # Header custom per Home Assistant
       header_up X-Original-URL {uri}
       
       # Rimuove header indesiderati dal backend
