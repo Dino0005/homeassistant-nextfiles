@@ -152,6 +152,7 @@ https://tuodominio.com {
     
    reverse_proxy http://localhost:8080 {
       # Header custom specifici per Nextcloud
+      header_up X-Real-IP {remote_host}
       header_up X-Forwarded-Ssl on
       
       # Rimuove header indesiderati dal backend
@@ -173,6 +174,7 @@ https://tuodominio.com {
     
     reverse_proxy http://localhost:8123 {
       # Header custom per Home Assistant
+      header_up X-Real-IP {remote_host}
       header_up X-Original-URL {uri}
       
       # Rimuove header indesiderati dal backend
