@@ -147,9 +147,7 @@ https://tuodominio.com {
   
   # NEXTFILES (Nextcloud) su /nextfiles
   handle /nextfiles* {
-    # Header di sicurezza per Nextcloud
     import security_headers
-    
     uri strip_prefix /nextfiles
     
    reverse_proxy http://localhost:8080 {
