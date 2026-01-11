@@ -146,9 +146,11 @@ https://tuodominio.com {
   redir /.well-known/nodeinfo /nextfiles/index.php/.well-known/nodeinfo 301
 
   # Correzione per il redirect post-login (Passkey/FIDO2)
-  redir /index.php/* /nextfiles{uri} 301
-  redir /apps/* /nextfiles{uri} 301
-  redir /core/* /nextfiles{uri} 301
+  @not_nextfiles {
+    not path /nextfiles*
+    path /index.php/* /apps/* /core/*
+  }
+  redir @not_nextfiles /nextfiles{uri} 301
   
   # NEXTFILES (Nextcloud) su /nextfiles
   handle /nextfiles* {
