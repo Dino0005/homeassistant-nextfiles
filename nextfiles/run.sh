@@ -451,12 +451,6 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set htaccess.RewriteBase --value='/nextfiles'" \
     2>/dev/null || true
 
-# Update .htaccess file to apply the RewriteBase
-bashio::log.info "Updating .htaccess file for WebAuthn compatibility..."
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:update:htaccess" \
-    2>/dev/null || true
-
 # Fix reverse proxy headers security
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set forwarded_for_headers 0 --value='HTTP_X_FORWARDED_FOR'" \
