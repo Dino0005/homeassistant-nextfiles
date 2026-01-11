@@ -144,6 +144,11 @@ https://tuodominio.com {
   redir /.well-known/caldav /nextfiles/remote.php/dav 301
   redir /.well-known/webfinger /nextfiles/index.php/.well-known/webfinger 301
   redir /.well-known/nodeinfo /nextfiles/index.php/.well-known/nodeinfo 301
+
+  # Correzione per il redirect post-login (Passkey/FIDO2)
+  redir /index.php/* /nextfiles{uri} 301
+  redir /apps/* /nextfiles{uri} 301
+  redir /core/* /nextfiles{uri} 301
   
   # NEXTFILES (Nextcloud) su /nextfiles
   handle /nextfiles* {
@@ -186,8 +191,8 @@ https://tuodominio.com {
 
 **Note importanti:**
 - Sostituisci `https://tuodominio.com` con il tuo dominio 
-- I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud
-- Senza questi redirect, vedrai avvisi nella panoramica amministrativa
+- I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud. Senza questi redirect, vedrai avvisi nella panoramica amministrativa
+-  I redirect `Passkey/FIDO2)`, sono necessari se si effettua il login con una Passkey, senza di questi si avrà l'errore `404 Not Found`, perchè Nextcloud prova ad usare un URL che inizia con /index.php/, /apps/ o /core/ (saltando il prefisso /nextfiles). Caddy sistemerà aggiungendo /nextfiles davanti.
 - Se hai un Fritzbox, il router dispone di un proprio FQDN predefinito per accedere da remoto, quinidi lo si può usare come dominio, ad es. xyz.myfritz.net
 
 Poi:
