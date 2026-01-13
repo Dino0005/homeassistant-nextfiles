@@ -148,7 +148,7 @@ https://tuodominio.com {
   # Correzione per il redirect post-login (Passkey/FIDO2)
   @not_nextfiles {
     not path /nextfiles*
-    path /index.php/* /apps/* /core/*
+    path /index.php/* /apps/* /core/* /login/* /common/*
   }
   redir @not_nextfiles /nextfiles{uri} 301
   
