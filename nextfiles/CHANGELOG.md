@@ -5,6 +5,11 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.1.1] - 2026-01-15
+
+### Aggiornato
+- **Alpine to 3.23**: Aggiornata l'immagine di base dell'add-on.
+
 ## [1.1.0] - 2025-12-31
 
 ### Aggiunto
