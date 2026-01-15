@@ -9,6 +9,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 ### Aggiornato
 - **Alpine to 3.23**: Aggiornata l'immagine di base dell'add-on.
+- **Nextcloud** 32.0.4 → 32.0.4
 
 ## [1.1.0] - 2025-12-31
 
