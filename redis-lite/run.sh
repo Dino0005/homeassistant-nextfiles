@@ -1,4 +1,4 @@
-#!/usr/bin/env bashio
+#!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -e
 
@@ -24,7 +24,6 @@ cat > /etc/redis.conf << EOF
 
 # Network
 bind 0.0.0.0
-protected-mode no
 port 6379
 timeout 0
 tcp-keepalive 300
@@ -72,6 +71,8 @@ else
     bashio::log.warning "Protected mode disabled - ensure port is not exposed externally!"
     cat >> /etc/redis.conf << EOF
 
+# Security
+protected-mode no
 EOF
 fi
 
