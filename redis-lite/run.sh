@@ -5,7 +5,7 @@ set -e
 bashio::log.info "Starting Redis Lite..."
 
 # Get Redis version
-REDIS_VERSION=$(redis-server --version | awk '{print $3}' | cut -d'=' -f2)
+REDIS_VERSION=$(redis-server --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
 bashio::log.info "Redis version: ${REDIS_VERSION}"
 
 # Get configuration
