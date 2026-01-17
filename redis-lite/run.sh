@@ -1,3 +1,5 @@
+#!/usr/bin/env bashio
+# shellcheck shell=bash
 set -e
 
 bashio::log.info "Starting Redis Lite..."
