@@ -1,11 +1,9 @@
-#!/usr/bin/env bashio
-# shellcheck shell=bash
 set -e
 
 bashio::log.info "Starting Redis Lite..."
 
 # Get Redis version
-REDIS_VERSION=$(redis-server --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
+REDIS_VERSION=$(redis-server --version | awk '{print $3}' | cut -d'=' -f2)
 bashio::log.info "Redis version: ${REDIS_VERSION}"
 
 # Get configuration
@@ -71,12 +69,13 @@ else
     bashio::log.info "No password set - Redis accessible without authentication"
     bashio::log.warning "Protected mode disabled - ensure port is not exposed externally!"
     cat >> /etc/redis.conf << EOF
+
 EOF
 fi
 
 # Ensure data directory exists with correct permissions
 mkdir -p /data/redis
-chown -R redis:redis /data/redis /etc/redis.conf
+chown -R redis:redis /data/redis
 chmod 755 /data/redis
 
 # Display configuration summary
@@ -93,4 +92,4 @@ bashio::log.info "=========================================="
 bashio::log.info "Starting Redis server..."
 
 # Start Redis
-exec su -s /bin/sh redis -c "redis-server /etc/redis.conf"
+exec redis-server /etc/redis.conf
