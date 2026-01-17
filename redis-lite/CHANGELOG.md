@@ -1,5 +1,10 @@
 # Registro delle modifiche - Redis Lite
 
+## [1.0.1] 2026-01-17
+
+#### Aggiunto
+- Alpine to 3.23
+
 ## [1.0.0] 2025-12-20
 
 ### Prima release
