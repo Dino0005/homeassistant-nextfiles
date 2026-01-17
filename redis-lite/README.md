@@ -174,7 +174,7 @@ Durante l'aggiornamento di Redis, le connessioni attive vengono interrotte. Ferm
 ### Note sull'aggiornamento automatico
 
 - Redis si aggiorna **solo** quando ricostruisci l'addon
-- Alpine 3.22 fornisce Redis 8.0.x
+- Alpine 3.23 fornisce Redis/Valkey server
 - L'aggiornamento **non è automatico** - richiede rebuild manuale
 - Verifica la versione nei log di avvio di Redis Lite
 
