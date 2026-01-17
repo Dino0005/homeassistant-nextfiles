@@ -10,7 +10,7 @@
 ### Prima release
 
 #### Aggiunto
-- **Server Redis base**: Implementazione leggera di Redis 8.0.x
+- **Server Redis base**: Implementazione leggera di Redis/Valkey server
 - **Configurazione memoria**: Limite memoria configurabile (default 128MB)
 - **Politiche di eviction**: 8 politiche disponibili (default: allkeys-lru)
 - **Persistenza opzionale**: Salvataggio dati su disco attivabile/disattivabile
