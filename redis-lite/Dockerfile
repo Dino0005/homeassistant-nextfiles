@@ -12,7 +12,8 @@ RUN apk add --no-cache \
 
 # Creazione della directory per il database Redis (/data è persistente in HA)
 # NOTA: I permessi vengono gestiti in run.sh dopo che il pacchetto redis ha creato l'utente
-RUN mkdir -p /data/redis
+RUN mkdir -p /data/redis && \
+    chown -R redis:redis /data/redis
 
 # Copy run script
 COPY run.sh /
