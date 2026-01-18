@@ -39,7 +39,7 @@ Self-hosted file storage solution con database MariaDB per Home Assistant.
 
 Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles. 
 
-ℹ️ Nota su Redis/Valkey: A partire dalla versione 1.0.2, questo addon usa Valkey 8.x (fornito da Alpine 3.23), un fork open-source 100% compatibile con Redis 7.2.x.
+ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x (fornito da Alpine 3.23), un fork open-source 100% compatibile con Redis 7.2.x.
 
 **Caratteristiche**
 - ✅ **Leggero**: Solo Redis server, nessun extra
