@@ -11,6 +11,19 @@ Addon Redis leggero e ottimizzato per l'uso con altri addon di Home Assistant, c
 - ✅ **Persistenza avanzata**: Supporto RDB + AOF per massima sicurezza dati
 - ✅ **Health Check**: Monitoraggio automatico dello stato del servizio
 
+## ℹ️ Nota su Redis/Valkey
+
+A partire dalla versione 1.0.2, questo addon usa **Valkey 8.x** (fornito da Alpine 3.23),
+un fork open-source 100% compatibile con Redis 7.2.x.
+
+**Valkey** è:
+- ✅ Completamente compatibile con Redis
+- ✅ Stesso protocollo e API
+- ✅ Open-source puro (BSD license)
+- ✅ Supportato dalla Linux Foundation
+
+Per Nextcloud e altri addon, **Valkey funziona identicamente a Redis**.
+
 ## 📦 Installazione
 
 1. Aggiungi questo repository ai tuoi repository addon personalizzati
