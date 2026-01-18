@@ -13,7 +13,7 @@ Addon Redis leggero e ottimizzato per l'uso con altri addon di Home Assistant, c
 
 ## ℹ️ Nota su Redis/Valkey
 
-A partire dalla versione 1.0.2, questo addon usa **Valkey 8.x** (fornito da Alpine 3.23),
+Questo addon usa **Valkey 8.x** (fornito da Alpine 3.23),
 un fork open-source 100% compatibile con Redis 7.2.x.
 
 **Valkey** è:
