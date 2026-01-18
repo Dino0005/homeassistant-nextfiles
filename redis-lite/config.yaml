@@ -1,5 +1,5 @@
 name: Redis Lite
-version: "1.0.1"
+version: "1.0.2"
 slug: redis-lite
 description: Lightweight Redis/Valkey server for Home Assistant addons caching
 url: https://redis.io
@@ -20,9 +20,11 @@ options:
   maxmemory: 128mb
   maxmemory_policy: allkeys-lru
   save_to_disk: true
+  use_aof: true
   password: ""
 schema:
   maxmemory: str
   maxmemory_policy: list(noeviction|allkeys-lru|allkeys-lfu|volatile-lru|volatile-lfu|allkeys-random|volatile-random|volatile-ttl)
   save_to_disk: bool
+  use_aof: bool
   password: password?
