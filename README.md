@@ -46,6 +46,8 @@ Lightweight Redis Addon and optimized for use with other Home Assistant addons, 
 - ✅ **Configurabile**: Gestione memoria e persistenza personalizzabili
 - ✅ **Sicuro**: Supporto password opzionale
 - ✅ **Ottimizzato**: Ideale per caching e file locking
+- ✅ **Persistenza avanzata**: Supporto RDB + AOF per massima sicurezza dati
+- ✅ **Health Check**: Monitoraggio automatico dello stato del servizio
 
 [Documentazione completa](./redis-lite/README.md)
 
