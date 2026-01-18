@@ -4,9 +4,18 @@ set -e
 
 bashio::log.info "Starting Redis Lite..."
 
-# Get Redis version
+# Get Redis/Valkey version
 REDIS_VERSION=$(redis-server --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
-bashio::log.info "Redis version: ${REDIS_VERSION}"
+REDIS_FULL=$(redis-server --version | head -n1)
+
+# Check if it's Valkey (Alpine 3.20+)
+if echo "$REDIS_FULL" | grep -qi "valkey"; then
+    bashio::log.info "Server: Valkey ${REDIS_VERSION} (Redis-compatible)"
+elif [[ "$REDIS_VERSION" == 8.* ]]; then
+    bashio::log.info "Server: Valkey ${REDIS_VERSION} (Redis-compatible, Alpine package)"
+else
+    bashio::log.info "Server: Redis ${REDIS_VERSION}"
+fi
 
 # Get configuration
 MAXMEMORY=$(bashio::config 'maxmemory')
