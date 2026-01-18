@@ -1,8 +1,18 @@
 # Registro delle modifiche - Redis Lite
 
-## [1.0.1] 2026-01-17
+## [1.0.2] 2026-01-18
 
 #### Aggiunto
+- Supporto AOF (Append Only File) per persistenza in tempo reale
+- Health Check automatico
+
+#### Ottimizzazioni
+- Migliorata diagnostica all'avvio con info su file di persistenza
+- Ottimizzata configurazione con formato ibrido RDB+AOF
+
+## [1.0.1] 2026-01-17
+
+#### Aggiornato
 - Alpine to 3.23
 
 ## [1.0.0] 2025-12-20
