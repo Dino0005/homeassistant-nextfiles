@@ -288,11 +288,11 @@ Controlla i log di Redis Lite all'avvio:
 
 Se vedi questi messaggi, i dati sono stati recuperati correttamente! ✅
 
-### Note sull'aggiornamento automatico
+### Note sull'aggiornamento
 
 - Redis si aggiorna **solo** quando ricostruisci l'addon
-- Alpine 3.23 fornisce Redis/Valkey server
 - L'aggiornamento **non è automatico** - richiede rebuild manuale
+- Alpine 3.23 fornisce Redis/Valkey server
 - Verifica la versione nei log di avvio di Redis Lite
 
 ## 💡 Consigli per l'uso
