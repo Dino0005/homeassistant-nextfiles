@@ -258,23 +258,6 @@ Se hai `use_aof: false`:
 6. **Avvia Redis Lite**
 7. **Avvia Nextfiles**
 
-#### **Metodo 3: Aggiornamento rapido (accetta logout utenti)**
-
-Se non ti preoccupa che gli utenti debbano rifare login:
-
-1. **Ferma Redis Lite**
-2. **Aggiorna Redis Lite**
-3. **Avvia Redis Lite**
-4. Gli utenti Nextcloud dovranno rifare login
-
-### Perché questa sequenza?
-
-Durante l'aggiornamento di Redis, le connessioni attive vengono interrotte. Fermare Nextfiles (o altri addon che usano Redis) prima previene:
-- ❌ Errori di connessione nei log
-- ❌ Perdita di lock sui file
-- ❌ Perdita di sessioni utente (se AOF non attivo)
-- ❌ Possibili deadlock su operazioni file
-
 ### Verifica dopo aggiornamento
 
 Controlla i log di Redis Lite all'avvio:
@@ -294,6 +277,7 @@ Se vedi questi messaggi, i dati sono stati recuperati correttamente! ✅
 - L'aggiornamento **non è automatico** - richiede rebuild manuale
 - Alpine 3.23 fornisce Redis/Valkey server
 - Verifica la versione nei log di avvio di Redis Lite
+- Per Nextcloud: **Il logout degli utenti previene errori dovuti alla sessione del browser che conserva il vecchio cookie**. Senza logout, dopo un cambio di versione di Redis/Valkey o PHP, dopo il riavvio di Nextfiles/Nextcloud il browser prova a utilizzare il vecchio cookie, ma Nextcloud non riconosce la firma (HMAC) e si genera l'errore nel log. Quando si effettua il logout Nextcloud invia un comando al browser per cancellare il cookie di sessione e contemporaneamente elimina la chiave corrispondente in Redis.
 
 ## 💡 Consigli per l'uso
 
