@@ -277,7 +277,7 @@ Se vedi questi messaggi, i dati sono stati recuperati correttamente! ✅
 - L'aggiornamento **non è automatico** - richiede rebuild manuale
 - Alpine 3.23 fornisce Redis/Valkey server
 - Verifica la versione nei log di avvio di Redis Lite
-- **Il logout degli utenti Nextcloud previene errori dovuti alla sessione del browser che conserva il vecchio cookie**. Senza logout, dopo un cambio di versione di Redis/Valkey o PHP, dopo il riavvio di Nextfiles/Nextcloud il browser prova a utilizzare il vecchio cookie, ma Nextcloud non riconosce la firma (HMAC) e si genera l'errore nel log. Quando si effettua il logout Nextcloud invia un comando al browser per cancellare il cookie di sessione e contemporaneamente elimina la chiave corrispondente in Redis.
+- **Il logout degli utenti Nextcloud previene errori dovuti alla sessione del browser che conserva il vecchio cookie**. Senza logout, dopo un cambio di versione di Redis/Valkey o PHP, dopo il riavvio di Nextcloud il browser prova a utilizzare il vecchio cookie, ma Nextcloud non riconosce la firma (HMAC) e si genera l'errore nel log. Quando si effettua il logout Nextcloud invia un comando al browser per cancellare il cookie di sessione e contemporaneamente elimina la chiave corrispondente in Redis.
 
 ## 💡 Consigli per l'uso
 
