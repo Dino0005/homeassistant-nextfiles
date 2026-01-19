@@ -256,6 +256,9 @@ Dopo l'installazione, Nextcloud mostra alcuni avvisi nella sezione amministrativ
 **Configurazioni opzionali:**
 - **"Server email non configurato"** - Necessario solo se vuoi ricevere notifiche via email.
 
+**"HMAC does not match"**
+- Se nel browser che si sta usando non si effettua il logout da Nextcloud, dopo un cambio di versione di Redis/Valkey o PHP, dopo il riavvio di Nextcloud il browser prova a utilizzare il vecchio cookie, ma Nextcloud non riconosce la firma (HMAC) e si genera l'errore nel log. Invece quando si effettua il logout, Nextcloud invia un comando al browser per cancellare il cookie di sessione e contemporaneamente elimina la chiave corrispondente in Redis.
+
 #### ⚠️ Avvisi che richiedono attenzione:
 
 - **"Configurazione intestazione reverse proxy errata"** - Se vedi questo, verifica che `trusted_proxies` includa `127.0.0.1` nella configurazione dell'add-on.
