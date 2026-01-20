@@ -5,17 +5,27 @@ set -e
 bashio::log.info "Starting Redis Lite..."
 
 # Get Redis/Valkey version
-REDIS_VERSION=$(redis-server --version | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
-REDIS_FULL=$(redis-server --version | head -n1)
+# NOTE:
+# Alpine Linux 3.20+ ships Valkey under the "redis" package name.
+# In this case redis-server reports "Redis server v=8.x" even though it is Valkey.
+REDIS_INFO=$(redis-server --version 2>/dev/null | head -n1)
 
-# Check if it's Valkey (Alpine 3.20+)
-if echo "$REDIS_FULL" | grep -qi "valkey"; then
-    bashio::log.info "Server: Valkey ${REDIS_VERSION} (Redis-compatible)"
+# Extract version number
+REDIS_VERSION=$(echo "$REDIS_INFO" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
+
+# Detect server type
+if echo "$REDIS_INFO" | grep -qi "valkey"; then
+    SERVER_NAME="Valkey"
+    SERVER_NOTE="(Redis-compatible)"
 elif [[ "$REDIS_VERSION" == 8.* ]]; then
-    bashio::log.info "Server: Valkey ${REDIS_VERSION} (Redis-compatible, Alpine package)"
+    SERVER_NAME="Valkey"
+    SERVER_NOTE="(Redis-compatible, Alpine package)"
 else
-    bashio::log.info "Server: Redis ${REDIS_VERSION}"
+    SERVER_NAME="Redis"
+    SERVER_NOTE=""
 fi
+
+bashio::log.info "Server: ${SERVER_NAME} ${REDIS_VERSION} ${SERVER_NOTE}"
 
 # Get configuration
 MAXMEMORY=$(bashio::config 'maxmemory')
