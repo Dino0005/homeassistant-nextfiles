@@ -85,14 +85,20 @@ RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf &&
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
     echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
 
-# Configure PHP defaults and enable PCNTL + APCu
+# Configure PHP defaults and enable PCNTL + APCu + Advanced OPcache
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^upload_max_filesize *=.*|upload_max_filesize = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^post_max_size *=.*|post_max_size = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^max_execution_time *=.*|max_execution_time = 3600|g' /etc/php83/php.ini && \
-    echo "opcache.interned_strings_buffer=16" >> /etc/php83/php.ini && \
-    echo "apc.enable_cli=1" >> /etc/php83/php.ini && \
-    sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini
+    sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.enable=.*|opcache.enable=1|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.enable_cli=.*|opcache.enable_cli=1|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.memory_consumption=.*|opcache.memory_consumption=128|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=16|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=10000|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.revalidate_freq=.*|opcache.revalidate_freq=1|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.save_comments=.*|opcache.save_comments=1|g' /etc/php83/php.ini && \
+    echo "apc.enable_cli=1" >> /etc/php83/php.ini
 
 # Setup Nextcloud cron job - runs every 5 minutes with logging
 RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
