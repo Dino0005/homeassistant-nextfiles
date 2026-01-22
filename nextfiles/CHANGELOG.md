@@ -5,6 +5,16 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.1.3] - 2026-01-22
+
+### Modificato
+- **Configurazione PHP OPcache** migliorata per prestazioni migliori di Nextcloud e per una migliore efficienza di avvio.
+
+### Miglioramenti delle prestazioni
+- Memoria OPcache aumentata a 128 MB
+- Supporto configurato per un massimo di 10.000 file memorizzati nella cache
+- Frequenza di riconvalida ottimizzata
+
 ## [1.1.2] - 2026-01-17
 
 ### Aggiornato
