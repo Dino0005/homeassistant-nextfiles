@@ -85,7 +85,7 @@ RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf &&
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
     echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
 
-# Configure PHP defaults and enable PCNTL + APCu + Advanced OPcache
+# Configure PHP defaults and enable PCNTL + APCu + Advanced OPcache.
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^upload_max_filesize *=.*|upload_max_filesize = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^post_max_size *=.*|post_max_size = 512M|g' /etc/php83/php.ini && \
