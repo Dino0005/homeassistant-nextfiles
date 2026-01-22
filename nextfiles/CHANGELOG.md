@@ -8,7 +8,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [1.1.3] - 2026-01-22
 
 ### Modificato
-- **Configurazione PHP OPcache** migliorata per prestazioni migliori di Nextcloud e per una migliore efficienza di avvio.
+- Configurazione PHP OPcache: migliorata per prestazioni migliori di Nextcloud e per una migliore efficienza di avvio.
 
 ### Miglioramenti delle prestazioni
 - Memoria OPcache aumentata a 128 MB
