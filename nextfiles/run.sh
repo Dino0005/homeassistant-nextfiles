@@ -159,18 +159,6 @@ sed -i "s|memory_limit = .*|memory_limit = ${MEMORY_LIMIT}|g" /etc/php83/php.ini
 sed -i "s|upload_max_filesize = .*|upload_max_filesize = ${MAX_UPLOAD}|g" /etc/php83/php.ini
 sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" /etc/php83/php.ini
 
-# Ottimizzazioni avanzate PHP OPcache (Turbo mode)
-bashio::log.info "Applying advanced PHP OPcache optimizations..."
-{
-    echo "opcache.enable=1"
-    echo "opcache.enable_cli=1"
-    echo "opcache.memory_consumption=128"
-    echo "opcache.interned_strings_buffer=16"
-    echo "opcache.max_accelerated_files=10000"
-    echo "opcache.revalidate_freq=1"
-    echo "opcache.save_comments=1"
-} >> /etc/php83/php.ini
-
 # First installation check
 if [ ! -f "${DATA_DIR}/config/config.php" ]; then
     bashio::log.info "First run detected. Installing Nextcloud with MariaDB..."
