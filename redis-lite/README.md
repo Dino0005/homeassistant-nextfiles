@@ -288,7 +288,7 @@ maxmemory: 128mb
 maxmemory_policy: allkeys-lru
 save_to_disk: true
 use_aof: true  # ⭐ IMPORTANTE per preservare sessioni
-password: ""
+password: "password_sicura_qui"
 ```
 
 **Perché questa configurazione?**
