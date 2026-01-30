@@ -59,7 +59,9 @@ RUN apk add --no-cache \
     imagemagick-heic \
     imagemagick-svg \
     imagemagick-webp \
-    ghostscript
+    ghostscript \
+    perl \
+    exiftool
 
 # Create /usr/bin/php symlink to php83
 RUN ln -sf /usr/bin/php83 /usr/bin/php && \
