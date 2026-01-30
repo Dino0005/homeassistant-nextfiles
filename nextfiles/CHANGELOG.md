@@ -7,8 +7,13 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 ## [1.1.3] - 2026-01-22
 
+### Aggiunto
+- Supporto per Nextcloud Memories app
+- Aggiunti exiftool e perl per gestione metadati foto/video
+
 ### Modificato
-- Configurazione PHP OPcache: migliorata per prestazioni migliori di Nextcloud e per una migliore efficienza di avvio.
+- Dockerfile: Configurazione PHP OPcache migliorata per prestazioni migliori di Nextcloud e per una migliore efficienza di avvio.
+- Dockerfile: aggiunti pacchetti perl ed exiftool
 
 ### Miglioramenti delle prestazioni
 - Memoria OPcache aumentata a 128 MB
