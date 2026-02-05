@@ -315,12 +315,10 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 17 --value='OC\\Preview\\Krita'" \
     2>/dev/null || true
 
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 18 --value='OC\\Preview\\Imaginary'" \
-    2>/dev/null || true
+# Note: OC\Preview\Imaginary removed - requires external Imaginary server
 
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 19 --value='OC\\Preview\\Image'" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 18 --value='OC\\Preview\\Image'" \
     2>/dev/null || true
 
 bashio::log.info "✓ Preview providers configured!"
@@ -551,16 +549,28 @@ mkdir -p "${MEMORIES_PLANET_DIR}"
 chown apache:apache "${MEMORIES_PLANET_DIR}"
 
 if [ ! -f "${MEMORIES_PLANET_DIR}/planet.db" ]; then
-    bashio::log.info "Downloading Memories planet database for reverse geocoding (~300MB)..."
-    bashio::log.info "This may take a few minutes..."
+    bashio::log.info "Planet database not found. Will download in background after Apache starts..."
     
-    su -s /bin/bash apache -c \
-        "cd ${MEMORIES_PLANET_DIR} && \
-        wget -q --show-progress https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db" \
-        && bashio::log.info "✓ Planet database downloaded successfully" \
-        || bashio::log.warning "⚠ Failed to download planet database - reverse geocoding will not work. You can download it manually later."
+    # Create background download script
+    cat > /tmp/download_planet.sh << 'EOFSCRIPT'
+#!/bin/bash
+sleep 10  # Wait for Apache to fully start
+MEMORIES_DIR="/share/nextfiles/data/appdata_memories"
+bashio::log.info "Starting background download of Memories planet database (~300MB)..."
+cd "${MEMORIES_DIR}"
+if wget -q --show-progress https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db 2>&1 | while IFS= read -r line; do bashio::log.info "$line"; done; then
+    chown -R apache:apache "${MEMORIES_DIR}"
+    bashio::log.info "✓ Memories planet database downloaded successfully!"
+    bashio::log.info "Reverse geocoding is now available. Restart Nextcloud or wait for the next photo indexing."
+else
+    bashio::log.warning "⚠ Failed to download planet database."
+    bashio::log.warning "You can download it manually with:"
+    bashio::log.warning "  cd ${MEMORIES_DIR} && wget https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db"
+fi
+EOFSCRIPT
     
-    chown -R apache:apache "${MEMORIES_PLANET_DIR}"
+    chmod +x /tmp/download_planet.sh
+    nohup /tmp/download_planet.sh > /dev/null 2>&1 &
 else
     bashio::log.info "✓ Planet database already exists, skipping download"
 fi
