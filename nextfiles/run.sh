@@ -553,24 +553,33 @@ if [ ! -f "${MEMORIES_PLANET_DIR}/planet.db" ]; then
     
     # Create background download script
     cat > /tmp/download_planet.sh << 'EOFSCRIPT'
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 sleep 10  # Wait for Apache to fully start
 MEMORIES_DIR="/share/nextfiles/data/appdata_memories"
-bashio::log.info "Starting background download of Memories planet database (~300MB)..."
+bashio::log.info "=============================================="
+bashio::log.info "Starting Memories planet database download"
+bashio::log.info "Size: ~300MB - This may take a few minutes"
+bashio::log.info "=============================================="
 cd "${MEMORIES_DIR}"
-if wget -q --show-progress https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db 2>&1 | while IFS= read -r line; do bashio::log.info "$line"; done; then
+if wget --progress=dot:giga https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db 2>&1 | tee /tmp/planet_download.log; then
     chown -R apache:apache "${MEMORIES_DIR}"
-    bashio::log.info "✓ Memories planet database downloaded successfully!"
-    bashio::log.info "Reverse geocoding is now available. Restart Nextcloud or wait for the next photo indexing."
+    bashio::log.info "=============================================="
+    bashio::log.info "✓ Memories planet database downloaded!"
+    bashio::log.info "=============================================="
+    bashio::log.info "Reverse geocoding is now available."
+    bashio::log.info "You can now search photos by location name."
 else
-    bashio::log.warning "⚠ Failed to download planet database."
-    bashio::log.warning "You can download it manually with:"
-    bashio::log.warning "  cd ${MEMORIES_DIR} && wget https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db"
+    bashio::log.warning "=============================================="
+    bashio::log.warning "⚠ Failed to download planet database"
+    bashio::log.warning "=============================================="
+    bashio::log.warning "Manual download command:"
+    bashio::log.warning "cd ${MEMORIES_DIR} && wget https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db"
 fi
+rm -f /tmp/planet_download.log
 EOFSCRIPT
     
     chmod +x /tmp/download_planet.sh
-    nohup /tmp/download_planet.sh > /dev/null 2>&1 &
+    /tmp/download_planet.sh &
 else
     bashio::log.info "✓ Planet database already exists, skipping download"
 fi
