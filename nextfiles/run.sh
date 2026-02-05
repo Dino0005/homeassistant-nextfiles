@@ -153,15 +153,14 @@ bashio::log.info "Fixing permissions on /share/nextfiles..."
 chown -R apache:apache "${DATA_DIR}"
 chmod -R 755 "${DATA_DIR}"
 
-# Mount custom apps directory (bind mount)
+# Create symlink for custom apps directory
 bashio::log.info "Setting up custom apps directory..."
-if [ ! -d "${NEXTCLOUD_DIR}/apps2" ]; then
-    mkdir -p "${NEXTCLOUD_DIR}/apps2"
+if [ ! -L "${NEXTCLOUD_DIR}/apps2" ]; then
+    rm -rf "${NEXTCLOUD_DIR}/apps2"
+    ln -sf "${DATA_DIR}/apps_custom" "${NEXTCLOUD_DIR}/apps2"
 fi
-# Mount the persistent directory
-mount --bind "${DATA_DIR}/apps_custom" "${NEXTCLOUD_DIR}/apps2"
-chown -R apache:apache "${NEXTCLOUD_DIR}/apps2"
-bashio::log.info "✓ Custom apps directory mounted at /var/www/nextcloud/apps2"
+chown -R apache:apache "${DATA_DIR}/apps_custom"
+bashio::log.info "✓ Custom apps directory linked at /var/www/nextcloud/apps2"
 
 # Update PHP settings
 bashio::log.info "Updating PHP configuration..."
