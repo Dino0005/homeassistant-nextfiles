@@ -543,6 +543,28 @@ else
     bashio::log.error "Cron daemon failed to start!"
 fi
 
+# Configure Memories reverse geocoding
+bashio::log.info "Checking Memories reverse geocoding database..."
+MEMORIES_PLANET_DIR="${DATA_DIR}/data/appdata_memories"
+
+mkdir -p "${MEMORIES_PLANET_DIR}"
+chown apache:apache "${MEMORIES_PLANET_DIR}"
+
+if [ ! -f "${MEMORIES_PLANET_DIR}/planet.db" ]; then
+    bashio::log.info "Downloading Memories planet database for reverse geocoding (~300MB)..."
+    bashio::log.info "This may take a few minutes..."
+    
+    su -s /bin/bash apache -c \
+        "cd ${MEMORIES_PLANET_DIR} && \
+        wget -q --show-progress https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db" \
+        && bashio::log.info "✓ Planet database downloaded successfully" \
+        || bashio::log.warning "⚠ Failed to download planet database - reverse geocoding will not work. You can download it manually later."
+    
+    chown -R apache:apache "${MEMORIES_PLANET_DIR}"
+else
+    bashio::log.info "✓ Planet database already exists, skipping download"
+fi
+
 bashio::log.info "Nextfiles is ready! Using MariaDB database with APCu cache."
 if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
     bashio::log.info "Redis integration active for file locking and distributed cache."
