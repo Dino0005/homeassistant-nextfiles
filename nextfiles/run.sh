@@ -140,7 +140,7 @@ bashio::log.info "Using PHP binary: ${PHP_BIN}"
 bashio::log.info "Setting up data directory: ${DATA_DIR}"
 mkdir -p "${DATA_DIR}/data"
 mkdir -p "${DATA_DIR}/config"
-mkdir -p "${DATA_DIR}/apps"
+mkdir -p "${DATA_DIR}/apps_custom"
 
 # Ensure apache user exists
 if ! id apache &>/dev/null; then
@@ -152,6 +152,16 @@ fi
 bashio::log.info "Fixing permissions on /share/nextfiles..."
 chown -R apache:apache "${DATA_DIR}"
 chmod -R 755 "${DATA_DIR}"
+
+# Mount custom apps directory (bind mount)
+bashio::log.info "Setting up custom apps directory..."
+if [ ! -d "${NEXTCLOUD_DIR}/apps2" ]; then
+    mkdir -p "${NEXTCLOUD_DIR}/apps2"
+fi
+# Mount the persistent directory
+mount --bind "${DATA_DIR}/apps_custom" "${NEXTCLOUD_DIR}/apps2"
+chown -R apache:apache "${NEXTCLOUD_DIR}/apps2"
+bashio::log.info "✓ Custom apps directory mounted at /var/www/nextcloud/apps2"
 
 # Update PHP settings
 bashio::log.info "Updating PHP configuration..."
@@ -315,12 +325,10 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 17 --value='OC\\Preview\\Krita'" \
     2>/dev/null || true
 
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 18 --value='OC\\Preview\\Imaginary'" \
-    2>/dev/null || true
+# Note: OC\Preview\Imaginary removed - requires external Imaginary server
 
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 19 --value='OC\\Preview\\Image'" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set enabledPreviewProviders 18 --value='OC\\Preview\\Image'" \
     2>/dev/null || true
 
 bashio::log.info "✓ Preview providers configured!"
@@ -509,6 +517,37 @@ su -s /bin/bash apache -c \
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --off" \
     2>/dev/null || true
+
+# Clean up any old apps_paths configuration from failed attempts
+bashio::log.info "Configuring custom apps directory (apps2)..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete apps_paths" \
+    2>/dev/null || true
+
+# Configure apps_paths for dual directory support (apps2 as primary)
+# INDEX 0 = Primary directory where new apps are installed (PERSISTENT)
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 path --value='/var/www/nextcloud/apps2'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 url --value='/apps2'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 writable --value=true --type=boolean" \
+    2>/dev/null || true
+
+# INDEX 1 = Secondary directory for system apps (rebuilt on each Docker rebuild)
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 path --value='/var/www/nextcloud/apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 url --value='/apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 writable --value=false --type=boolean" \
+    2>/dev/null || true
+
+bashio::log.info "✓ Custom apps directory (apps2) configured as primary - new apps will be persistent!"
 
 # Final permissions
 chown -R apache:apache "${NEXTCLOUD_DIR}"
