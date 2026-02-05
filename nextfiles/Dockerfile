@@ -61,7 +61,9 @@ RUN apk add --no-cache \
     imagemagick-webp \
     ghostscript \
     perl \
-    exiftool
+    exiftool \
+    sqlite \
+    wget
 
 # Create /usr/bin/php symlink to php83
 RUN ln -sf /usr/bin/php83 /usr/bin/php && \
