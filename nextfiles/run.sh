@@ -195,6 +195,16 @@ else
     rm -f "${NEXTCLOUD_DIR}/config/config.php"
     ln -sf "${DATA_DIR}/config/config.php" "${NEXTCLOUD_DIR}/config/config.php"
 
+    # Restore custom apps from persistent storage
+    bashio::log.info "Restoring custom apps from persistent storage..."
+    if [ -d "${DATA_DIR}/apps" ] && [ "$(ls -A ${DATA_DIR}/apps)" ]; then
+        cp -rp "${DATA_DIR}/apps"/* "${NEXTCLOUD_DIR}/apps/" 2>/dev/null || true
+        chown -R apache:apache "${NEXTCLOUD_DIR}/apps"
+        bashio::log.info "✓ Custom apps restored"
+    else
+        bashio::log.info "No custom apps to restore"
+    fi
+
     # Enable maintenance mode
     bashio::log.info "Enabling maintenance mode for safe upgrade..."
     su -s /bin/bash apache -c \
@@ -502,6 +512,22 @@ su -s /bin/bash apache -c \
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_1" \
     2>/dev/null || true
+
+# Backup custom apps to persistent storage for next rebuild
+bashio::log.info "Backing up custom apps to persistent storage..."
+mkdir -p "${DATA_DIR}/apps"
+# Copy only apps that are not in the default Nextcloud apps
+for app_dir in "${NEXTCLOUD_DIR}/apps"/*; do
+    if [ -d "$app_dir" ]; then
+        app_name=$(basename "$app_dir")
+        # Skip default Nextcloud apps (they come with every installation)
+        if ! grep -q "\"$app_name\"" "${NEXTCLOUD_DIR}/core/shipped.json" 2>/dev/null; then
+            cp -rp "$app_dir" "${DATA_DIR}/apps/" 2>/dev/null || true
+        fi
+    fi
+done
+chown -R apache:apache "${DATA_DIR}/apps"
+bashio::log.info "✓ Custom apps backed up"
 
 # Disable maintenance mode
 su -s /bin/bash apache -c \
