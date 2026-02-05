@@ -1,4 +1,4 @@
-# Nextfiles (Nextcloud) - Home Assistant Add-on
+# Nextfiles (Nextcloud) - Home Assistant App
 
 Self-hosted file storage solution with MariaDB database for Home Assistant.
 
@@ -29,7 +29,7 @@ Questo add-on **funziona solo** con:
 
 Queste versioni non supportano gli add-on. Per verificare la tua versione, vai su **Impostazioni → Informazioni** e controlla "Tipo di installazione".
 
-### Add-on MariaDB
+### App MariaDB (add-on)
 Prima di avviare Nextfiles è necessario installare e configurare l'add-on MariaDB, per il database di Nextcloud.
 
 **Configurazione MariaDB**
