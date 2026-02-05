@@ -517,36 +517,45 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --off" \
     2>/dev/null || true
 
-# Clean up any old apps_paths configuration from failed attempts
-bashio::log.info "Configuring custom apps directory (apps2)..."
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete apps_paths" \
-    2>/dev/null || true
+# Configure apps_paths directly in config.php (avoids "apps directory not found" errors)
+bashio::log.info "Configuring custom apps directory (apps2) in config.php..."
 
-# Configure apps_paths for dual directory support (apps2 as primary)
-# INDEX 0 = Primary directory where new apps are installed (PERSISTENT)
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 path --value='/var/www/nextcloud/apps2'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 url --value='/apps2'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 writable --value=true --type=boolean" \
-    2>/dev/null || true
+# Use PHP to edit config.php directly
+cat > /tmp/update_apps_paths.php << 'EOFPHP'
+<?php
+$configFile = '/share/nextfiles/config/config.php';
+if (file_exists($configFile)) {
+    include $configFile;
+    
+    // Set apps_paths with apps2 as primary (writable, persistent)
+    $CONFIG['apps_paths'] = [
+        [
+            'path' => '/var/www/nextcloud/apps2',
+            'url' => '/apps2',
+            'writable' => true,
+        ],
+        [
+            'path' => '/var/www/nextcloud/apps',
+            'url' => '/apps',
+            'writable' => false,
+        ],
+    ];
+    
+    // Write back to config file
+    $content = "<?php\n\$CONFIG = " . var_export($CONFIG, true) . ";\n";
+    file_put_contents($configFile, $content);
+    echo "apps_paths configured successfully\n";
+} else {
+    echo "Config file not found\n";
+    exit(1);
+}
+EOFPHP
 
-# INDEX 1 = Secondary directory for system apps (rebuilt on each Docker rebuild)
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 path --value='/var/www/nextcloud/apps'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 url --value='/apps'" \
-    2>/dev/null || true
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 writable --value=false --type=boolean" \
-    2>/dev/null || true
+su -s /bin/bash apache -c "${PHP_BIN} /tmp/update_apps_paths.php" && \
+    bashio::log.info "✓ Custom apps directory (apps2) configured as primary - new apps will be persistent!" || \
+    bashio::log.warning "Failed to configure apps_paths in config.php"
 
-bashio::log.info "✓ Custom apps directory (apps2) configured as primary - new apps will be persistent!"
+rm -f /tmp/update_apps_paths.php
 
 # Final permissions
 chown -R apache:apache "${NEXTCLOUD_DIR}"
