@@ -202,6 +202,38 @@ else
         2>/dev/null || true
 fi
 
+# Link custom apps directory to persistent storage
+bashio::log.info "Setting up persistent custom apps directory..."
+if [ ! -L "${NEXTCLOUD_DIR}/custom_apps" ]; then
+    # Remove existing custom_apps if it's not a symlink
+    rm -rf "${NEXTCLOUD_DIR}/custom_apps"
+    # Create symlink to persistent storage
+    ln -sf "${DATA_DIR}/apps" "${NEXTCLOUD_DIR}/custom_apps"
+    bashio::log.info "✓ Custom apps directory linked to ${DATA_DIR}/apps"
+fi
+
+# Configure Nextcloud to use custom_apps directory
+bashio::log.info "Configuring Nextcloud apps directories..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 path --value='/var/www/nextcloud/apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 url --value='/apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 0 writable --value=false --type=boolean" \
+    2>/dev/null || true
+
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 path --value='/var/www/nextcloud/custom_apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 url --value='/custom_apps'" \
+    2>/dev/null || true
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set apps_paths 1 writable --value=true --type=boolean" \
+    2>/dev/null || true
+
 # Fix permissions for config directory
 bashio::log.info "Fixing permissions for Nextcloud config directory..."
 chown -R apache:apache "${DATA_DIR}/config"
@@ -210,6 +242,10 @@ chmod -R 755 "${DATA_DIR}/config"
 # Fix permissions also on Nextcloud's config dir
 chown apache:apache "${NEXTCLOUD_DIR}/config"
 chmod 755 "${NEXTCLOUD_DIR}/config"
+
+# Fix permissions for custom apps
+chown -R apache:apache "${DATA_DIR}/apps"
+chmod -R 755 "${DATA_DIR}/apps"
 
 # Create updater backup folder to avoid warnings
 bashio::log.info "Checking for updater backup folder..."
