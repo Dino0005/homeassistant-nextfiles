@@ -541,49 +541,6 @@ else
     bashio::log.error "Cron daemon failed to start!"
 fi
 
-# Configure Memories reverse geocoding
-bashio::log.info "Checking Memories reverse geocoding database..."
-MEMORIES_PLANET_DIR="${DATA_DIR}/data/appdata_memories"
-
-mkdir -p "${MEMORIES_PLANET_DIR}"
-chown apache:apache "${MEMORIES_PLANET_DIR}"
-
-if [ ! -f "${MEMORIES_PLANET_DIR}/planet.db" ]; then
-    bashio::log.info "Planet database not found. Will download in background after Apache starts..."
-    
-    # Create background download script
-    cat > /tmp/download_planet.sh << 'EOFSCRIPT'
-#!/usr/bin/with-contenv bashio
-sleep 10  # Wait for Apache to fully start
-MEMORIES_DIR="/share/nextfiles/data/appdata_memories"
-bashio::log.info "=============================================="
-bashio::log.info "Starting Memories planet database download"
-bashio::log.info "Size: ~300MB - This may take a few minutes"
-bashio::log.info "=============================================="
-cd "${MEMORIES_DIR}"
-if wget --progress=dot:giga https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db 2>&1 | tee /tmp/planet_download.log; then
-    chown -R apache:apache "${MEMORIES_DIR}"
-    bashio::log.info "=============================================="
-    bashio::log.info "✓ Memories planet database downloaded!"
-    bashio::log.info "=============================================="
-    bashio::log.info "Reverse geocoding is now available."
-    bashio::log.info "You can now search photos by location name."
-else
-    bashio::log.warning "=============================================="
-    bashio::log.warning "⚠ Failed to download planet database"
-    bashio::log.warning "=============================================="
-    bashio::log.warning "Manual download command:"
-    bashio::log.warning "cd ${MEMORIES_DIR} && wget https://github.com/pulsejet/memories-assets/releases/latest/download/planet.db"
-fi
-rm -f /tmp/planet_download.log
-EOFSCRIPT
-    
-    chmod +x /tmp/download_planet.sh
-    /tmp/download_planet.sh &
-else
-    bashio::log.info "✓ Planet database already exists, skipping download"
-fi
-
 bashio::log.info "Nextfiles is ready! Using MariaDB database with APCu cache."
 if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
     bashio::log.info "Redis integration active for file locking and distributed cache."
