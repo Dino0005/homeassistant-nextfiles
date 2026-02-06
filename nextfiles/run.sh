@@ -561,6 +561,22 @@ rm -f /tmp/update_apps_paths.php
 chown -R apache:apache "${NEXTCLOUD_DIR}"
 chown -R apache:apache "${DATA_DIR}"
 
+# Create compatibility symlinks for ALL apps in apps2
+# This helps apps that have hardcoded paths expecting /var/www/nextcloud/apps
+bashio::log.info "Creating compatibility symlinks for apps2 apps..."
+if [ -d "${NEXTCLOUD_DIR}/apps2" ]; then
+    for app_dir in "${NEXTCLOUD_DIR}/apps2"/*; do
+        if [ -d "$app_dir" ]; then
+            app_name=$(basename "$app_dir")
+            # Only create symlink if app doesn't already exist in /apps
+            if [ ! -e "${NEXTCLOUD_DIR}/apps/$app_name" ]; then
+                ln -sf "${NEXTCLOUD_DIR}/apps2/$app_name" "${NEXTCLOUD_DIR}/apps/$app_name"
+            fi
+        fi
+    done
+    bashio::log.info "✓ Compatibility symlinks created for apps2 apps"
+fi
+
 # Configure Nextcloud to use cron for background jobs
 bashio::log.info "Configuring Nextcloud to use cron..."
 su -s /bin/bash apache -c \
