@@ -5,6 +5,20 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.1.4] - 2026-02-06
+
+### Aggiunto
+- **Implementato sistema di app persistenti**: Le app installate dall'App Store Nextcloud sopravvivono ora a riavvii e rebuild del container
+- **Directory apps2 persistente**: Nuova directory /var/www/nextcloud/apps2 collegata a /share/nextfiles/apps_custom per archiviazione permanente.
+- **Configurazione automatica dual-path**: Nextcloud configurato per installare le nuove app direttamente in apps2 (persistente)
+- **Symlink di compatibilità automatici**: Sistema che crea automaticamente symlink da apps/ a apps2/ per garantire compatibilità con app che usano percorsi hardcoded
+- **Aggiunto sqlite**: Supporto per database SQLite nelle app che lo richiedono
+- **Aggiunto wget**: Utility per download di file e risorse esterne
+
+### Rimosso
+- **Rimosso OC\Preview\Imaginary**: Eliminato provider che richiedeva server esterno non configurato, evitando tentativi di connessione falliti e warning nei log.
+- **Ottimizzazione lista provider**: Ridotti da 20 a 19 provider, mantenendo solo quelli funzionanti con ImageMagick e FFmpeg
+
 ## [1.1.3] - 2026-01-22
 
 ### Aggiunto
