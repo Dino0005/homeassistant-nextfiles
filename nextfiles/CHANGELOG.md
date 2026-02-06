@@ -19,6 +19,9 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - **Rimosso OC\Preview\Imaginary**: Eliminato provider che richiedeva server esterno non configurato, evitando tentativi di connessione falliti e warning nei log.
 - **Ottimizzazione lista provider**: Ridotti da 20 a 19 provider, mantenendo solo quelli funzionanti con ImageMagick e FFmpeg
 
+### Risolto
+- **Compatibilità app con percorsi hardcoded**: Risolto problema con app come Memories che cercano file in percorsi assoluti
+
 ## [1.1.3] - 2026-01-22
 
 ### Aggiunto
