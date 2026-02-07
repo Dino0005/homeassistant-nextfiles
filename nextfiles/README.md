@@ -96,7 +96,7 @@ trusted_domains:
   - tuodominio.com          # Il tuo dominio pubblico (es. xyz.myfritz.net)
   - localhost               # Accesso locale
 trusted_proxies:
-  - 172.30.33.0/24  # Rete interna Home Assistant
+  - 172.30.0.0/16  # Rete interna Home Assistant
   - 127.0.0.1       # Proxy locale (Caddy, Nginx, ecc.)
 max_upload_size: 2G
 memory_limit: 1G
