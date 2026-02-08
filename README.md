@@ -50,7 +50,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 
 | Anteprima | Nome Card | Versione | Descrizione |
 | :---: | :--- | :---: | :--- |
-| <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/system-monitor-card/images/desktop.jpg" width="120"> | **[System Monitor Card](./system-monitor-card)** | [![Version](https://img.shields.io/github/v/release/Dino0005/homeassistant-nextfiles?filter=system-monitor*&label=%20&color=orange)](https://github.com/Dino0005/homeassistant-nextfiles/releases) | Una card personalizzata per Home Assistant che mostra CPU, RAM e Storage con indicatori circolari e colori dinamici|
+| <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/system-monitor-card/images/desktop.jpg" width="120"> | **[System Monitor Card](./system-monitor-card)** | [![Version](https://img.shields.io/github/v/release/Dino0005/homeassistant-nextfiles?filter=system-monitor*&label=%20&color=orange)](https://github.com/Dino0005/homeassistant-nextfiles/releases) | System Monitor Card per Home Assistant|
 
 ## Supporto
 
