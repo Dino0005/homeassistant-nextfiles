@@ -28,6 +28,8 @@ https://github.com/Dino0005/homeassistant-nextfiles
 </p>
 
 > Self-hosted file storage solution con database MariaDB per Home Assistant. Sincronizza i tuoi file in modo sicuro e privato.
+>
+> [Documentazione completa](./nextfiles/README.md)
 
 ---
 <p align="center">
@@ -40,44 +42,11 @@ https://github.com/Dino0005/homeassistant-nextfiles
 > Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles.
 > 
 > ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x (fornito da Alpine 3.23), un fork open-source 100% compatibile con Redis 7.2.x.
+>
+> [Documentazione completa](./redis-lite/README.md)
 
 ---
 
-
-## Add-on disponibili
-
-![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue)
-
-### [Nextfiles (Nextcloud)](./nextfiles)
-<img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="64">
-
-Self-hosted file storage solution con database MariaDB per Home Assistant.
-
-**Caratteristiche:**
-- 📁 Storage su `/share/nextfiles`
-- 🗄️ Database esterno MariaDB/MySQL (Richiede l'installazione e configurazione del add-on MariaDB)
-- 🔒 Supporto HTTPS tramite reverse proxy
-- ⚡ Configurazione semplificata
-
-[Documentazione completa](./nextfiles/README.md)
-
-
-### [Redis Lite](./redis-lite)
-<img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="64">
-
-Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles. 
-
-ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x (fornito da Alpine 3.23), un fork open-source 100% compatibile con Redis 7.2.x.
-
-**Caratteristiche**
-- ✅ **Leggero**: Solo Redis server, nessun extra
-- ✅ **Configurabile**: Gestione memoria e persistenza personalizzabili
-- ✅ **Sicuro**: Supporto password opzionale
-- ✅ **Ottimizzato**: Ideale per caching e file locking
-- ✅ **Persistenza avanzata**: Supporto RDB + AOF per massima sicurezza dati
-- ✅ **Health Check**: Monitoraggio automatico dello stato del servizio
-
-[Documentazione completa](./redis-lite/README.md)
 
 ## Supporto
 
