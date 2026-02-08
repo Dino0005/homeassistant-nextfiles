@@ -18,7 +18,35 @@ Oppure aggiungi manualmente l'URL:
 https://github.com/Dino0005/homeassistant-nextfiles
 ```
 
+## 🧩 App (Add-on) Disponibili
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="100"><br>
+  <strong>Nextfiles (Nextcloud)</strong><br>
+  <a href="./nextfiles"> Esplora Add-on</a> • 
+  <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
+</p>
+
+> Self-hosted file storage solution con database MariaDB per Home Assistant. Sincronizza i tuoi file in modo sicuro e privato.
+
+---
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="100"><br>
+  <strong>Redis Lite</strong><br>
+  <a href="./redis-lite"> Esplora Add-on</a> • 
+  <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fredis-lite%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
+</p>
+
+> Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles.
+> 
+> ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x (fornito da Alpine 3.23), un fork open-source 100% compatibile con Redis 7.2.x.
+
+---
+
+
 ## Add-on disponibili
+
+![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue)
 
 ### [Nextfiles (Nextcloud)](./nextfiles)
 <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="64">
