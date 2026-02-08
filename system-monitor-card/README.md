@@ -1,8 +1,8 @@
 # System Monitor Card per Home Assistant
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
-[![GitHub Release](https://img.shields.io/github/release/Dino0005/homeassistant-nextfiles.svg)](https://github.com/Dino0005/homeassistant-nextfiles/releases)
-[![License](https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles.svg)](LICENSE)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
+[![GitHub Release](https://img.shields.io/github/v/release/Dino0005/homeassistant-nextfiles)](../releases)
+[![License](https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles)](../LICENSE)
 
 Una card personalizzata per Home Assistant che mostra CPU, RAM e Storage con indicatori circolari e colori dinamici.
 
