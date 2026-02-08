@@ -28,6 +28,9 @@ Una card personalizzata per Home Assistant che mostra CPU, RAM e Storage con ind
 </p>
 
 ### Visual Editor
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/system-monitor-card/images/editor.jpg" width="90%">
+</p>
 
 ## 📦 Installazione
 
