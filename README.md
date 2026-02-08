@@ -41,7 +41,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 
 > Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles.
 > 
-> ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x (fornito da Alpine 3.23), una soluzione di caching ad alte prestazioni (fork open-source di Redis 7.2.x.)
+> ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x, una soluzione di caching ad alte prestazioni (fork open-source di Redis 7.2.x.)
 >
 > [Documentazione completa](./redis-lite/README.md)
 
