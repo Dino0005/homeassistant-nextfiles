@@ -108,3 +108,32 @@ entities:
 ### System Monitor Integration
 
 Devi avere l'integrazione **System Monitor** configurata in Home Assistant.
+
+## 🎨 Visualizzazione
+
+### Scale Colori
+
+#### CPU e RAM (% Utilizzo)
+| Range | Colore | Stato |
+|-------|--------|-------|
+| 0-50% | 🟢 Verde | Normale |
+| 50-70% | 🟡 Giallo | Attenzione |
+| 70-85% | 🟠 Arancione | Elevato |
+| 85-100% | 🔴 Rosso | Critico |
+
+#### Temperatura CPU
+| Range | Colore | Stato |
+|-------|--------|-------|
+| < 40°C | 🔵 Blu | Freddo |
+| 40-55°C | 🔵→🟢 Blu-Verde | Normale |
+| 55-70°C | 🟢→🟡 Verde-Giallo | Caldo |
+| 70-80°C | 🟡→🟠 Giallo-Arancione | Molto Caldo |
+| > 80°C | 🟠→🔴 Arancione-Rosso | Critico |
+
+### Layout Responsive
+
+| Dispositivo | Dimensione Cerchi | Testo |
+|-------------|-------------------|-------|
+| Desktop (> 480px) | 100px | Completo |
+| Mobile (≤ 480px) | 85px | Abbreviato |
+| Mobile Piccolo (≤ 360px) | 75px | Ultra-compatto |
