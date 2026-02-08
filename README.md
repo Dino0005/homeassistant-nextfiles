@@ -1,12 +1,12 @@
-# Home Assistant Add-ons by Dino0005
+# Home Assistant App (Add-ons) by Dino0005
 
 ![Project Stage][project-stage-shield]
 ![Maintenance][maintenance-shield]
 [![License][license-shield]](LICENSE)
 
-Repository di add-on personalizzati per Home Assistant.
+Repository di App e Card per Home Assistant.
 
-## Installazione
+## Installazione App
 
 Aggiungi questo repository al tuo Home Assistant:
 
