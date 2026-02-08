@@ -140,3 +140,7 @@ Devi avere l'integrazione **System Monitor** configurata in Home Assistant.
 | Desktop (> 480px) | 100px | Completo |
 | Mobile (≤ 480px) | 85px | Abbreviato |
 | Mobile Piccolo (≤ 360px) | 75px | Ultra-compatto |
+
+## 📄 Licenza
+
+Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](LICENSE).
