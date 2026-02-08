@@ -18,4 +18,7 @@ Una card personalizzata per Home Assistant che mostra CPU, RAM e Storage con ind
 ## 📸 Screenshots
 
 ### Desktop View
-![Desktop](https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/system-monitor-card/images/desktop.jpg)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/system-monitor-card/images/desktop.jpg" width="50%">
+</p>
+
