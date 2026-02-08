@@ -330,4 +330,4 @@ Per problemi o domande:
 
 ## 📜 License
 
-MIT
+Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
