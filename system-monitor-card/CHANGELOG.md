@@ -6,7 +6,7 @@ Tutte le modifiche notevoli a questo progetto saranno documentate in questo file
 
 ### Aggiunto
 - Nuova sezione nella configurazione: "👆 Interazioni al Tocco"
-- Tocco su Percentuale CPU, Temperatura CPU, Percentualòe RAM, Info RAM, Info Archiviazione, Percentuale Archiviazione
+- Tocco su Cerchio Percentuale CPU, Temperatura CPU, Cerchio Percentualòe RAM, Info RAM, Info Archiviazione, Percentuale Archiviazione
 
 ## [1.0.2] - 2026-02-01
 
