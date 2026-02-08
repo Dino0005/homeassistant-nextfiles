@@ -143,4 +143,4 @@ Devi avere l'integrazione **System Monitor** configurata in Home Assistant.
 
 ## 📄 Licenza
 
-Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](LICENSE).
+Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
