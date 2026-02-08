@@ -321,7 +321,7 @@ Rielaborato per:
 
 ## Licenza
 
-MIT License
+Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
 
 ## Supporto
 
