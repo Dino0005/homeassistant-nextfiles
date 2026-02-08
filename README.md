@@ -23,7 +23,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 <p align="center">
   <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="100"><br>
   <strong>Nextfiles (Nextcloud)</strong><br>
-  <a href="./nextfiles"> Esplora Add-on</a> • 
+  <a href="./nextfiles"> Esplora App</a> • 
   <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
 </p>
 
@@ -35,7 +35,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 <p align="center">
   <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="100"><br>
   <strong>Redis Lite</strong><br>
-  <a href="./redis-lite"> Esplora Add-on</a> • 
+  <a href="./redis-lite"> Esplora App</a> • 
   <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fredis-lite%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
 </p>
 
