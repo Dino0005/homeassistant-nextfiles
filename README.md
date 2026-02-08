@@ -4,7 +4,7 @@
 ![Maintenance][maintenance-shield]
 [![License][license-shield]](LICENSE)
 
-Repository di App e Card per Home Assistant.
+Repository di App (Add-on) e Card personalizzate per Home Assistant.
 
 ## Installazione App
 
@@ -46,7 +46,11 @@ https://github.com/Dino0005/homeassistant-nextfiles
 > [Documentazione completa](./redis-lite/README.md)
 
 ---
+## 🎴 Custom Cards (Lovelace)
 
+| Anteprima | Nome Card | Versione | Descrizione |
+| :---: | :--- | :---: | :--- |
+| <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/system-monitor-card/images/desktop.jpg" width="120"> | **[System Monitor Card](./system-monitor-card)** | [![Version](https://img.shields.io/github/v/release/Dino0005/homeassistant-nextfiles?filter=system-monitor*&label=%20&color=orange)](https://github.com/Dino0005/homeassistant-nextfiles/releases) | Una card personalizzata per Home Assistant che mostra CPU, RAM e Storage con indicatori circolari e colori dinamici|
 
 ## Supporto
 
