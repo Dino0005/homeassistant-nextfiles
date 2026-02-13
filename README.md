@@ -19,7 +19,7 @@ Oppure aggiungi manualmente l'URL:
 https://github.com/Dino0005/homeassistant-nextfiles
 ```
 
-## 🧩 App (Add-on) Disponibili
+## 🧩 App Disponibili
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="100"><br>
