@@ -5,7 +5,7 @@ FROM $BUILD_FROM
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG NEXTCLOUD_VERSION=32.0.5
+ARG NEXTCLOUD_VERSION=32.0.6
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 
 # Install requirements (MariaDB support included + APCu for caching + Redis support)
