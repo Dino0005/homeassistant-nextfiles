@@ -2,7 +2,7 @@
 
 ![Project Stage][project-stage-shield]
 ![Maintenance][maintenance-shield]
-[![License][license-shield]](LICENSE)
+[![License](https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles)](./LICENSE)
 
 Repository di App (Add-on) e Card personalizzate per Home Assistant.
 
