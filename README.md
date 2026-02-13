@@ -1,8 +1,9 @@
 # Home Assistant App (Add-ons) by Dino0005
 
+![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.2+-blue.svg?logo=home-assistant)
 ![Project Stage][project-stage-shield]
 ![Maintenance][maintenance-shield]
-[![License](https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles)](./LICENSE)
+[![License](https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles?color=yellow)](./LICENSE)
 
 Repository di App (Add-on) e Card personalizzate per Home Assistant.
 
