@@ -1,4 +1,4 @@
-# Home Assistant App (Add-ons) by Dino0005
+# Home Assistant Apps (Add-ons) by Dino0005
 
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.2+-blue.svg?logo=home-assistant)
 ![Project Stage][project-stage-shield]
