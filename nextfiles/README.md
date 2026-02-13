@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/Platform-Home%20Assistant-blue?logo=home-assistant" valign="middle">
 </p>
 
-Self-hosted file storage solution with MariaDB database for Home Assistant.
+Self-hosted file storage solution with Nextcloud for Home Assistant.
 
 <div align="center">
   <img width="817" height="600" alt="Screenshot 2025-11-20 alle 22 16 07" src="https://github.com/user-attachments/assets/026775ec-5371-4d6c-b37d-efd859223d92" />
