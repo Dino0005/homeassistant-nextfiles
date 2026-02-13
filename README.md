@@ -27,7 +27,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
   <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
 </p>
 
-> Self-hosted file storage solution con database MariaDB per Home Assistant. Sincronizza i tuoi file in modo sicuro e privato.
+> Self-hosted file storage solution con Nextcloud per Home Assistant. Sincronizza i tuoi file in modo sicuro e privato.
 >
 > [Documentazione completa](./nextfiles/README.md)
 
