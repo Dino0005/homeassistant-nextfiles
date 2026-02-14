@@ -294,7 +294,8 @@ trusted_domains:
   - 192.168.1.100      # IP locale
   - localhost          # Accesso locale
 trusted_proxies:
-  - 127.0.0.1          # Sempre necessario con reverse proxy
+  - 172.30.0.0/16      # Rete interna Home Assistant
+  - 127.0.0.1          # Proxy locale (Caddy, Nginx, ecc.)
 ```
 
 **Con Caddy e path `/nextfiles`**: Usa il dominio principale senza il path.
