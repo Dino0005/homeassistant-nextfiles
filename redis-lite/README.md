@@ -7,7 +7,6 @@
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="100"><br>
-  <strong>Redis Lite</strong><br>
 </p>
 
 Addon Redis leggero e ottimizzato per l'uso con altri addon di Home Assistant, come Nextcloud/Nextfiles.
