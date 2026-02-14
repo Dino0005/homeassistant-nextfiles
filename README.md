@@ -40,7 +40,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
   <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fredis-lite%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
 </p>
 
-> Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextcloud/Nextfiles.
+> Lightweight Redis Addon and optimized for use with other Home Assistant addons, such as Nextfiles (Nextcloud).
 > 
 > ℹ️ Nota su Redis/Valkey: Questo addon usa Valkey 8.x, una soluzione di caching ad alte prestazioni (fork open-source di Redis 7.2.x.)
 >
