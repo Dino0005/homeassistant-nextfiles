@@ -1,6 +1,6 @@
 # Home Assistant Apps (Add-ons) by Dino0005
 
-![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2026.2+-blue.svg?logo=home-assistant)
+![Home Assistant App](https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant)
 ![Project Stage][project-stage-shield]
 ![Maintenance][maintenance-shield]
 [![License](https://img.shields.io/github/license/Dino0005/homeassistant-nextfiles?color=yellow)](./LICENSE)
