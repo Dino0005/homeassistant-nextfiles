@@ -2,7 +2,7 @@ ARG BUILD_FROM
 FROM $BUILD_FROM
 
 # Metadata
-LABEL maintainer="Your Name"
+LABEL maintainer="Dino0005"
 LABEL description="Lightweight Redis server for Home Assistant with persistence support"
 
 # Set shell
