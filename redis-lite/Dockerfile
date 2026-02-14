@@ -1,10 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Metadata
-LABEL maintainer="Dino0005"
-LABEL description="Lightweight Redis server for Home Assistant with persistence support"
-
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -36,11 +32,6 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Expose Redis port
 EXPOSE 6379
-
-# Labels per Home Assistant
-LABEL io.hass.version="1.0.2"
-LABEL io.hass.type="addon"
-LABEL io.hass.arch="armhf|armv7|aarch64|amd64|i386"
 
 # Avvia Redis tramite run.sh
 CMD ["/run.sh"]
