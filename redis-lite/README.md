@@ -1,9 +1,7 @@
 # Redis Lite per Home Assistant
 
-<p align="left">
-  <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fredis-lite%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
-  <img src="https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant" valign="middle">
-</p>
+![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fredis-lite%2Fconfig.yaml&query=%24.version&label=Version&color=blue) 
+![Home Assistant App](https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="100"><br>
