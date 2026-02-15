@@ -112,7 +112,7 @@ entities:
 
 ### System Monitor Integration
 
-Devi avere l'integrazione **System Monitor** configurata in Home Assistant ([📚 Leggi la guida ufficiale](https://www.home-assistant.io/integrations/systemmonitor/)).
+Devi avere l'integrazione **System Monitor** configurata in Home Assistant - [📚 Leggi la guida ufficiale](https://www.home-assistant.io/integrations/systemmonitor/).
 
 ## 🎨 Visualizzazione
 
