@@ -5,6 +5,63 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+
+## [1.1.6] - 2026-02-19
+
+### Aggiunto
+**Miglioramenti delle prestazioni**
+- Compilazione JIT (Just-In-Time) di PHP 8.3
+  - Abilitato OPcache JIT con impostazioni ottimizzate (opcache.jit=1255)
+    - Esecuzione del codice PHP più veloce del 20-30%
+    - Tempi di caricamento delle pagine significativamente migliorati
+    - Prestazioni migliori per operazioni ad alto utilizzo di CPU
+  - Dimensione buffer JIT: 128M dedicati al codice compilato
+
+**Ottimizzazioni OPcache**
+- Memoria OPcache raddoppiata: 128M → 256M
+  - Maggiore quantità di codice PHP memorizzato in cache
+  - Riduzione dell’I/O su disco del 40-50%
+  - Tasso di cache hit quasi perfetto (>95%)
+- Buffer delle stringhe internate aumentato: 16M → 32M
+  - Migliore deduplicazione delle stringhe
+  - Minore utilizzo di memoria
+- Frequenza di rivalidazione ottimizzata: 1s → 60s
+  - Minore overhead in produzione
+  - Prestazioni migliori sotto carico
+
+**Serializzatore binario igbinary**
+- Aggiunto igbinary per APCu e Redis
+  - Serializzazione/deserializzazione 2-3 volte più veloce
+  - 30% di memoria in meno per i dati in cache
+  - Voci di cache più piccole del 50%
+  - Notevole incremento delle prestazioni nelle operazioni di cache
+- Nota: Le sessioni utilizzano il serializzatore PHP standard per la massima compatibilità
+
+**Miglioramenti APCu**
+- Memoria condivisa aumentata: predefinita (~32M) → 64M
+  - Più dati di configurazione in cache
+  - Meno query al database
+  - Maggiore reattività dell’applicazione
+
+**Nuove funzionalità**
+- Supporto SMB/CIFS
+  - Aggiunto supporto client SMB/CIFS (php83-pecl-smbclient + samba-client)
+    - Integrazione completa con l’app Archiviazione esterna
+    - Supporto per Synology, QNAP, FreeNAS e altri sistemi NAS
+    - Compatibilità con file server aziendali
+  
+**Come utilizzare**:
+- Abilitare l’app “Supporto archiviazione esterna”
+- Andare in Impostazioni → Archiviazione esterna
+- Aggiungere uno storage SMB/CIFS
+- Configurare con le credenziali della condivisione di rete
+
+**Supporto IMAP**
+- Aggiunta estensione IMAP (php83-imap)
+  - Capacità di integrazione email
+  - Supporto per l’app Mail (se installata)
+  - Automazione dei flussi di lavoro migliorata tramite email
+
 ## [1.1.5] - 2026-02-13
 
 ### Aggiornato
