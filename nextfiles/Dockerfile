@@ -8,7 +8,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG NEXTCLOUD_VERSION=32.0.6
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 
-# Install requirements (MariaDB support included + APCu for caching + Redis support)
+# Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
 RUN apk add --no-cache \
     apache2 \
     apache2-ssl \
@@ -47,7 +47,11 @@ RUN apk add --no-cache \
     php83-apcu \
     php83-pecl-redis \
     php83-pecl-imagick \
+    php83-pecl-igbinary \
+    php83-imap \
+    php83-pecl-smbclient \
     mariadb-client \
+    samba-client \
     netcat-openbsd \
     curl \
     bash \
@@ -89,7 +93,7 @@ RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf &&
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
     echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
 
-# Configure PHP defaults and enable PCNTL + APCu + Advanced OPcache
+# Configure PHP defaults, enable PCNTL + APCu + Advanced OPcache with JIT (PHP 8.3)
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^upload_max_filesize *=.*|upload_max_filesize = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^post_max_size *=.*|post_max_size = 512M|g' /etc/php83/php.ini && \
@@ -97,12 +101,19 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini && \
     sed -i 's|^;*opcache.enable=.*|opcache.enable=1|g' /etc/php83/php.ini && \
     sed -i 's|^;*opcache.enable_cli=.*|opcache.enable_cli=1|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.memory_consumption=.*|opcache.memory_consumption=128|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=16|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.memory_consumption=.*|opcache.memory_consumption=256|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=32|g' /etc/php83/php.ini && \
     sed -i 's|^;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=10000|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.revalidate_freq=.*|opcache.revalidate_freq=1|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.revalidate_freq=.*|opcache.revalidate_freq=60|g' /etc/php83/php.ini && \
     sed -i 's|^;*opcache.save_comments=.*|opcache.save_comments=1|g' /etc/php83/php.ini && \
-    echo "apc.enable_cli=1" >> /etc/php83/php.ini
+    sed -i 's|^;*opcache.jit=.*|opcache.jit=1255|g' /etc/php83/php.ini && \
+    sed -i 's|^;*opcache.jit_buffer_size=.*|opcache.jit_buffer_size=128M|g' /etc/php83/php.ini && \
+    echo "apc.enable_cli=1" >> /etc/php83/php.ini && \
+    echo "apc.shm_size=64M" >> /etc/php83/php.ini
+
+# Configure igbinary serializer for APCu and sessions (better performance)
+RUN echo "apc.serializer=igbinary" >> /etc/php83/conf.d/apcu.ini && \
+    echo "session.serialize_handler=igbinary" >> /etc/php83/php.ini
 
 # Setup Nextcloud cron job - runs every 5 minutes with logging
 RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
