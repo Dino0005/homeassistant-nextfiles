@@ -115,6 +115,12 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
 RUN echo "apc.serializer=igbinary" >> /etc/php83/conf.d/apcu.ini && \
     echo "session.serialize_handler=igbinary" >> /etc/php83/php.ini
 
+# Fix PHP session directory permissions and configuration
+RUN mkdir -p /tmp/sessions && \
+    chown -R apache:apache /tmp/sessions && \
+    chmod 1777 /tmp/sessions && \
+    echo "session.save_path = /tmp/sessions" >> /etc/php83/php.ini
+
 # Setup Nextcloud cron job - runs every 5 minutes with logging
 RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
     echo "*/5 * * * * echo \"[CRON] Starting Nextcloud cron.php at \$(date)\" && su -s /bin/sh apache -c 'cd /var/www/nextcloud && /usr/bin/php /var/www/nextcloud/cron.php' && echo \"[CRON] Nextcloud cron.php completed\"" >> /etc/crontabs/root
