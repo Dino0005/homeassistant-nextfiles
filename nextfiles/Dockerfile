@@ -98,17 +98,23 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^upload_max_filesize *=.*|upload_max_filesize = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^post_max_size *=.*|post_max_size = 512M|g' /etc/php83/php.ini && \
     sed -i 's|^max_execution_time *=.*|max_execution_time = 3600|g' /etc/php83/php.ini && \
-    sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.enable=.*|opcache.enable=1|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.enable_cli=.*|opcache.enable_cli=1|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.memory_consumption=.*|opcache.memory_consumption=256|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=32|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=10000|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.revalidate_freq=.*|opcache.revalidate_freq=60|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.save_comments=.*|opcache.save_comments=1|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.jit=.*|opcache.jit=1255|g' /etc/php83/php.ini && \
-    sed -i 's|^;*opcache.jit_buffer_size=.*|opcache.jit_buffer_size=128M|g' /etc/php83/php.ini && \
-    echo "apc.enable_cli=1" >> /etc/php83/php.ini && \
+    sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php83/php.ini
+
+# Configure OPcache with JIT (use dedicated config file for reliability)
+RUN { \
+        echo 'opcache.enable=1'; \
+        echo 'opcache.enable_cli=1'; \
+        echo 'opcache.memory_consumption=256'; \
+        echo 'opcache.interned_strings_buffer=32'; \
+        echo 'opcache.max_accelerated_files=10000'; \
+        echo 'opcache.revalidate_freq=60'; \
+        echo 'opcache.save_comments=1'; \
+        echo 'opcache.jit=1255'; \
+        echo 'opcache.jit_buffer_size=128M'; \
+    } > /etc/php83/conf.d/opcache-nextcloud.ini
+
+# Configure APCu
+RUN echo "apc.enable_cli=1" >> /etc/php83/php.ini && \
     echo "apc.shm_size=64M" >> /etc/php83/php.ini
 
 # Configure igbinary serializer for APCu only (sessions use default PHP serializer for compatibility)
