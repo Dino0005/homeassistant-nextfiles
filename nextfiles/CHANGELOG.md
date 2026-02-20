@@ -5,6 +5,25 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.2.1] - 2026-02-20
+
+### Corretto Bug Critico
+#### OPcache JIT Non si Attivava
+- **Risolto**: OPcache JIT era configurato ma non effettivamente abilitato
+  - Modificato da sostituzione pattern `sed` a file di configurazione dedicato
+  - Configurazione JIT ora in `/etc/php83/conf.d/opcache-nextcloud.ini`
+  - **Verificato**: `opcache.jit_buffer_size` ora correttamente impostato a 128M
+  - **Impatto**: JIT è ora attivo correttamente, garantendo il promesso aumento di performance del 20-30%
+
+### 📝 Dettagli Tecnici
+- Configurazione OPcache spostata in file `.ini` dedicato per maggiore affidabilità
+- Tutte le direttive OPcache ora garantite essere impostate correttamente
+- Nessun'altra modifica rispetto alla 1.2.0
+
+### ⚠️ Note di Migrazione
+- **Automatico**: Semplicemente aggiorna dalla 1.2.0 alla 1.2.1
+- **Beneficio immediato**: JIT sarà attivo dopo il riavvio
+- **Verifica**: Esegui `docker exec -it <container> php -i | grep "JIT =>"` per confermare
 
 ## [1.2.0] - 2026-02-19
 
