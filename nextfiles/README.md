@@ -163,9 +163,13 @@ https://tuodominio.com {
     uri strip_prefix /nextfiles
     
    reverse_proxy http://localhost:8080 {
+      # Pass authentication headers
+      header_up Authorization {http.request.header.Authorization}
+      
       # Header custom specifici per Nextcloud
       header_up X-Real-IP {remote_host}
       header_up X-Forwarded-Ssl on
+      header_up Host {host}
       
       # Rimuove header indesiderati dal backend
       header_down -X-Powered-By
