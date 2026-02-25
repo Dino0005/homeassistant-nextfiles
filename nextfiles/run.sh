@@ -361,7 +361,12 @@ if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete redis" \
         2>/dev/null || true
     
-    # Create redis array configuration
+    # CRITICAL FIX: Initialize redis as array FIRST
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis --type=array" \
+        2>/dev/null || true
+    
+    # Now set array keys
     su -s /bin/bash apache -c \
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set redis host --type=string --value='${REDIS_HOST}'" \
         2>/dev/null || true
