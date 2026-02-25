@@ -5,15 +5,19 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
-## [1.2.1] - 2026-02-20
+## [1.2.1] - 2026-02-25
 
 ### Corretto Bug Critico
 #### OPcache JIT Non si Attivava
-- **Risolto**: OPcache JIT era configurato ma non effettivamente abilitato
+- **Corretto**: OPcache JIT era configurato ma non effettivamente abilitato
   - Modificato da sostituzione pattern `sed` a file di configurazione dedicato
   - Configurazione JIT ora in `/etc/php83/conf.d/opcache-nextcloud.ini`
   - **Verificato**: `opcache.jit_buffer_size` ora correttamente impostato a 128M
   - **Impatto**: JIT è ora attivo correttamente, garantendo il promesso aumento di performance del 20-30%
+#### Configurazione di Redis
+- **Corretto**: Configurazione dell'array Redis malformata in run.sh
+  - Aggiunto: Inizializzazione corretta dell'array prima dell'impostazione delle chiavi
+
 
 ### 📝 Dettagli Tecnici
 - Configurazione OPcache spostata in file `.ini` dedicato per maggiore affidabilità
