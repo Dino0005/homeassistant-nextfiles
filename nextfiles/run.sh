@@ -162,11 +162,25 @@ fi
 chown -R apache:apache "${DATA_DIR}/apps_custom"
 bashio::log.info "✓ Custom apps directory linked at /var/www/nextcloud/apps2"
 
-# Update PHP settings
+# Update PHP settings (dynamically detect php.ini path for future PHP version compatibility)
+bashio::log.info "Detecting PHP configuration file..."
+PHP_INI=$(php --ini | grep "Loaded Configuration File" | cut -d: -f2 | xargs)
+
+if [ -z "${PHP_INI}" ] || [ ! -f "${PHP_INI}" ]; then
+    bashio::log.error "Could not detect php.ini location!"
+    bashio::log.error "Output from 'php --ini':"
+    php --ini
+    exit 1
+fi
+
 bashio::log.info "Updating PHP configuration..."
-sed -i "s|memory_limit = .*|memory_limit = ${MEMORY_LIMIT}|g" /etc/php83/php.ini
-sed -i "s|upload_max_filesize = .*|upload_max_filesize = ${MAX_UPLOAD}|g" /etc/php83/php.ini
-sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" /etc/php83/php.ini
+bashio::log.info "PHP ini file: ${PHP_INI}"
+
+sed -i "s|memory_limit = .*|memory_limit = ${MEMORY_LIMIT}|g" "${PHP_INI}"
+sed -i "s|upload_max_filesize = .*|upload_max_filesize = ${MAX_UPLOAD}|g" "${PHP_INI}"
+sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" "${PHP_INI}"
+
+bashio::log.info "✓ PHP configuration updated (memory: ${MEMORY_LIMIT}, upload: ${MAX_UPLOAD})"
 
 # First installation check
 if [ ! -f "${DATA_DIR}/config/config.php" ]; then
