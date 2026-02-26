@@ -1,5 +1,5 @@
 name: Nextfiles
-version: "1.2.1"
+version: "1.2.2"
 slug: nextfiles
 description: Self-hosted file storage solution with MariaDB database, APCu cache, Redis support, and PHP 8.3 JIT optimization for Home Assistant
 url: https://github.com/Dino0005/homeassistant-nextfiles/tree/main/nextfiles
