@@ -5,6 +5,20 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+
+## [1.2.2] - 2026-02-26
+
+### Improvements
+#### Rilevamento Dinamico del Percorso di Configurazione PHP
+- **Aggiunto**: Rilevamento automatico della posizione del file php.ini
+  - Utilizza il comando `php --ini` per trovare il file di configurazione in modo dinamico
+  - Compatibile con i futuri aggiornamenti a PHP 8.4 e versioni successive
+  - Non sono necessarie modifiche al file run.sh quando si cambia la versione di PHP
+
+#### Configurazione di Redis
+- **Corretto**: Configurazione dell'array Redis malformata in run.sh
+- **Aggiunto**: Inizializzazione corretta dell'array prima dell'impostazione delle chiavi
+
 ## [1.2.1] - 2026-02-25
 
 ### Corretto Bug Critico
@@ -14,10 +28,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
   - Configurazione JIT ora in `/etc/php83/conf.d/opcache-nextcloud.ini`
   - **Verificato**: `opcache.jit_buffer_size` ora correttamente impostato a 128M
   - **Impatto**: JIT è ora attivo correttamente, garantendo il promesso aumento di performance del 20-30%
-#### Configurazione di Redis
-- **Corretto**: Configurazione dell'array Redis malformata in run.sh
-  - Aggiunto: Inizializzazione corretta dell'array prima dell'impostazione delle chiavi
-
 
 ### 📝 Dettagli Tecnici
 - Configurazione OPcache spostata in file `.ini` dedicato per maggiore affidabilità
