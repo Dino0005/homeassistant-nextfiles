@@ -117,15 +117,8 @@ RUN { \
 RUN echo "apc.enable_cli=1" >> /etc/php83/php.ini && \
     echo "apc.shm_size=64M" >> /etc/php83/php.ini
 
-# Configure igbinary serializer for APCu only (sessions use default PHP serializer for compatibility)
+# Configure igbinary serializer for APCu only
 RUN echo "apc.serializer=igbinary" >> /etc/php83/conf.d/apcu.ini
-
-# Fix PHP session directory permissions and configuration
-RUN mkdir -p /tmp/sessions && \
-    chown -R apache:apache /tmp/sessions && \
-    chmod 1777 /tmp/sessions && \
-    echo "session.save_path = /tmp/sessions" >> /etc/php83/php.ini && \
-    echo "session.save_handler = files" >> /etc/php83/php.ini
 
 # Setup Nextcloud cron job - runs every 5 minutes with logging
 RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
