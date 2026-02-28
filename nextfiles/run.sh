@@ -458,6 +458,18 @@ fi
 
 bashio::log.info "=========================================="
 
+# Configure Nextcloud session lifetime for stability (24 hours)
+bashio::log.info "Configuring Nextcloud session parameters..."
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set session_lifetime --value=86400 --type=integer" \
+    2>/dev/null || true
+
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set session_keepalive --value=true --type=boolean" \
+    2>/dev/null || true
+
+bashio::log.info "✓ Session lifetime set to 24 hours"
+
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
 
