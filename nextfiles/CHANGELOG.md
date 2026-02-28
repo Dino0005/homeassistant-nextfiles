@@ -10,7 +10,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Improvements - Redis Sessions
 #### Redis-based PHP Sessions (Nextcloud Official Approach)
 - **Changed**: PHP sessions now stored in Redis instead of local files
-  - Follows official Nextcloud Docker methodology
   - **Impact**: Stable, persistent sessions across container operations
 
 ### Technical Implementation
