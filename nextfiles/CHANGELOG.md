@@ -5,32 +5,12 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
-## [1.2.3] - 2026-02-27
+## [1.2.3] - 2026-03-01
 
-### Improvements - Redis Sessions
-#### Redis-based PHP Sessions (Nextcloud Official Approach)
-- **Changed**: PHP sessions now stored in Redis instead of local files
+### Improvements
+#### Persistent sessions
+- **Changed**: PHP sessions now stored in`/share/nextfiles/sessions`
   - **Impact**: Stable, persistent sessions across container operations
-
-### Technical Implementation
-**Configuration:**
-- Dynamic session config via `/etc/php83/conf.d/nextfiles-sessions.ini`
-- Managed by run.sh on each startup
-- Automatic cleanup prevents duplicates
-- Future-proof for PHP 8.4+
-
-**Fallback Safety:**
-- Automatic fallback to file sessions if Redis unavailable
-- Graceful degradation ensures system always works
-
-**Verification:**
-```bash
-# Check session configuration
-docker exec -it addon_xxxxx_nextfiles cat /etc/php83/conf.d/nextfiles-sessions.ini
-
-# View active sessions in Redis
-docker exec -it addon_xxxxx_redis-lite redis-cli keys "PHPREDIS_SESSION:*"
-```
 
 ## [1.2.2] - 2026-02-26
 
