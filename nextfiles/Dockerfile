@@ -120,6 +120,16 @@ RUN echo "apc.enable_cli=1" >> /etc/php83/php.ini && \
 # Configure igbinary serializer for APCu only
 RUN echo "apc.serializer=igbinary" >> /etc/php83/conf.d/apcu.ini
 
+# Configure PHP sessions with persistent storage
+# Sessions stored in /share/nextfiles/sessions (persistent volume)
+# This ensures sessions survive container restarts and rebuilds
+RUN { \
+    echo 'session.save_handler = files'; \
+    echo 'session.save_path = /share/nextfiles/sessions'; \
+    echo 'session.gc_maxlifetime = 86400'; \
+    echo 'session.cookie_lifetime = 0'; \
+    } > /etc/php83/conf.d/nextcloud-sessions.ini
+
 # Setup Nextcloud cron job - runs every 5 minutes with logging
 RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
     echo "*/5 * * * * echo \"[CRON] Starting Nextcloud cron.php at \$(date)\" && su -s /bin/sh apache -c 'cd /var/www/nextcloud && /usr/bin/php /var/www/nextcloud/cron.php' && echo \"[CRON] Nextcloud cron.php completed\"" >> /etc/crontabs/root
