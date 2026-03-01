@@ -142,6 +142,13 @@ mkdir -p "${DATA_DIR}/data"
 mkdir -p "${DATA_DIR}/config"
 mkdir -p "${DATA_DIR}/apps_custom"
 
+# Setup persistent session directory
+bashio::log.info "Setting up persistent session directory..."
+mkdir -p /share/nextfiles/sessions
+chown apache:apache /share/nextfiles/sessions
+chmod 1777 /share/nextfiles/sessions
+bashio::log.info "✓ Session directory configured at /share/nextfiles/sessions"
+
 # Ensure apache user exists
 if ! id apache &>/dev/null; then
     addgroup -g 48 apache
@@ -405,58 +412,6 @@ elif [[ -n "${REDIS_HOST}" ]]; then
 else
     bashio::log.info "No Redis configured - using only APCu for local cache"
 fi
-
-# Configure PHP sessions (Redis or file fallback)
-bashio::log.info "=========================================="
-bashio::log.info "Configuring PHP session handler..."
-bashio::log.info "=========================================="
-
-PHP_VERSION=$(php -v | head -n 1 | cut -d' ' -f2 | cut -d'.' -f1,2)
-PHP_CONF_DIR="/etc/php${PHP_VERSION//.}/conf.d"
-SESSION_INI="${PHP_CONF_DIR}/nextfiles-sessions.ini"
-
-# Always remove old config to prevent duplicates on restart
-rm -f "${SESSION_INI}"
-
-if [[ -n "${REDIS_HOST}" ]] && nc -z "${REDIS_HOST}" "${REDIS_PORT}" 2>/dev/null; then
-    bashio::log.info "Configuring PHP sessions to use Redis..."
-    
-    # Build Redis session path
-    if [[ -n "${REDIS_PASSWORD}" ]]; then
-        REDIS_SESSION_PATH="tcp://${REDIS_HOST}:${REDIS_PORT}?auth=${REDIS_PASSWORD}"
-    else
-        REDIS_SESSION_PATH="tcp://${REDIS_HOST}:${REDIS_PORT}"
-    fi
-    
-    # Create session config file
-    cat > "${SESSION_INI}" << EOF
-; Nextfiles session configuration (managed by run.sh)
-; Redis-based sessions for stability and scalability
-session.save_handler = redis
-session.save_path = "${REDIS_SESSION_PATH}"
-EOF
-    
-    bashio::log.info "✓ PHP sessions configured to use Redis at ${REDIS_HOST}:${REDIS_PORT}"
-else
-    bashio::log.warning "Redis not available - using file-based sessions (fallback)"
-    
-    # Create session directory for fallback
-    mkdir -p /tmp/sessions
-    chown apache:apache /tmp/sessions
-    chmod 1777 /tmp/sessions
-    
-    # Create session config file
-    cat > "${SESSION_INI}" << EOF
-; Nextfiles session configuration (managed by run.sh)
-; File-based sessions (fallback when Redis unavailable)
-session.save_handler = files
-session.save_path = /tmp/sessions
-EOF
-    
-    bashio::log.info "✓ PHP sessions configured to use files at /tmp/sessions (fallback)"
-fi
-
-bashio::log.info "=========================================="
 
 # Configure Nextcloud session lifetime for stability (24 hours)
 bashio::log.info "Configuring Nextcloud session parameters..."
