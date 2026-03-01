@@ -8,9 +8,34 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [1.2.3] - 2026-03-01
 
 ### Improvements
-#### Persistent sessions
-- **Changed**: PHP sessions now stored in`/share/nextfiles/sessions`
-  - **Impact**: Stable, persistent sessions across container operations
+#### Persistent Session Storage
+- **Changed**: Sessions now stored in persistent volume `/share/nextfiles/sessions`
+  - **Before**: `/tmp/sessions` (volatile, lost on container restart)
+  - **After**: `/share/nextfiles/sessions` (persistent across restarts/rebuilds)
+  - **Benefit**: Users stay logged in after container operations
+
+#### Extended Session Lifetime
+- **Added**: Session lifetime extended to 24 hours
+  - `session.gc_maxlifetime = 86400` (24 hours)
+  - `session_lifetime = 86400` in Nextcloud config
+  - `session_keepalive = true`
+  - **Before**: Sessions expired after 24 minutes
+  - **After**: Sessions persist for 24 hours
+ 
+### Technical Details
+**Session Configuration:**
+```ini
+session.save_handler = files
+session.save_path = /share/nextfiles/sessions (persistent volume)
+session.gc_maxlifetime = 86400 (24 hours)
+session.cookie_lifetime = 0 (until browser close)
+session.serialize_handler = php (Nextcloud compatible)
+```
+
+**File Locations:**
+- Sessions: `/share/nextfiles/sessions/` (persistent)
+- Config: `/etc/php83/conf.d/nextcloud-sessions.ini`
+- Run script creates directory with correct permissions
 
 ## [1.2.2] - 2026-02-26
 
