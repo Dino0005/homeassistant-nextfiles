@@ -16,7 +16,7 @@ Designed to work with external MariaDB and Redis/Valkey services for maximum fle
 - 📁 Storage su `/share/nextfiles` (persistente attraverso i riavvii)
 - 🗄️ Database esterno MariaDB/MySQL (add-on MariaDB necessario)
 - 🚀 Redis per cache e locking (<a href="../redis-lite"> add-on Redis Lite </a>)
-- 🚀 JIT attivo (performance)
+- 🚀 JIT attivo
 - 🔒 Supporto HTTPS tramite reverse proxy
 - ⚡ Configurazione semplificata
 - 🎨 Interfaccia web completa di Nextcloud
