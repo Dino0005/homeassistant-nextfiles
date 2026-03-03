@@ -135,7 +135,7 @@ RUN { \
 # Session cleanup cron job - runs every hour to remove expired sessions (>24h)
 RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/crontabs/root && \
     echo "*/5 * * * * echo \"[CRON] Starting Nextcloud cron.php at \$(date)\" && su -s /bin/sh apache -c 'cd /var/www/nextcloud && /usr/bin/php /var/www/nextcloud/cron.php' && echo \"[CRON] Nextcloud cron.php completed\"" >> /etc/crontabs/root && \
-    echo "0 * * * * echo \"[CRON] Cleaning expired sessions at \$(date)\" && find /share/nextfiles/sessions/ -name \"sess_*\" -mtime +1 -delete && echo \"[CRON] Session cleanup completed\"" >> /etc/crontabs/root
+    echo "0 * * * * echo \"[CRON] Cleaning expired sessions at \$(date)\" && find /share/nextfiles/sessions/ -name \"sess_*\" -mmin +1440 -delete && echo \"[CRON] Session cleanup completed\"" >> /etc/crontabs/root
 
 # Copy run script
 COPY run.sh /
