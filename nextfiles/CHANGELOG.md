@@ -9,10 +9,11 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 ### Improvements
 #### Persistent Session Storage
-- **Changed**: Sessions now stored in persistent volume `/share/nextfiles/sessions`
+- **Added**: Sessions now stored in persistent volume `/share/nextfiles/sessions`
   - **Before**: `/tmp/sessions` (volatile, lost on container restart)
   - **After**: `/share/nextfiles/sessions` (persistent across restarts/rebuilds)
   - **Benefit**: Users stay logged in after container operations
+- **Added**: Automatic cleaning of expired sessions (cron job every hour)
 
 #### Extended Session Lifetime
 - **Added**: Session lifetime extended to 24 hours
