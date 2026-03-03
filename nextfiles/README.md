@@ -1,6 +1,7 @@
 # Nextfiles (Nextcloud) - Home Assistant App
 
 ![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue) 
+![Nextcloud Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fbuild.yaml&query=%24.args.NEXTCLOUD_VERSION&label=Nextcloud&color=blue&logo=nextcloud)
 ![Home Assistant App](https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant)
 
 Self-hosted file storage solution with Nextcloud for Home Assistant. 
