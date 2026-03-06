@@ -166,16 +166,15 @@ fi
 
 bashio::log.info "✓ Session directory configured at /share/nextfiles/sessions (perms: 1777)"
 
-# Ensure apache user exists
-if ! id apache &>/dev/null; then
-    addgroup -g 48 apache
-    adduser -D -u 48 -G apache -s /sbin/nologin apache
-fi
-
 # Fix permissions for /share mount
 bashio::log.info "Fixing permissions on /share/nextfiles..."
 chown -R apache:apache "${DATA_DIR}"
 chmod -R 755 "${DATA_DIR}"
+
+# IMPORTANT: Restore session directory permissions (chmod -R above resets it to 755)
+# Session directory MUST have 1777 permissions for PHP to write session files
+chmod 1777 /share/nextfiles/sessions
+bashio::log.info "✓ Session directory permissions restored to 1777"
 
 # Create symlink for custom apps directory
 bashio::log.info "Setting up custom apps directory..."
