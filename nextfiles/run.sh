@@ -145,9 +145,19 @@ mkdir -p "${DATA_DIR}/apps_custom"
 # Setup persistent session directory
 bashio::log.info "Setting up persistent session directory..."
 mkdir -p /share/nextfiles/sessions
+
+# ALWAYS set correct permissions (even if directory exists)
 chown apache:apache /share/nextfiles/sessions
 chmod 1777 /share/nextfiles/sessions
-bashio::log.info "✓ Session directory configured at /share/nextfiles/sessions"
+
+# Verify permissions
+PERMS=$(stat -c "%a" /share/nextfiles/sessions 2>/dev/null || echo "0")
+if [ "$PERMS" != "1777" ]; then
+    bashio::log.warning "Session directory permissions incorrect ($PERMS), fixing..."
+    chmod 1777 /share/nextfiles/sessions
+fi
+
+bashio::log.info "✓ Session directory configured at /share/nextfiles/sessions (perms: 1777)"
 
 # Ensure apache user exists
 if ! id apache &>/dev/null; then
