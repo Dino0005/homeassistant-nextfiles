@@ -142,6 +142,13 @@ mkdir -p "${DATA_DIR}/data"
 mkdir -p "${DATA_DIR}/config"
 mkdir -p "${DATA_DIR}/apps_custom"
 
+# Ensure apache user exists FIRST (needed for chown commands below)
+if ! id apache &>/dev/null; then
+    bashio::log.info "Creating apache user..."
+    addgroup -g 48 apache
+    adduser -D -u 48 -G apache -s /sbin/nologin apache
+fi
+
 # Setup persistent session directory
 bashio::log.info "Setting up persistent session directory..."
 mkdir -p /share/nextfiles/sessions
