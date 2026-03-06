@@ -150,25 +150,25 @@ if ! id apache &>/dev/null; then
 fi
 
 # Fix permissions for /share mount (apply general 755 permissions)
-bashio::log.info "Fixing permissions on /share/nextfiles..."
+bashio::log.info "Fixing permissions on ${DATA_DIR}..."
 chown -R apache:apache "${DATA_DIR}"
 chmod -R 755 "${DATA_DIR}"
 
 # Setup persistent session directory AFTER general permissions
 # This ensures the special 1777 permissions are not overwritten
 bashio::log.info "Setting up persistent session directory..."
-mkdir -p /share/nextfiles/sessions
-chown apache:apache /share/nextfiles/sessions
-chmod 1777 /share/nextfiles/sessions
+mkdir -p "${DATA_DIR}/sessions"
+chown apache:apache "${DATA_DIR}/sessions"
+chmod 1777 "${DATA_DIR}/sessions"
 
 # Verify session directory permissions
-PERMS=$(stat -c "%a" /share/nextfiles/sessions 2>/dev/null || echo "0")
+PERMS=$(stat -c "%a" "${DATA_DIR}/sessions" 2>/dev/null || echo "0")
 if [ "$PERMS" != "1777" ]; then
     bashio::log.warning "Session directory permissions incorrect ($PERMS), fixing..."
-    chmod 1777 /share/nextfiles/sessions
+    chmod 1777 "${DATA_DIR}/sessions"
 fi
 
-bashio::log.info "✓ Session directory configured at /share/nextfiles/sessions (perms: 1777)"
+bashio::log.info "✓ Session directory configured at ${DATA_DIR}/sessions (perms: 1777)"
 
 # Create symlink for custom apps directory
 bashio::log.info "Setting up custom apps directory..."
@@ -569,14 +569,14 @@ su -s /bin/bash apache -c \
 bashio::log.info "Configuring custom apps directory (apps2) in config.php..."
 
 # Use PHP to edit config.php directly
-cat > /tmp/update_apps_paths.php << 'EOFPHP'
+cat > /tmp/update_apps_paths.php << EOFPHP
 <?php
-$configFile = '/share/nextfiles/config/config.php';
-if (file_exists($configFile)) {
-    include $configFile;
+\$configFile = '${DATA_DIR}/config/config.php';
+if (file_exists(\$configFile)) {
+    include \$configFile;
     
     // Set apps_paths with apps2 as primary (writable, persistent)
-    $CONFIG['apps_paths'] = [
+    \$CONFIG['apps_paths'] = [
         [
             'path' => '/var/www/nextcloud/apps2',
             'url' => '/apps2',
@@ -590,8 +590,8 @@ if (file_exists($configFile)) {
     ];
     
     // Write back to config file
-    $content = "<?php\n\$CONFIG = " . var_export($CONFIG, true) . ";\n";
-    file_put_contents($configFile, $content);
+    \$content = "<?php\n\\\$CONFIG = " . var_export(\$CONFIG, true) . ";\n";
+    file_put_contents(\$configFile, \$content);
     echo "apps_paths configured successfully\n";
 } else {
     echo "Config file not found\n";
