@@ -131,6 +131,7 @@ RUN { \
     echo 'session.gc_maxlifetime = 86400'; \
     echo 'session.cookie_lifetime = 0'; \
     echo 'session.serialize_handler = php'; \
+    echo 'session.save_mode = 0600'; \
     } > /etc/php${PHP_VERSION}/conf.d/nextcloud-sessions.ini
 
 # Setup Nextcloud cron job - runs every 5 minutes with logging
