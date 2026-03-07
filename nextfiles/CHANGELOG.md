@@ -5,6 +5,53 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+
+## [1.2.4] - 2026-03-07
+
+### Technical Improvements & Bug Fixes
+#### Dynamic PHP Version Support
+- **Added**: `PHP_VERSION` build argument for easy upgrades
+  - Default: PHP 8.3
+  - Futureproof: Ready for PHP 8.4, 8.5, etc.
+  - Single-line upgrade in `build.yaml`
+  - All PHP paths and packages now use `${PHP_VERSION}` variable
+
+#### Session File Permissions Fix
+- **Fixed**: Session files created with insecure 755 permissions
+  - **Before**: `-rwxr-xr-x` (755) - readable by all
+  - **After**: `-rw-------` (600) - secure, owner-only
+  - Added `session.save_mode = 0600` to PHP configuration
+  - Prevents potential session security issues
+
+#### Session Directory Permissions Fix
+- **Fixed**: Session directory permissions reset by recursive chmod
+  - **Before**: Directory permissions overwritten to 755 after setup
+  - **After**: Correct order ensures 1777 (sticky bit) persists
+  - Apache user now created BEFORE permission setup
+  - Session directory configured AFTER general permissions
+
+#### Code Quality Improvements
+- **Refactored**: Consistent use of `${DATA_DIR}` variable
+  - Replaced hardcoded `/share/nextfiles` paths
+  - Improved maintainability and readability
+  - Single point of change for data directory path
+
+### Migration Notes
+
+**Recommendation:**
+- After upgrade, clear all sessions for immediate security:
+```bash
+  docker exec -it addon_xxx_nextfiles rm -f /share/nextfiles/sessions/sess_*
+```
+- Users will need to login again (one-time only)
+
+###  Bugs Fixed
+
+- **Fixed**: Session files created with world-readable permissions (755)
+- **Fixed**: Session directory permissions reset to 755 after container restart
+- **Fixed**: Apache user creation happening after chown operations
+- **Fixed**: Hardcoded PHP version paths limiting upgrade flexibility
+
 ## [1.2.3] - 2026-03-01
 
 ### Improvements
