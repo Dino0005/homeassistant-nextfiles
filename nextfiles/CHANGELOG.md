@@ -39,11 +39,12 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Migration Notes
 
 **Recommendation:**
+- Logout before upgrade
 - After upgrade, clear all sessions for immediate security:
 ```bash
   docker exec -it addon_xxx_nextfiles rm -f /share/nextfiles/sessions/sess_*
 ```
-- Users will need to login again (one-time only)
+- Users will need to login again
 
 ###  Bugs Fixed
 
