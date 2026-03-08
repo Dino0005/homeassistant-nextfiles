@@ -609,6 +609,12 @@ rm -f /tmp/update_apps_paths.php
 chown -R apache:apache "${NEXTCLOUD_DIR}"
 chown -R apache:apache "${DATA_DIR}"
 
+# IMPORTANT: Restore session file permissions
+if compgen -G "${DATA_DIR}/sessions/sess_*" > /dev/null 2>&1; then
+    chmod 600 "${DATA_DIR}/sessions"/sess_* 2>/dev/null || true
+    bashio::log.info "✓ Restored secure permissions (600) for session files"
+fi
+
 # Create compatibility symlinks for ALL apps in apps2
 # This helps apps that have hardcoded paths expecting /var/www/nextcloud/apps
 bashio::log.info "Creating compatibility symlinks for apps2 apps..."
