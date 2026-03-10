@@ -8,11 +8,23 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 ## [1.2.4] - 2026-03-07
 
+### Major Upgrades
+
+#### PHP 8.4 Upgrade
+- **Upgraded**: PHP from 8.3.30 to 8.4.18
+  - Improved JIT performance (+5-10%)
+  - Property hooks support (PHP 8.4 feature)
+  - Asymmetric visibility
+  - Lazy objects
+  - Better garbage collection
+  - Latest security patches
+  - Fully compatible with Nextcloud 32
+
 ### Technical Improvements & Bug Fixes
 #### Dynamic PHP Version Support
 - **Added**: `PHP_VERSION` build argument for easy upgrades
-  - Default: PHP 8.3
-  - Futureproof: Ready for PHP 8.4, 8.5, etc.
+  - Default: PHP 8.4
+  - Futureproof: Ready for PHP 8.5, etc.
   - Single-line upgrade in `build.yaml`
   - All PHP paths and packages now use `${PHP_VERSION}` variable
 
