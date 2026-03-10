@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG NEXTCLOUD_VERSION=32.0.6
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
-ARG PHP_VERSION=83
+ARG PHP_VERSION=84
 ENV PHP_VERSION=${PHP_VERSION}
 
 # Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
