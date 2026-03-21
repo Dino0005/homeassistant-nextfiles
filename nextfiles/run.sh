@@ -686,4 +686,4 @@ rm -f "${MYSQL_CONFIG}"
 # Alpine default is 8MB which is too low for Nextcloud recursive operations
 # Set to 64MB (65536 KB) to handle deep file trees and app installations
 bashio::log.info "Starting Apache with increased stack size (64MB)..."
-exec /bin/sh -c 'ulimit -s 65536 && httpd -D FOREGROUND'
+exec sh -c 'ulimit -s 65536 && exec httpd -D FOREGROUND'
