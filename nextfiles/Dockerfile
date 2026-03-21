@@ -95,6 +95,11 @@ RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf &&
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
     echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
 
+# Fix ImageMagick threading issues (prevents segmentation faults)
+# ImageMagick threading conflicts with PHP JIT causing worker crashes
+RUN echo 'SetEnv MAGICK_THREAD_LIMIT 1' >> /etc/apache2/httpd.conf && \
+    echo 'export MAGICK_THREAD_LIMIT=1' >> /etc/profile
+
 # Configure PHP defaults, enable PCNTL + APCu + Advanced OPcache with JIT
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
     sed -i 's|^upload_max_filesize *=.*|upload_max_filesize = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
