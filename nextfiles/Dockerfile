@@ -1,6 +1,9 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+# CRITICAL: Install bash BEFORE using it in SHELL directive
+RUN apk update && apk upgrade && apk add --no-cache bash
+
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -56,7 +59,6 @@ RUN apk add --no-cache \
     samba-client \
     netcat-openbsd \
     curl \
-    bash \
     dcron \
     s6-overlay \
     ffmpeg \
