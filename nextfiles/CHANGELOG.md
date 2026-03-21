@@ -6,6 +6,16 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/)
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
 
+## [1.2.5] - 2026-03-21
+
+###  Bugs Fixed
+
+#### Fix ImageMagick threading issues (prevents segmentation faults)
+- ImageMagick threading conflicts with PHP JIT causing worker crashes
+
+#### Increase stack size to prevent segmentation faults
+- Alpine default is 8MB which is too low for Nextcloud recursive operations. Set to 64MB (65536 KB) to handle deep file trees and app installations.
+    
 ## [1.2.4] - 2026-03-07
 
 ### Major Upgrades
