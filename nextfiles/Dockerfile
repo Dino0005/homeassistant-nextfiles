@@ -1,9 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Install bash FIRST
-RUN apk update && apk upgrade && apk add --no-cache bash
-
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
