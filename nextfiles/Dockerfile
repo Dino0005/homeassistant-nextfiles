@@ -10,9 +10,6 @@ ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 ARG PHP_VERSION=84
 ENV PHP_VERSION=${PHP_VERSION}
 
-# CRITICAL FIX: Update Alpine package repositories first
-RUN apk update && apk upgrade
-
 # Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
 RUN apk add --no-cache \
     apache2 \
@@ -97,11 +94,6 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
 RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf && \
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
     echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
-
-# Fix ImageMagick threading issues (prevents segmentation faults)
-# ImageMagick threading conflicts with PHP JIT causing worker crashes
-RUN echo 'SetEnv MAGICK_THREAD_LIMIT 1' >> /etc/apache2/httpd.conf && \
-    echo 'export MAGICK_THREAD_LIMIT=1' >> /etc/profile
 
 # Configure PHP defaults, enable PCNTL + APCu + Advanced OPcache with JIT
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
