@@ -100,7 +100,7 @@ RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf &&
 RUN echo 'SetEnv MAGICK_THREAD_LIMIT 1' >> /etc/apache2/httpd.conf && \
     echo 'export MAGICK_THREAD_LIMIT=1' >> /etc/profile
 
-# Configure PHP defaults, enable PCNTL + APCu + Advanced OPcache with JIT
+    # Configure PHP defaults, enable PCNTL + APCu + Advanced OPcache with JIT
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
     sed -i 's|^upload_max_filesize *=.*|upload_max_filesize = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
     sed -i 's|^post_max_size *=.*|post_max_size = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
