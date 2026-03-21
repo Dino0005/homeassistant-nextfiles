@@ -1,9 +1,6 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# CRITICAL: Install bash BEFORE using it in SHELL directive
-RUN apk update && apk upgrade && apk add --no-cache bash
-
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -59,6 +56,7 @@ RUN apk add --no-cache \
     samba-client \
     netcat-openbsd \
     curl \
+    bash \
     dcron \
     s6-overlay \
     ffmpeg \
@@ -96,11 +94,6 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
 RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf && \
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
     echo "AddType font/otf .otf" >> /etc/apache2/httpd.conf
-
-# Fix ImageMagick threading issues (prevents segmentation faults)
-# ImageMagick threading conflicts with PHP JIT causing worker crashes
-RUN echo 'SetEnv MAGICK_THREAD_LIMIT 1' >> /etc/apache2/httpd.conf && \
-    echo 'export MAGICK_THREAD_LIMIT=1' >> /etc/profile
 
 # Configure PHP defaults, enable PCNTL + APCu + Advanced OPcache with JIT
 RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php${PHP_VERSION}/php.ini && \
