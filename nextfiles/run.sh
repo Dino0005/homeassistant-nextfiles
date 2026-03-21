@@ -669,11 +669,5 @@ fi
 bashio::log.info "Cleaning up temporary files..."
 rm -f "${MYSQL_CONFIG}"
 
-# Increase stack size to prevent segmentation faults
-# Alpine default is 8MB which is too low for Nextcloud recursive operations
-# Set to 64MB (65536 KB) to handle deep file trees and app installations
-bashio::log.info "Setting stack size limit to 64MB..."
-ulimit -s 65536
-
 bashio::log.info "Starting Apache web server..."
 exec httpd -D FOREGROUND
