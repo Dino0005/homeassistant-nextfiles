@@ -460,7 +460,7 @@ DOMAIN_COUNT=$(jq -r '.trusted_domains | length' ${CONFIG_FILE})
 bashio::log.info "Found ${DOMAIN_COUNT} trusted domains in configuration"
 
 for i in $(seq 0 $((DOMAIN_COUNT - 1))); do
-    DOMAIN=$(jq -r ".trusted_domains[${i}] // \"\"' ${CONFIG_FILE})
+    DOMAIN=$(jq -r ".trusted_domains[${i}]" ${CONFIG_FILE})
     if [[ -n "${DOMAIN}" ]]; then
         bashio::log.info "Adding trusted domain [${i}]: ${DOMAIN}"
         su -s /bin/bash apache -c \
@@ -483,7 +483,7 @@ bashio::log.info "Found ${PROXY_COUNT} trusted proxies in configuration"
 
 # Add each proxy
 for i in $(seq 0 $((PROXY_COUNT - 1))); do
-    PROXY=$(jq -r ".trusted_proxies[${i}] // \"\"' ${CONFIG_FILE})
+    PROXY=$(jq -r ".trusted_proxies[${i}]" ${CONFIG_FILE})
     if [[ -n "${PROXY}" ]]; then
         bashio::log.info "Adding trusted proxy [${i}]: ${PROXY}"
         su -s /bin/bash apache -c \
