@@ -2,6 +2,9 @@
 # shellcheck shell=bash
 set -e
 
+# Load bashio library
+source /usr/lib/bashio/bashio.sh
+
 bashio::log.info "Starting Nextfiles setup..."
 
 # Get configuration
