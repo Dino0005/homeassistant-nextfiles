@@ -7,23 +7,33 @@ source /usr/lib/bashio/bashio.sh
 
 bashio::log.info "Starting Nextfiles setup..."
 
+# Read configuration from /data/options.json (HA provides this file automatically)
+CONFIG_FILE="/data/options.json"
+
+if [[ ! -f "${CONFIG_FILE}" ]]; then
+    echo "[FATAL] Configuration file /data/options.json not found!"
+    exit 1
+fi
+
+bashio::log.info "Reading configuration from ${CONFIG_FILE}"
+
 # Get configuration
-ADMIN_USER=$(bashio::config 'admin_user')
-ADMIN_PASSWORD=$(bashio::config 'admin_password')
-MAX_UPLOAD=$(bashio::config 'max_upload_size')
-MEMORY_LIMIT=$(bashio::config 'memory_limit')
-DEFAULT_PHONE_REGION=$(bashio::config 'default_phone_region')
+ADMIN_USER=$(jq -r '.admin_user // "admin"' ${CONFIG_FILE})
+ADMIN_PASSWORD=$(jq -r '.admin_password // ""' ${CONFIG_FILE})
+MAX_UPLOAD=$(jq -r '.max_upload_size // "512M"' ${CONFIG_FILE})
+MEMORY_LIMIT=$(jq -r '.memory_limit // "512M"' ${CONFIG_FILE})
+DEFAULT_PHONE_REGION=$(jq -r '.default_phone_region // "IT"' ${CONFIG_FILE})
 
 # Get Redis configuration (optional)
-REDIS_HOST=$(bashio::config 'redis_host')
-REDIS_PORT=$(bashio::config 'redis_port')
-REDIS_PASSWORD=$(bashio::config 'redis_password')
+REDIS_HOST=$(jq -r '.redis_host // ""' ${CONFIG_FILE})
+REDIS_PORT=$(jq -r '.redis_port // 6379' ${CONFIG_FILE})
+REDIS_PASSWORD=$(jq -r '.redis_password // ""' ${CONFIG_FILE})
 
 # Get MariaDB configuration
-MARIADB_HOST=$(bashio::config 'mariadb_host')
-MARIADB_DATABASE=$(bashio::config 'mariadb_database')
-MARIADB_USERNAME=$(bashio::config 'mariadb_username')
-MARIADB_PASSWORD=$(bashio::config 'mariadb_password')
+MARIADB_HOST=$(jq -r '.mariadb_host // "core-mariadb"' ${CONFIG_FILE})
+MARIADB_DATABASE=$(jq -r '.mariadb_database // "nextcloud"' ${CONFIG_FILE})
+MARIADB_USERNAME=$(jq -r '.mariadb_username // "nextcloud"' ${CONFIG_FILE})
+MARIADB_PASSWORD=$(jq -r '.mariadb_password // ""' ${CONFIG_FILE})
 
 # Validate MariaDB configuration
 if [ -z "$MARIADB_HOST" ] || [ -z "$MARIADB_PASSWORD" ]; then
@@ -446,11 +456,11 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:delete trusted_domains" \
     2>/dev/null || true
 
-DOMAIN_COUNT=$(bashio::config 'trusted_domains | length')
+DOMAIN_COUNT=$(jq -r '.trusted_domains | length' ${CONFIG_FILE})
 bashio::log.info "Found ${DOMAIN_COUNT} trusted domains in configuration"
 
 for i in $(seq 0 $((DOMAIN_COUNT - 1))); do
-    DOMAIN=$(bashio::config "trusted_domains[${i}]")
+    DOMAIN=$(jq -r ".trusted_domains[${i}] // \"\"' ${CONFIG_FILE})
     if [[ -n "${DOMAIN}" ]]; then
         bashio::log.info "Adding trusted domain [${i}]: ${DOMAIN}"
         su -s /bin/bash apache -c \
@@ -468,12 +478,12 @@ su -s /bin/bash apache -c \
     2>/dev/null || true
 
 # Get count of trusted proxies
-PROXY_COUNT=$(bashio::config 'trusted_proxies | length')
+PROXY_COUNT=$(jq -r '.trusted_proxies | length' ${CONFIG_FILE})
 bashio::log.info "Found ${PROXY_COUNT} trusted proxies in configuration"
 
 # Add each proxy
 for i in $(seq 0 $((PROXY_COUNT - 1))); do
-    PROXY=$(bashio::config "trusted_proxies[${i}]")
+    PROXY=$(jq -r ".trusted_proxies[${i}] // \"\"' ${CONFIG_FILE})
     if [[ -n "${PROXY}" ]]; then
         bashio::log.info "Adding trusted proxy [${i}]: ${PROXY}"
         su -s /bin/bash apache -c \
@@ -483,7 +493,7 @@ for i in $(seq 0 $((PROXY_COUNT - 1))); do
 done
 
 # Set overwrite settings
-FIRST_DOMAIN=$(bashio::config 'trusted_domains | .[0]')
+FIRST_DOMAIN=$(jq -r '.trusted_domains[0] // "localhost"' ${CONFIG_FILE})
 
 bashio::log.info "Configuring overwrite settings for reverse proxy..."
 
