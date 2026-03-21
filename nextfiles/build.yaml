@@ -12,4 +12,3 @@ labels:
 args:
   NEXTCLOUD_VERSION: "32.0.6"
   PHP_VERSION: "84"
-  CACHEBUST: "20260321"
