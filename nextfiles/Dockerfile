@@ -10,6 +10,9 @@ ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 ARG PHP_VERSION=84
 ENV PHP_VERSION=${PHP_VERSION}
 
+# CRITICAL FIX: Update Alpine package repositories first
+RUN apk update && apk upgrade
+
 # Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
 RUN apk add --no-cache \
     apache2 \
