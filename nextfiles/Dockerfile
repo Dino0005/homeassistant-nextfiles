@@ -9,7 +9,6 @@ ARG NEXTCLOUD_VERSION=32.0.6
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 ARG PHP_VERSION=84
 ENV PHP_VERSION=${PHP_VERSION}
-ARG CACHEBUST=1
 
 # Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
 RUN apk add --no-cache \
