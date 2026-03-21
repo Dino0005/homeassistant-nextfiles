@@ -1,9 +1,8 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# CRITICAL FIX: Force complete rebuild and ensure apk works
-# This prevents Docker cache issues that skip bash installation
-RUN apk update && apk upgrade && apk add --no-cache wget && apk del wget
+# Install bash FIRST
+RUN apk update && apk upgrade && apk add --no-cache bash
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
