@@ -323,6 +323,17 @@ L'add-on gestisce automaticamente i permessi, ma se necessario puoi accedere via
 chown -R root:root /share/nextfiles
 ```
 
+### Problemi con insatllazione delle app da Web UI
+- ⚠️ Install app da Web UI causa timeout che blocca Nextcloud, ma completa dopo il riavvio l'app è installata e abilitata.
+- ✅ Install app da CLI funziona senza problemi
+```bash
+# Installa Calendar via CLI (no timeout)
+docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
+
+# Installa Contacts
+docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
+```
+
 ## Crediti
 
 Basato sul progetto originale [hassio-addon-nextcloud](https://github.com/mtthp/hassio-addons) di Matthieu Petit.
