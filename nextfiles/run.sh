@@ -211,7 +211,7 @@ sed -i "s|upload_max_filesize = .*|upload_max_filesize = ${MAX_UPLOAD}|g" "${PHP
 sed -i "s|post_max_size = .*|post_max_size = ${MAX_UPLOAD}|g" "${PHP_INI}"
 sed -i "s|max_execution_time = .*|max_execution_time = 300|g" "${PHP_INI}"
 
-bashio::log.info "✓ PHP configuration updated (memory: ${MEMORY_LIMIT}, upload: ${MAX_UPLOAD})"
+bashio::log.info "✓ PHP configuration updated (memory: ${MEMORY_LIMIT}, upload: ${MAX_UPLOAD}, max_exec: 300s)"
 
 # First installation check
 if [ ! -f "${DATA_DIR}/config/config.php" ]; then
