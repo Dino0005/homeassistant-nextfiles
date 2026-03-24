@@ -117,7 +117,7 @@ RUN { \
         echo 'opcache.revalidate_freq=60'; \
         echo 'opcache.save_comments=1'; \
         echo 'opcache.jit=1255'; \
-        echo 'opcache.jit_buffer_size=128M'; \
+        echo 'opcache.jit_buffer_size=16M'; \
     } > /etc/php${PHP_VERSION}/conf.d/opcache-nextcloud.ini
 
 # Configure APCu
