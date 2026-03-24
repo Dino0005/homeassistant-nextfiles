@@ -324,10 +324,13 @@ chown -R root:root /share/nextfiles
 ```
 
 ### Problemi con insatllazione delle app da Web UI
-- ⚠️ Install app da Web UI causa timeout che blocca Nextcloud, ma completa dopo il riavvio l'app è installata e abilitata.
+- ⚠️ Install app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio il riavvio di Nextfiles l'app è installata e abilitata.
 - ✅ Install app da CLI funziona senza problemi
 ```bash
-# Installa Calendar via CLI (no timeout)
+# Per installare un'App
+docker exec -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:install nome_app
+
+# Installa Calendar
 docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
 
 # Installa Contacts
