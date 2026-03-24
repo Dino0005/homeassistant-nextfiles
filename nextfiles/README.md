@@ -324,7 +324,7 @@ chown -R root:root /share/nextfiles
 ```
 
 ### Problemi con insatllazione delle app da Web UI
-- ⚠️ Install app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio il riavvio di Nextfiles l'app è installata e abilitata.
+- ⚠️ Install app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata.
 - ✅ Install app da CLI funziona senza problemi
 ```bash
 # Per installare un'App
