@@ -328,13 +328,13 @@ chown -R root:root /share/nextfiles
 - ✅ Install app da CLI funziona senza problemi
 ```bash
 # Per installare un'App
-docker exec -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:install nome_app
+docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:install nome_app
 
 # Installa Calendar
-docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
+docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
 
 # Installa Contacts
-docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
+docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
 ```
 
 ## Crediti
