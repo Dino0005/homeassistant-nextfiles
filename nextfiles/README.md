@@ -320,7 +320,7 @@ trusted_proxies:
 L'add-on gestisce automaticamente i permessi, ma se necessario puoi accedere via SSH e eseguire:
 
 ```bash
-chown -R root:root /share/nextfiles
+chown -R apache:apache /share/nextfiles
 ```
 
 ### Problemi con insatllazione delle app da Web UI
