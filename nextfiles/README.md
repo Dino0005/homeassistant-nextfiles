@@ -327,7 +327,7 @@ chown -R root:root /share/nextfiles
 - ⚠️ Install app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata.
 - ✅ Install app da CLI funziona senza problemi
 ```bash
-# Per installare un'App
+# Per installare un'App da CLI
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:install nome_app
 
 # Installa Calendar
@@ -335,6 +335,10 @@ docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ ap
 
 # Installa Contacts
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
+```
+Riparazione del database e della cache:
+```bash
+docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:repair
 ```
 
 ## Crediti
