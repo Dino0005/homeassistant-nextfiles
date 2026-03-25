@@ -30,7 +30,9 @@ options:
   trusted_domains:
     - localhost
   trusted_proxies:
-    - 172.30.33.0/24
+    - 172.30.0.0/16
+    - 172.16.0.0/12
+    - 127.0.0.1
   max_upload_size: 512M
   memory_limit: 512M
   redis_host: ""
