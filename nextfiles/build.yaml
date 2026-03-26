@@ -12,5 +12,5 @@ labels:
   org.opencontainers.image.source: "https://github.com/Dino0005/homeassistant-nextfiles"
   org.opencontainers.image.licenses: "MIT"
 args:
-  NEXTCLOUD_VERSION: "32.0.6"
+  NEXTCLOUD_VERSION: "32.0.7"
   PHP_VERSION: "84"
