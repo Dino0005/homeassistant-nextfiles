@@ -326,6 +326,8 @@ chown -R apache:apache /share/nextfiles
 ### Problemi con insatllazione/aggiornamneto delle app da Web UI
 - ⚠️ Installare/Aggiornare app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata.
 - ✅ Installare/Aggiornre app da CLI funziona senza problemi
+
+Installazione
 ```bash
 # Per installare un'App da CLI
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:install nome_app
@@ -336,6 +338,7 @@ docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ ap
 # Installa Contacts
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
 ```
+Aggiornamento
 ```bash
 # Per aggiornare un'App da CLI
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:update nome_app
