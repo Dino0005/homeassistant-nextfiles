@@ -117,7 +117,7 @@ RUN { \
         echo 'opcache.revalidate_freq=60'; \
         echo 'opcache.save_comments=1'; \
         echo 'opcache.jit=1255'; \
-        echo 'opcache.jit_buffer_size=16M'; \
+        echo 'opcache.jit_buffer_size=32M'; \
     } > /etc/php${PHP_VERSION}/conf.d/opcache-nextcloud.ini
 
 # Configure APCu
@@ -135,7 +135,7 @@ RUN { \
     echo 'session.save_path = /share/nextfiles/sessions'; \
     echo 'session.gc_maxlifetime = 86400'; \
     echo 'session.cookie_lifetime = 0'; \
-    echo 'session.serialize_handler = php'; \
+    echo 'session.serialize_handler = igbinary'; \
     echo 'session.save_mode = 0600'; \
     } > /etc/php${PHP_VERSION}/conf.d/nextcloud-sessions.ini
 
