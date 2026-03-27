@@ -448,6 +448,27 @@ su -s /bin/bash apache -c \
 
 bashio::log.info "✓ Session lifetime set to 24 hours"
 
+# Configure Snowflake ID for Nextcloud 33+ (required for distributed setups)
+bashio::log.info "=========================================="
+bashio::log.info "Configuring Snowflake ID - Preparation..."
+bashio::log.info "=========================================="
+
+# Check if a server_id already exists in config.php so as not to overwrite it
+EXISTING_ID=$(su -s /bin/bash apache -c "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:get snowflake.server_id" 2>/dev/null || echo "")
+
+if [ -z "$EXISTING_ID" ]; then
+    # If not exists, generate numeric ID based on hostname (0-1023 range for Snowflake)
+    NEW_SERVER_ID=$(echo "$(hostname)" | cksum | awk '{print $1 % 1024}')
+    su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set snowflake.server_id --value='${NEW_SERVER_ID}' --type=integer" \
+        2>/dev/null || true
+    bashio::log.info "✓ New Snowflake ID generated: ${NEW_SERVER_ID}"
+else
+    bashio::log.info "✓ Snowflake ID already exists: ${EXISTING_ID}"
+fi
+
+bashio::log.info "=========================================="
+
 # Configure trusted domains
 bashio::log.info "Configuring trusted domains..."
 
