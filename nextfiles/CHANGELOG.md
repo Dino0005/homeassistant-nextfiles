@@ -71,7 +71,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Logout before upgrade
 - After upgrade, clear all sessions for immediate security:
 ```bash
-  docker exec -it addon_1960957c_nextfiles rm -f /share/nextfiles/sessions/sess_*
+  docker exec -it -u apache addon_1960957c_nextfiles rm -f /share/nextfiles/sessions/sess_*
 ```
 - Users will need to login again
 
