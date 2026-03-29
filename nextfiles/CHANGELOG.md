@@ -21,9 +21,8 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Stack size: ulimit 64MB
 
 ### Technical
-- Base image pinned to tested SHA
-- PHP 8.4.18 with JIT enabled
-- All features working
+- Base image pinned to Alpine 3.23.3 (LTS) for enhanced system security and library consistency.
+- PHP 8.4.18 with JIT enabled (Native Alpine 3.23 build).
     
 ## [1.2.4] - 2026-03-07
 
