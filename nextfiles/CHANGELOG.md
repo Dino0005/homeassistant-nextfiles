@@ -16,6 +16,8 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Bash execution in container (shebang + CMD fix)
 - Configuration reading (bashio::config → jq)
 - ImageMagick segfaults (MAGICK_THREAD_LIMIT=1)
+
+### Modified
 - Stack size: ulimit 64MB
 
 ### Technical
