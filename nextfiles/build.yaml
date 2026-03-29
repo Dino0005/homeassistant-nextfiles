@@ -3,9 +3,6 @@ build_from:
   # Tested and working version from 2026-03-17: ghcr.io/home-assistant/aarch64-base:3.23-2026.03.1
   aarch64: ghcr.io/home-assistant/aarch64-base@sha256:50613e8045a921516f9357563872be320088f6310d5674d117cc8254b68bf298
   amd64: ghcr.io/home-assistant/amd64-base:3.23
-  armhf: ghcr.io/home-assistant/armhf-base:3.23
-  armv7: ghcr.io/home-assistant/armv7-base:3.23
-  i386: ghcr.io/home-assistant/i386-base:3.23
 labels:
   org.opencontainers.image.title: "Nextfiles"
   org.opencontainers.image.description: "Self-hosted file storage with integrated database"
