@@ -11,7 +11,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - **Nextcloud** 32.0.6 → 32.0.7
 
 ### Deprecated
-- 32-bit architectures deprecated by Home Assistant OS 17.0: i386, armhf, armv7 removed from build.yaml
+- 32-bit architecture support deprecated following Home Assistant OS 17.0: i386, armhf, armv7 removed from build.yaml
 
 ## [1.3.0] - 2026-03-21
 
