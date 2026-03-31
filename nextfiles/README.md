@@ -330,7 +330,7 @@ chown -R apache:apache /share/nextfiles
 Installazione
 ```bash
 # Per installare un'App da CLI
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:install nome_app
+docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install nome_app
 
 # Installa Calendar
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
@@ -341,7 +341,7 @@ docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ ap
 Aggiornamento
 ```bash
 # Per aggiornare un'App da CLI
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextfiles/occ app:update nome_app
+docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:update nome_app
 
 # Aggiornare Calendar
 docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:update calendar
