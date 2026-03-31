@@ -324,7 +324,11 @@ chown -R apache:apache /share/nextfiles
 ```
 
 ### Problemi con insatllazione/aggiornamneto delle app da Web UI
-- ⚠️ Installare/Aggiornare app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata.
+- ⚠️ Installare/Aggiornare app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata. Oppure basta riavviare Apache:
+```bash
+# Per riaviare Apache
+docker exec -it addon_1960957c_nextfiles bash -c "httpd -k restart"
+```
 - ✅ Installare/Aggiornre app da CLI funziona senza problemi
 
 Installazione
