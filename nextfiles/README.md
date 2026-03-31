@@ -153,37 +153,29 @@ https://tuodominio.com {
   redir /.well-known/webfinger /nextfiles/index.php/.well-known/webfinger 301
   redir /.well-known/nodeinfo /nextfiles/index.php/.well-known/nodeinfo 301
 
-  # Correzione per il redirect post-login (Passkey/FIDO2)
-  @not_nextfiles {
-    not path /nextfiles*
-    path /index.php/* /apps/* /core/* /login/* /common/*
-  }
-  redir @not_nextfiles /nextfiles{uri} 301
-  
   # NEXTFILES (Nextcloud) su /nextfiles
-  handle /nextfiles* {
-    import security_headers
-    uri strip_prefix /nextfiles
-    
-   reverse_proxy http://localhost:8080 {
-      # Pass authentication headers
-      header_up Authorization {http.request.header.Authorization}
-      
-      # Header custom specifici per Nextcloud
-      header_up X-Real-IP {remote_host}
-      header_up X-Forwarded-Ssl on
-      header_up Host {host}
-      
-      # Rimuove header indesiderati dal backend
-      header_down -X-Powered-By
-      
-      # Timeout estesi per operazioni lunghe
-      transport http {
-        read_timeout 3600s
-        write_timeout 3600s
-      }
-    }
-  }
+	handle_path /nextfiles/* {
+		import security_headers
+
+		reverse_proxy http://localhost:8080 {
+			# Pass authentication headers
+			header_up Authorization {http.request.header.Authorization}
+
+			# Header custom specifici per Nextcloud
+			header_up X-Real-IP {remote_host}
+			header_up X-Forwarded-Ssl on
+			header_up Host {host}
+
+			# Rimuove header indesiderati dal backend
+			header_down -X-Powered-By
+
+			# Timeout estesi per operazioni lunghe
+			transport http {
+				read_timeout 3600s
+				write_timeout 3600s
+			}
+		}
+	}
   
   # HOME ASSISTANT (root path)
   handle {
