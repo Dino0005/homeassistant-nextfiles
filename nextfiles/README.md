@@ -181,7 +181,6 @@ https://tuodominio.com {
 	handle {
 		import security_headers
 		header Content-Security-Policy "default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' https:; worker-src 'self' blob:; child-src 'self' blob:; img-src 'self' data: blob: https:; media-src 'self' https: blob:; connect-src 'self' wss: https:; object-src 'none'; base-uri 'self'; upgrade-insecure-requests;"
-		#header Link "</local/favicon.ico>; rel=icon"
 		header Link "</static/icons/favicon.ico>; rel=icon"
 
 		reverse_proxy http://localhost:8123 {
