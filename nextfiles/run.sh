@@ -527,7 +527,7 @@ su -s /bin/bash apache -c \
     2>/dev/null || true
 
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}/nextfiles'" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwrite.cli.url --value='https://${FIRST_DOMAIN}'" \
     2>/dev/null || true
 
 su -s /bin/bash apache -c \
