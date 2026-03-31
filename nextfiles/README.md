@@ -352,7 +352,9 @@ docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ ap
 
 Riparazione del database e della cache:
 ```bash
-docker exec -it addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:repair
+docker exec -it addon_1960957c_nextfiles \
+    su -s /bin/bash apache -c \
+    "php /var/www/nextcloud/occ maintenance:repair"
 ```
 
 ## Crediti
