@@ -107,7 +107,7 @@ RUN sed -i 's|^memory_limit *=.*|memory_limit = 512M|g' /etc/php${PHP_VERSION}/p
     sed -i 's|^max_execution_time *=.*|max_execution_time = 3600|g' /etc/php${PHP_VERSION}/php.ini && \
     sed -i 's/^disable_functions.*/disable_functions = /g' /etc/php${PHP_VERSION}/php.ini
 
-# Configure OPcache with JIT (use dedicated config file for reliability)
+# Configure OPcache without JIT (JIT causes segfault with PHP 8.4 + Apache prefork)
 RUN { \
         echo 'opcache.enable=1'; \
         echo 'opcache.enable_cli=1'; \
@@ -116,8 +116,8 @@ RUN { \
         echo 'opcache.max_accelerated_files=10000'; \
         echo 'opcache.revalidate_freq=60'; \
         echo 'opcache.save_comments=1'; \
-        echo 'opcache.jit=1255'; \
-        echo 'opcache.jit_buffer_size=32M'; \
+        echo 'opcache.jit=0'; \
+        echo 'opcache.jit_buffer_size=0'; \
     } > /etc/php${PHP_VERSION}/conf.d/opcache-nextcloud.ini
 
 # Configure APCu
