@@ -16,7 +16,6 @@ Designed to work with external MariaDB and Redis/Valkey services for maximum fle
 - 📁 Storage su `/share/nextfiles` (persistente attraverso i riavvii)
 - 🗄️ Database esterno MariaDB/MySQL (add-on MariaDB necessario)
 - 🚀 Redis per cache e locking (<a href="../redis-lite"> add-on Redis Lite </a>)
-- 🚀 JIT attivo
 - 🔒 Supporto HTTPS tramite reverse proxy
 - ⚡ Configurazione semplificata
 - 🎨 Interfaccia web completa di Nextcloud
@@ -315,7 +314,7 @@ L'add-on gestisce automaticamente i permessi, ma se necessario puoi accedere via
 chown -R apache:apache /share/nextfiles
 ```
 
-### Problemi con insatllazione/aggiornamneto delle app da Web UI
+### Problemi con insatllazione/aggiornamneto delle app da Web UI qunado JIT è attivo (JIT disattivato da v1.3.2)
 - ⚠️ Installare/Aggiornare app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata. Oppure basta riavviare Apache:
 ```bash
 # Per riaviare Apache
