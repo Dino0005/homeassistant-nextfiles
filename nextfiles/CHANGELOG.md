@@ -5,6 +5,13 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+
+## [1.3.2] - 2026-04-01
+
+###  Fixed
+- Fix Config value overwrite.cli.url
+- Fix segfault: Disabled OPcache JIT to resolve Apache worker segmentation faults. The combination of PHP 8.4 and Apache (prefork) is incompatible with JIT during intensive operations, such as app installations. This issue previously caused the web interface to hang, requiring a manual Apache restart.
+
 ## [1.3.1] - 2026-03-26
 
 ### Updated
@@ -12,9 +19,6 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 ### Deprecated
 - 32-bit architecture support deprecated following Home Assistant OS 17.0: i386, armhf, armv7 removed from build.yaml
-
-###  Fixed
-- Config value overwrite.cli.url
 
 ## [1.3.0] - 2026-03-21
 
