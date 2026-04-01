@@ -197,7 +197,7 @@ https://tuodominio.com {
 **Note importanti:**
 - Sostituisci `https://tuodominio.com` con il tuo dominio 
 - I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud. Senza questi redirect, vedrai avvisi nella panoramica amministrativa
-- `handle_path`, intercetta la richiesta che inizia con /nextfiles/ e taglia via quella parte. Nextcloud (dentro il container) è installato nella cartella "root" (/var/www/nextcloud), quindi non sa di essere "sotto" la cartella /nextfiles. Se Caddy non rimuovesse il prefisso, passerebbe ad Apache una richiesta per una cartella /nextfiles/ che Apache non troverebbe, restituendo un errore 404.
+- `handle_path`, intercetta la richiesta che inizia con /nextfiles/ e taglia via quella parte. Nextcloud (dentro il container) è installato nella cartella "root" (`/var/www/nextcloud`), quindi non sa di essere "sotto" la cartella /nextfiles. Se Caddy non rimuovesse il prefisso, passerebbe ad Apache una richiesta per una cartella /nextfiles/ che Apache non troverebbe, restituendo un errore 404.
 - Se hai un Fritzbox, il router dispone di un proprio FQDN predefinito per accedere da remoto, quinidi lo si può usare come dominio, ad es. xyz.myfritz.net
 
 Poi:
