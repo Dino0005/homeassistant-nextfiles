@@ -13,6 +13,9 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Deprecated
 - 32-bit architecture support deprecated following Home Assistant OS 17.0: i386, armhf, armv7 removed from build.yaml
 
+###  Fixed
+- Config value overwrite.cli.url
+
 ## [1.3.0] - 2026-03-21
 
 ###  Fixed
