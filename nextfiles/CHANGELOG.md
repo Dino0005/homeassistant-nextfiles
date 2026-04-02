@@ -6,7 +6,10 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/)
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
 
-## [1.3.2] - 2026-04-01
+## [1.3.2] - 2026-04-02
+
+### Updated
+- **Nextcloud** 32.0.7 → 32.0.8
 
 ###  Fixed
 - Fix Config value overwrite.cli.url
