@@ -537,6 +537,11 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwritewebroot --value='/nextfiles'" \
     2>/dev/null || true
 
+# Set temp directory (necessary to upgrade to NC33+)
+su -s /bin/bash apache -c \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set tempdirectory --value='${DATA_DIR}/tmp'" \
+    2>/dev/null || true
+
 # Fix reverse proxy headers security
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set forwarded_for_headers 0 --value='HTTP_X_FORWARDED_FOR'" \
