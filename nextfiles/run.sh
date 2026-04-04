@@ -154,6 +154,9 @@ bashio::log.info "Setting up data directory: ${DATA_DIR}"
 mkdir -p "${DATA_DIR}/data"
 mkdir -p "${DATA_DIR}/config"
 mkdir -p "${DATA_DIR}/apps_custom"
+# Temp directory for Nextcloud (necessary to upgrade to NC33+)
+mkdir -p "${DATA_DIR}/tmp"
+chown apache:apache "${DATA_DIR}/tmp"
 
 # Ensure apache user exists FIRST (needed for chown commands below)
 if ! id apache &>/dev/null; then
