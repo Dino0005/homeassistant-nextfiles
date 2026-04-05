@@ -15,6 +15,11 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - Fix Config value overwrite.cli.url
 - Fix segfault: Disabled OPcache JIT to resolve Apache worker segmentation faults. The combination of PHP 8.4 and Apache (prefork) is incompatible with JIT during intensive operations, such as app installations. This issue previously caused the web interface to hang, requiring a manual Apache restart.
 
+### Added
+- Preparing for Nextcloud 33:
+  - Configure Snowflake ID for Nextcloud 33+. Generate numeric ID based on hostname (0-1023 range for Snowflake)
+  - Set temp directory for Nextcloud, necessary to upgrade to NC33+.
+
 ## [1.3.1] - 2026-03-26
 
 ### Updated
