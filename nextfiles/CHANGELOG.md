@@ -11,6 +11,12 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Updated
 - **Nextcloud** 32.0.8 → 33.0.2
 
+### Added
+- Configuration tempdirectory on persistent volume for compatibility with the Snowflake ID system introduced in NC33
+- Cron job for automatic cleaning of the tmp folder at 4:00
+- Serverid configuration as an integer numeric identifier required by NC33
+- Automatic cleaning of obsolete DAV configuration keys not recognized by the NC33 config lexicon
+
 ## [1.3.2] - 2026-04-02
 
 ### Updated
