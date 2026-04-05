@@ -607,6 +607,10 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:app:delete circles migration_22_0_1" \
     2>/dev/null || true
 
+# Clean up obsolete DAV config keys (NC33 config lexicon)
+bashio::log.info "Cleaning up obsolete DAV config keys..."
+${MYSQL_CMD} --defaults-extra-file="${MYSQL_CONFIG}" -e "DELETE FROM ${MARIADB_DATABASE}.oc_appconfig WHERE appid='dav' AND configkey IN ('regeneratedBirthdayCalendarsForYearFix','buildCalendarSearchIndex','builtSocialSearchIndex','system_addressbook_limit','buildCalendarReminderIndex','hide_absence_settings','enableCalendarFederation','sendInvitations','needs_system_address_book_sync','buildCalendarReminderIndex');" 2>/dev/null || true
+
 # Disable maintenance mode
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --off" \
