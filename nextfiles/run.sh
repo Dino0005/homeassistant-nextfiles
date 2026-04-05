@@ -544,7 +544,7 @@ su -s /bin/bash apache -c \
 
 # Set server ID
 su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set server_id --value='nextfiles-1'" \
+    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set serverid --value='1' --type=integer" \
     2>/dev/null || true
 
 # Fix reverse proxy headers security
