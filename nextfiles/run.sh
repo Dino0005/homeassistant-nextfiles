@@ -537,14 +537,6 @@ su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set overwritewebroot --value='/nextfiles'" \
     2>/dev/null || true
 
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set htaccess.RewriteBase --value='/nextfiles'" \
-    2>/dev/null || true
-
-su -s /bin/bash apache -c \
-    "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:update:htaccess" \
-    2>/dev/null || true
-
 # Set temp directory (necessary to upgrade to NC33+)
 su -s /bin/bash apache -c \
     "${PHP_BIN} ${NEXTCLOUD_DIR}/occ config:system:set tempdirectory --value='${DATA_DIR}/tmp'" \
