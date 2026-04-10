@@ -40,7 +40,11 @@ ${MYSQL_CMD} --defaults-extra-file="${MYSQL_CONFIG}" \
     -e "DELETE FROM ${MARIADB_DATABASE}.oc_jobs WHERE class LIKE '%Circles%';" \
     2>/dev/null || true
 
-# 3. Pulizia lock di migrazione (prima del repair)
+# 3. Esegui repair (velocissimo ora che Circles è disabilitato)
+bashio::log.info "Running maintenance repair..."
+occ "maintenance:repair --include-expensive --no-interaction"
+
+# 4. Pulizia lock di migrazione DOPO il repair
 bashio::log.info "Cleaning up Circles migration locks..."
 occ "config:app:delete circles migration_lock"
 occ "config:app:delete circles migration_22_0_0"
@@ -65,12 +69,6 @@ ${MYSQL_CMD} --defaults-extra-file="${MYSQL_CONFIG}" -e \
          'needs_system_address_book_sync'
        );" \
     2>/dev/null || true
-
-# ---------------------------------------------------------------------------
-# maintenance:repair
-# ---------------------------------------------------------------------------
-bashio::log.info "Running maintenance repair..."
-occ "maintenance:repair --include-expensive --no-interaction"
 
 # ---------------------------------------------------------------------------
 # Disattiva maintenance mode
