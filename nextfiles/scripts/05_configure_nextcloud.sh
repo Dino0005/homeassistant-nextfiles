@@ -41,6 +41,11 @@ done
 
 bashio::log.info "✓ Preview providers configured (${#PROVIDERS[@]} providers)"
 
+# Pulizia migration_lock PRIMA della configurazione Redis e del repair
+# (previene errori durante maintenance:repair — originale riga 382)
+bashio::log.info "Cleaning up Circles migration lock (pre-repair)..."
+occ "config:app:delete circles migration_lock"
+
 # ---------------------------------------------------------------------------
 # Redis (opzionale)
 # ---------------------------------------------------------------------------
