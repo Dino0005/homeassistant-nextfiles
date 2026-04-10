@@ -24,7 +24,8 @@ for script in "${SCRIPTS[@]}"; do
     bashio::log.info "=========================================="
     bashio::log.info "▶ $(basename $script)"
     bashio::log.info "=========================================="
-    bash "$script" || { bashio::log.fatal "Failed at: $script"; exit 1; }
+    # source invece di bash: preserva le variabili exportate tra gli script
+    source "$script" || { bashio::log.fatal "Failed at: $script"; exit 1; }
 done
 
 bashio::log.info "=========================================="
