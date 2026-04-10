@@ -148,6 +148,7 @@ RUN echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /
 
 # Copy run script
 COPY run.sh /
-RUN chmod a+x /run.sh
+COPY scripts/ /scripts/
+RUN chmod a+x /run.sh /scripts/*.sh
 
 CMD ["/bin/bash", "/run.sh"]
