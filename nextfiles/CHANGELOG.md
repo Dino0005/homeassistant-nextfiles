@@ -7,7 +7,7 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 
 
-## [1.3.4] - 2026-04-10
+## [1.3.4] - 2026-04-11
 
 ### Modified
 - Refactored `run.sh` into modular scripts for better maintainability and easier debugging:
@@ -18,8 +18,8 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
   - `scripts/04_install_or_upgrade.sh` — first install via `occ maintenance:install` or existing install config link + maintenance mode
   - `scripts/05_configure_nextcloud.sh` — all `occ config:system:set` calls (APCu, Redis, preview providers, sessions, Snowflake ID, trusted domains/proxies, overwrite settings)
   - `scripts/06_finalize.sh` — DB indices, Circles fix, DAV cleanup, `maintenance:repair`, `apps_paths` config, final permissions, compatibility symlinks, cron daemon
-- Compressed 19 repeated `enabledPreviewProviders` calls into a loop (no behavior change)
 - `run.sh` is now a pure orchestrator: sources env, iterates scripts, launches Apache
+- `enabledPreviewProviders` kept as direct `su` calls (not wrapped in `occ()`) to preserve correct backslash escaping in `config.php`
 
 ## [1.3.3] - 2026-04-05
 
