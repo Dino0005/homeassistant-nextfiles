@@ -9,7 +9,6 @@
 #   - Overwrite settings (reverse proxy)
 # =============================================================================
 set -e
-source /usr/lib/bashio/bashio.sh
 source /scripts/env.sh
 
 # Shorthand per eseguire occ come utente apache (errori non fatali)
