@@ -3,7 +3,6 @@
 # 02_setup_folders.sh — Creazione cartelle, permessi, sessioni, symlink apps2
 # =============================================================================
 set -e
-source /usr/lib/bashio/bashio.sh
 source /scripts/env.sh
 
 # ---------------------------------------------------------------------------
