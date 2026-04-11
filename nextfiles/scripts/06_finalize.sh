@@ -11,7 +11,6 @@
 #   - Avvio cron
 # =============================================================================
 set -e
-source /usr/lib/bashio/bashio.sh
 source /scripts/env.sh
 
 occ() {
