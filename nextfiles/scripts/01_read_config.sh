@@ -3,7 +3,6 @@
 # 01_read_config.sh — Lettura configurazione e test connessione MariaDB
 # =============================================================================
 set -e
-source /usr/lib/bashio/bashio.sh
 source /scripts/env.sh
 
 bashio::log.info "Reading configuration from ${CONFIG_FILE}"
