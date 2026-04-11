@@ -3,7 +3,6 @@
 # 03_setup_php.sh — Rilevamento PHP e aggiornamento php.ini a runtime
 # =============================================================================
 set -e
-source /usr/lib/bashio/bashio.sh
 source /scripts/env.sh
 
 # ---------------------------------------------------------------------------
