@@ -1,5 +1,10 @@
 # Registro delle modifiche - Redis Lite
 
+## [1.0.3] 2026-04-16
+
+#### Deprecated
+- 32-bit architecture support deprecated following Home Assistant OS 17.0: i386, armhf, armv7 removed from build.yaml
+
 ## [1.0.2] 2026-01-18
 
 #### Aggiunto
