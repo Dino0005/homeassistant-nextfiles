@@ -135,13 +135,15 @@ Per accesso sicuro HTTPS tramite Caddy con path `/nextfiles`:
 ```caddyfile
 # Snippet con header di sicurezza base
 (security_headers) {
-  header {
-    Strict-Transport-Security "max-age=31536000; includeSubDomains"
-    X-Content-Type-Options "nosniff"
-    X-Frame-Options "SAMEORIGIN"
-    Referrer-Policy "same-origin"
-    -Server
-  }
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "no-referrer-when-downgrade"
+        X-Robots-Tag "noindex, nofollow"
+        X-Permitted-Cross-Domain-Policies "none"
+        -Server
+    }
 }
 
 https://tuodominio.com {
@@ -152,9 +154,17 @@ https://tuodominio.com {
   redir /.well-known/webfinger /nextfiles/index.php/.well-known/webfinger 301
   redir /.well-known/nodeinfo /nextfiles/index.php/.well-known/nodeinfo 301
 
-  # NEXTFILES (Nextcloud) su /nextfiles
-	handle_path /nextfiles/* {
+  # Correzione per il redirect post-login (Passkey/FIDO2)
+	@not_nextfiles {
+		not path /nextfiles*
+		path /index.php/* /apps/* /core/* /login/* /common/*
+	}
+	redir @not_nextfiles /nextfiles{uri} 301
+
+	# NEXTFILES (Nextcloud) su /nextfiles
+	handle /nextfiles* {
 		import security_headers
+		uri strip_prefix /nextfiles
 
 		reverse_proxy http://localhost:8080 {
 			# Pass authentication headers
