@@ -206,10 +206,12 @@ https://tuodominio.com {
 ```
 
 **Note importanti:**
-- Sostituisci `https://tuodominio.com` con il tuo dominio 
-- I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud. Senza questi redirect, vedrai avvisi nella panoramica amministrativa
-- `handle_path`, intercetta la richiesta che inizia con `/nextfiles/` e taglia via quella parte. Nextcloud (dentro il container) è installato nella cartella "root" (`/var/www/nextcloud`), quindi non sa di essere "sotto" la cartella `/nextfiles`. Se Caddy non rimuovesse il prefisso, passerebbe ad Apache una richiesta per una cartella `/nextfiles/` che Apache non troverebbe, restituendo un errore 404.
-- Se hai un Fritzbox, il router dispone di un proprio FQDN predefinito per accedere da remoto, quinidi lo si può usare come dominio, ad es. xyz.myfritz.net
+- **Dominio FQDN**: Sostituisci `https://tuodominio.com` con il tuo dominio 
+- **Service Discovery**: I redirect `.well-known` sono necessari per CalDAV, CardDAV e la federazione Nextcloud. Senza questi redirect, vedrai avvisi nella panoramica di Nextcloud
+- **Gestione della sottocartella** `/nextfiles/`: La direttiva `uri strip_prefix /nextfiles` è essenziale. Poiché l'istanza di Nextcloud nel container è installata nella "root" (`/var/www/nextcloud`), essa ignora di trovarsi in una sottocartella `/nextfiles` esterna. Se Caddy non rimuovesse il prefisso, passerebbe una richiesta per una cartella `/nextfiles/` che Apache non troverebbe, restituendo un errore "404 Not Found".
+- **Correzione redirect post-login:** Il blocco `@not_nextfiles` è una misura di sicurezza specifica per evitare che il server perda il riferimento al percorso (/nextfiles) durante i processi di autenticazione complessi, come il login tramite Passkey/FIDO2.
+- **Timeouts**: I parametri `read_timeout` e `write_timeout` a `3600s` sono necessari per evitare che connessioni lunghe (come il caricamento di file di grandi dimensioni o il backup di foto) vengano interrotte prematuramente dal proxy.
+- **Se hai un Fritzbox**, il router dispone di un proprio FQDN predefinito per accedere da remoto, quinidi lo si può usare come dominio, ad es. xyz.myfritz.net
 
 Poi:
 1. Ricarica Caddy
