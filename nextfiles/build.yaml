@@ -6,7 +6,7 @@ build_from:
   amd64: ghcr.io/home-assistant/amd64-base@sha256:7c2e95909a2b767bd23a594c35240caf3a954e93a3408675388ba8ca0b20cbb3
 labels:
   org.opencontainers.image.title: "Nextfiles"
-  org.opencontainers.image.description: "Self-hosted file storage with integrated database"
+  org.opencontainers.image.description: "Self-hosted file storage solution with MariaDB database, APCu cache, Redis support for Home Assistant"
   org.opencontainers.image.source: "https://github.com/Dino0005/homeassistant-nextfiles"
   org.opencontainers.image.licenses: "MIT"
 args:
