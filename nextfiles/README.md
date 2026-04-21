@@ -59,9 +59,10 @@ Inoltre nella configurazione di MariaDB, scorri fino a **Rete** per aggiungere l
 
 ### Risorse Hardware
 
-- **RAM**: Minimo 2GB disponibili (4GB raccomandati)
-- **Storage**: Spazio libero su `/share` per i file
-- **CPU**: Qualsiasi
+- **RAM**: Minimo 2GB disponibili (4GB raccomandati).
+- **Storage**: Spazio libero su `/share` per i file.
+- **Architecture**: Supportata aarch64 (ARM64) e amd64 (x86_64).
+- **CPU**: Qualsiasi processore compatibile.
 
 Testato con Home Assistant OS su Home Assistant Yellow (Raspberry Pi CM4 con 4 GB RAM), SSD 256 GB
 
