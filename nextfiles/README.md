@@ -224,9 +224,11 @@ Tutti i dati sono salvati in `/share/nextfiles`:
 
 ```
 /share/nextfiles/
+├── sessions/       # File delle sessioni
+├── tmp/            # File temporanei
 ├── data/           # File degli utenti
 ├── config/         # Configurazione Nextcloud
-└── apps/           # App aggiuntive (future)
+└── apps_custom/    # App aggiuntive (future)
 ```
 
 ## Backup
