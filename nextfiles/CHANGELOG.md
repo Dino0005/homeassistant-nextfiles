@@ -7,6 +7,14 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 
 
 
+## [1.3.5] - 
+
+### Updated
+- Updated base image to v3.23-2026.04.0 via pinned SHA to include latest security patches while maintaining build stability.
+
+### Removed
+- Removed unnecessary cron job for tmp/ directory cleanup: Monitoring confirmed that Nextcloud 33 manages the sfi_file_sequence folder by overwriting existing lock files rather than accumulating new ones. Manual intervention or automated purging is not required for this persistent directory.
+
 ## [1.3.4] - 2026-04-11
 
 ### Modified
