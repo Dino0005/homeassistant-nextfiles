@@ -51,6 +51,21 @@ else
     su -s /bin/bash apache -c \
         "${PHP_BIN} ${NEXTCLOUD_DIR}/occ maintenance:mode --on" \
         2>/dev/null || true
+
+    # Esegui upgrade schema DB se necessario (nuova versione Nextcloud)
+    NEEDS_UPGRADE=$(su -s /bin/bash apache -c \
+        "${PHP_BIN} ${NEXTCLOUD_DIR}/occ status --output=json 2>/dev/null" \
+        | grep -o '"needsDbUpgrade":true' || true)
+
+    if [ -n "${NEEDS_UPGRADE}" ]; then
+        bashio::log.info "Database upgrade required. Running occ upgrade..."
+        su -s /bin/bash apache -c \
+            "${PHP_BIN} ${NEXTCLOUD_DIR}/occ upgrade" \
+            || { bashio::log.fatal 'Error during Nextcloud database upgrade'; exit 1; }
+        bashio::log.info "✓ Database upgrade completed"
+    else
+        bashio::log.info "No database upgrade needed"
+    fi
 fi
 
 # ---------------------------------------------------------------------------
