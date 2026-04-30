@@ -16,6 +16,9 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ### Removed
 - Removed unnecessary cron job for tmp/ directory cleanup: Monitoring confirmed that Nextcloud 33 manages the sfi_file_sequence folder by overwriting existing lock files rather than accumulating new ones. Manual intervention or automated purging is not required for this persistent directory.
 
+### Fixed
+- `occ upgrade` now runs automatically on container start when a database schema upgrade is required after a Nextcloud version bump
+
 ## [1.3.4] - 2026-04-11
 
 ### Modified
