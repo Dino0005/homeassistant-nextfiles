@@ -9,6 +9,21 @@
 
 Addon Redis leggero e ottimizzato per l'uso con altri addon di Home Assistant, come Nextfiles (Nextcloud).
 
+## Requisiti
+
+### Versione Home Assistant
+
+Questa app (add-on) **funziona solo** con:
+- ✅ **Home Assistant OS**
+
+**NON compatibile** con:
+- ❌ Home Assistant Container (Docker standalone)
+
+Una installazione di tipo Container, essendo "isolata", non ha accesso alle applicazioni, di conseguenza, non può installare questo add-on.
+Le "app" (o add-on) di Home Assistant non sono altro che altri container Docker gestiti centralmente dal Supervisore di Home Assistant OS.
+
+Per verificare la tua versione, vai su **Impostazioni → Informazioni** e controlla "Metodo di installazionee".
+
 ## 🎯 Caratteristiche
 
 - ✅ **Leggero**: Solo Redis server, nessun extra
