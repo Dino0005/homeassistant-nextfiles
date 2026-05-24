@@ -25,15 +25,16 @@ Designed to work with external MariaDB and Redis/Valkey services for maximum fle
 
 ### Versione Home Assistant
 
-Questo add-on **funziona solo** con:
-- ✅ **Home Assistant OS** (raccomandato)
-- ✅ **Home Assistant Supervised**
+Questa app (add-on) **funziona solo** con:
+- ✅ **Home Assistant OS**
 
 **NON compatibile** con:
 - ❌ Home Assistant Container (Docker standalone)
-- ❌ Home Assistant Core (installazione Python)
 
-Queste versioni non supportano gli add-on. Per verificare la tua versione, vai su **Impostazioni → Informazioni** e controlla "Tipo di installazione".
+Una installazione di tipo Container, essendo "isolata", non ha accesso alle applicazioni, di conseguenza, non può installare questo add-on.
+Le "app" (o add-on) di Home Assistant non sono altro che altri container Docker gestiti centralmente dal Supervisore di Home Assistant OS.
+
+Per verificare la tua versione, vai su **Impostazioni → Informazioni** e controlla "Metodo di installazionee".
 
 ### App MariaDB (add-on)
 Prima di avviare Nextfiles è necessario installare e configurare l'add-on MariaDB, per il database di Nextcloud.
