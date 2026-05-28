@@ -6,6 +6,11 @@ Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/)
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
 
+## [1.3.6] - 2026-05-28
+
+### Updated
+- **Nextcloud** 33.0.3 → 33.0.4
+- **Updated base image** to v3.23-2026.05.0 via pinned SHA
 
 ## [1.3.5] - 2026-04-30
 
