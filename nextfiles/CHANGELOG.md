@@ -16,6 +16,29 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - **Nextcloud** 33.0.3 → 33.0.4
 - **Updated base image** to v3.23-2026.05.0 via pinned SHA
 
+##  ⚠️ Notice: Nextcloud 33.0.4 — Notifications app bug (Push.php)
+
+### Problem
+After updating to Nextcloud 33.0.4, users with **2FA via Nextcloud Notification** enabled were blocked at login with an "Internal Server Error". The bug is caused by a missing `IAppConfig` dependency injection in the `Push` class constructor of the notifications app 6.0.0, which throws a fatal exception during the 2FA challenge phase.
+
+Reference: [nextcloud/notifications#3035](https://github.com/nextcloud/notifications/issues/3035)
+
+### Temporary fix (Pending notifications app update)
+Replace `Push.php` manually with the fixed version from PR [#3039](https://github.com/nextcloud/notifications/pull/3039):
+
+```bash
+docker exec addon_1960957c_nextfiles bash -c "curl -s https://raw.githubusercontent.com/nextcloud/notifications/refs/pull/3039/head/lib/Push.php -o /var/www/nextcloud/apps/notifications/lib/Push.php"
+```
+
+### Permanent Fix
+The definitive fix will be natively included in the upcoming **Nextcloud 33.0.5** release. 
+
+Alternatively, if an official update for the notifications app is released sooner, you can apply it immediately by running:
+
+```bash
+docker exec addon_1960957c_nextfiles php /var/www/nextcloud/occ app:update notifications
+```
+
 ## [1.3.5] - 2026-04-30
 
 ### Updated
