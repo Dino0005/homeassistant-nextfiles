@@ -135,7 +135,7 @@ RUN { \
     echo 'session.save_path = /share/nextfiles/sessions'; \
     echo 'session.gc_maxlifetime = 86400'; \
     echo 'session.cookie_lifetime = 0'; \
-    echo 'session.serialize_handler = php'; \
+    echo 'session.serialize_handler = igbinary'; \
     echo 'session.save_mode = 0600'; \
     } > /etc/php${PHP_VERSION}/conf.d/nextcloud-sessions.ini
 
