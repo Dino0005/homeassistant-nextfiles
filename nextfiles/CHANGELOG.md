@@ -8,8 +8,10 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 ## [1.3.8] - 2026-06-13
 
 ### Updated
-- **PHP** 8.4 → 8.5
-- Fix `php85-imap`: migrated to PECL package (`php85-pecl-imap`)
+- **PHP** 8.4 → 8.5:
+  - `php85-apcu`: renamed to `php85-pecl-apcu`
+  - `php85-imap`: renamed to `php85-pecl-imap`
+  - Removed packages now integrated in PHP 8.5 core: `php85-json`, `php85-opcache`, `php85-zlib`, `php85-cli`
 
 ## [1.3.7] - 2026-06-02
 
