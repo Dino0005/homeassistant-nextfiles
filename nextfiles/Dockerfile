@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Setup base
 ARG NEXTCLOUD_VERSION=33.0.5
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
-ARG PHP_VERSION=84
+ARG PHP_VERSION=85
 ENV PHP_VERSION=${PHP_VERSION}
 
 # Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
@@ -50,7 +50,7 @@ RUN apk add --no-cache \
     php${PHP_VERSION}-pecl-redis \
     php${PHP_VERSION}-pecl-imagick \
     php${PHP_VERSION}-pecl-igbinary \
-    php${PHP_VERSION}-imap \
+    php${PHP_VERSION}-pecl-imap \
     php${PHP_VERSION}-pecl-smbclient \
     mariadb-client \
     samba-client \
