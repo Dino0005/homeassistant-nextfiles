@@ -11,4 +11,4 @@ labels:
   org.opencontainers.image.licenses: "MIT"
 args:
   NEXTCLOUD_VERSION: "33.0.5"
-  PHP_VERSION: "84"
+  PHP_VERSION: "85"
