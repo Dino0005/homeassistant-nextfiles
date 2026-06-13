@@ -16,7 +16,7 @@ RUN apk add --no-cache \
     apache2-ssl \
     php${PHP_VERSION} \
     php${PHP_VERSION}-apache2 \
-    php${PHP_VERSION}-cli \
+#    php${PHP_VERSION}-cli \ Removed in PHP 8.5: integrated in core
     php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-ctype \
     php${PHP_VERSION}-curl \
@@ -25,9 +25,9 @@ RUN apk add --no-cache \
     php${PHP_VERSION}-gd \
     php${PHP_VERSION}-iconv \
     php${PHP_VERSION}-intl \
-    php${PHP_VERSION}-json \
+#    php${PHP_VERSION}-json \ Removed in PHP 8.5: integrated in core
     php${PHP_VERSION}-mbstring \
-    php${PHP_VERSION}-opcache \
+#    php${PHP_VERSION}-opcache \ Removed in PHP 8.5: integrated in core
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-pdo \
     php${PHP_VERSION}-pdo_mysql \
@@ -38,7 +38,7 @@ RUN apk add --no-cache \
     php${PHP_VERSION}-xmlreader \
     php${PHP_VERSION}-xmlwriter \
     php${PHP_VERSION}-zip \
-    php${PHP_VERSION}-zlib \
+#    php${PHP_VERSION}-zlib \ Removed in PHP 8.5: integrated in core
     php${PHP_VERSION}-posix \
     php${PHP_VERSION}-pcntl \
     php${PHP_VERSION}-bcmath \
@@ -46,7 +46,7 @@ RUN apk add --no-cache \
     php${PHP_VERSION}-exif \
     php${PHP_VERSION}-sodium \
     php${PHP_VERSION}-sysvsem \
-    php${PHP_VERSION}-apcu \
+    php${PHP_VERSION}-pecl-apcu \
     php${PHP_VERSION}-pecl-redis \
     php${PHP_VERSION}-pecl-imagick \
     php${PHP_VERSION}-pecl-igbinary \
