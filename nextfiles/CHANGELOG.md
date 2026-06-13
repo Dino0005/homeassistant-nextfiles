@@ -5,6 +5,12 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.3.8] - 2026-06-13
+
+### Updated
+- **PHP** 8.4 → 8.5
+- Fix `php85-imap`: migrated to PECL package (`php85-pecl-imap`)
+
 ## [1.3.7] - 2026-06-02
 
 ### Updated
