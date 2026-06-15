@@ -11,9 +11,9 @@ e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/)
 - **PHP** 8.4 → 8.5:
   - `php85-apcu`: renamed to `php85-pecl-apcu`
   - `php85-imap`: renamed to `php85-pecl-imap`
-  - Removed packages now integrated in PHP 8.5 core: `php85-json`, `php85-opcache`, `php85-zlib`, `php85-cli`
 
 ### Removed
+- Removed packages now integrated in PHP 8.5 core: `php85-json`, `php85-opcache`, `php85-zlib`, `php85-cli`
 - Removed php-fpm: unused with Apache mod_php
 
 ## [1.3.7] - 2026-06-02
