@@ -17,7 +17,6 @@ RUN apk add --no-cache \
     php${PHP_VERSION} \
     php${PHP_VERSION}-apache2 \
 #    php${PHP_VERSION}-cli \ Removed in PHP 8.5: integrated in core
-    php${PHP_VERSION}-fpm \
     php${PHP_VERSION}-ctype \
     php${PHP_VERSION}-curl \
     php${PHP_VERSION}-dom \
@@ -73,7 +72,6 @@ RUN apk add --no-cache \
 
 # Create /usr/bin/php symlink to php
 RUN ln -sf /usr/bin/php${PHP_VERSION} /usr/bin/php && \
-    ln -sf /usr/sbin/php-fpm${PHP_VERSION} /usr/sbin/php-fpm || true
 
 # Download and extract Nextcloud
 WORKDIR /var/www
