@@ -71,7 +71,7 @@ RUN apk add --no-cache \
     wget
 
 # Create /usr/bin/php symlink to php
-RUN ln -sf /usr/bin/php${PHP_VERSION} /usr/bin/php && \
+RUN ln -sf /usr/bin/php${PHP_VERSION} /usr/bin/php
 
 # Download and extract Nextcloud
 WORKDIR /var/www
