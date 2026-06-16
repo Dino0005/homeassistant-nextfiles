@@ -5,6 +5,11 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.3.9] - 2026-06-16
+
+### Updated
+- **Updated base image** to v3.24-2026.06.1 via pinned SHA
+
 ## [1.3.8] - 2026-06-13
 
 ### Updated
