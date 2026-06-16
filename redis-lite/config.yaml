@@ -1,14 +1,11 @@
 name: Redis Lite
-version: "1.0.3"
+version: "1.0.4"
 slug: redis-lite
 description: Lightweight Redis/Valkey server for Home Assistant addons caching
 url: https://valkey.io
 arch:
-  - armhf
-  - armv7
   - aarch64
   - amd64
-  - i386
 init: false
 startup: services
 boot: auto
