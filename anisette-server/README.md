@@ -86,7 +86,7 @@ handle /anisette* {
     reverse_proxy http://127.0.0.1:6969
 }
 ```
-Imposta l'URL `https://tuodominio.comanisette-servers.json` della lista server anisette su SideStore e dalla lista seleziona:
+Imposta l'URL `https://tuodominio.comanisette-servers.json` della lista server anisette nelle impostazioni di SideStore. Dalla lista seleziona:
 
 ```
 Home Assistant
