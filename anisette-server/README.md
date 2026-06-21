@@ -15,19 +15,23 @@ Compatibile con **SideStore** (protocolli anisette-v1 e anisette-v3) e **AltServ
 
 Il Dockerfile usa **due stage**:
 
-1. **Stage upstream** — scarica l'immagine `dadoum/anisette-v3-server:latest` ed estrae il binario già compilato staticamente. Nessuna compilazione da sorgente: veloce e riproducibile.
-2. **Stage runtime** — copia il binario nella base ufficiale HA (`ghcr.io/home-assistant/aarch64-base` o `amd64-base`) e aggiunge solo le dipendenze minime (`libplist`, `curl`, `ca-certificates`).
+1. **Stage builder** — compila `anisette-v3-server` da sorgente su **Debian** (glibc). La compilazione su Debian è necessaria perché la libreria `provision` di Dadoum usa simboli glibc (`backtrace`, `__res_init`) non disponibili su Alpine/musl.
+2. **Stage runtime** — copia il binario compilato in un'immagine `debian:stable-slim` minimale, senza strumenti di build.
 
-Il binario è **cachato nei layer Docker**: i rebuild successivi (es. aggiornamento dell'immagine base HA) sono istantanei finché il digest upstream non cambia.
+> **Nota**: a differenza della maggior parte degli add-on HA, questo non usa le immagini base ufficiali `ghcr.io/home-assistant/*-base` (Alpine) per incompatibilità con la libreria upstream. L'add-on funziona comunque correttamente sotto il Supervisor HA.
 
-> **Nota aarch64**: l'immagine Dadoum su Docker Hub è probabilmente solo amd64. Su aarch64 la prima build usa l'emulazione QEMU (può richiedere qualche minuto); il risultato viene poi cachato.
+### Cache Docker
+
+Il layer di compilazione è cachato: i rebuild successivi (es. aggiornamento della versione dell'add-on) sono veloci finché il sorgente upstream non cambia.
+
+La **prima build** richiede circa **10–15 minuti** su aarch64 per la compilazione da sorgente con `ldc2`.
 
 ## Installazione
 
 1. Aggiungi questo repository all'add-on store di Home Assistant.
 2. Installa **Anisette v3 Server**.
 3. Avvia l'add-on.
-4. Al primo avvio il server scarica automaticamente le librerie Apple (da Apple CDN). Può richiedere circa un minuto.
+4. Al primo avvio il server scarica automaticamente le librerie Apple (da Apple CDN) e completa il provisioning. Può richiedere circa un minuto.
 
 Il server sarà raggiungibile su `http://<ip-home-assistant>:6969`.
 
@@ -39,9 +43,9 @@ Tutti i dati di provisioning (librerie Apple Music, file ADI) vengono salvati in
 /share/.config/anisette-v3/lib/
 ```
 
-Questa directory sopravvive agli aggiornamenti e ai rebuild dell'add-on.
+Questa directory sopravvive agli aggiornamenti e ai rebuild dell'add-on grazie al volume `/share` di HA.
 
-Puoi pre-popolare `/share/anisette-v3/lib/` tramite Samba se hai già le librerie da un'altra installazione: l'add-on le rileverà e le collegherà automaticamente.
+Puoi pre-popolare `/share/anisette-v3/lib/` tramite Samba se hai già le librerie da un'altra installazione: l'add-on le rileverà e le collegherà automaticamente al percorso atteso.
 
 ## Configurazione SideStore / AltStore
 
@@ -51,6 +55,12 @@ Imposta l'URL del server anisette su:
 http://<ip-home-assistant>:6969
 ```
 
+Se esposto tramite reverse proxy (es. Caddy):
+
+```
+https://tuodominio.com/anisette
+```
+
 ## Aggiornamento
 
-Per aggiornare il binario del server all'ultima versione di Dadoum: aggiorna il numero di versione nel `config.yaml` dell'add-on (campo `version`). Questo forza il Supervisor HA a ricostruire l'immagine, che scaricherà il nuovo digest di `dadoum/anisette-v3-server:latest`.
+Per aggiornare il server all'ultima versione di Dadoum: incrementa il campo `version` nel `config.yaml` dell'add-on. Questo forza il Supervisor HA a ricostruire l'immagine, rieseguendo la compilazione da sorgente con il codice aggiornato.
