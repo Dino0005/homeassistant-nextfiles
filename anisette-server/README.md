@@ -49,18 +49,9 @@ Puoi pre-popolare `/share/anisette-v3/lib/` tramite Samba se hai già le libreri
 
 ## Configurazione SideStore / AltStore
 
-L'URL del server anisette in locale sarà:
-```
-http://<ip-home-assistant>:6969
-```
+SideStore non accetta un URL diretto al server anisette — richiede un URL che punti a un file JSON con la lista dei server in questo formato:
 
-Se esposto tramite reverse proxy (es. Caddy):
-```
-https://tuodominio.com/anisette
-```
-
-SideStore però non accetta un URL diretto al server anisette, vuole un URL che punti a un file JSON con la lista dei server in questo formato:
-```
+```json
 {
   "servers": [
     {
@@ -71,9 +62,12 @@ SideStore però non accetta un URL diretto al server anisette, vuole un URL che 
 }
 ```
 
-Nel Caddyfile inseriamo:
-```
-# Anisette server list per SideStore
+### Configurazione con reverse proxy Caddy
+
+Aggiungi questi due blocchi nel Caddyfile, prima del blocco catch-all di Home Assistant:
+
+```caddy
+# Lista server anisette per SideStore
 handle /anisette-servers.json {
     header Content-Type "application/json"
     respond `{"servers":[{"name":"Home Assistant","address":"https://tuodominio.com/anisette"}]}`
@@ -86,12 +80,32 @@ handle /anisette* {
     reverse_proxy http://127.0.0.1:6969
 }
 ```
-Imposta l'URL `https://tuodominio.comanisette-servers.json` della lista server anisette nelle impostazioni di SideStore. Dalla lista seleziona:
 
+> **Nota**: usa `127.0.0.1` e non `localhost` — il server anisette ascolta solo su IPv4 e `localhost` risolve IPv6 (`::1`) causando un errore di connessione.
+
+Poi in SideStore:
+
+1. Settings → Anisette Servers
+2. Sostituisci l'URL della lista con `https://tuodominio.com/anisette-servers.json`
+3. Tap **Refresh Servers**
+4. Seleziona **Home Assistant** dalla lista
+
+### Configurazione solo rete locale
+
+Se vuoi usare il server solo in rete locale senza reverse proxy, crea un file `servers.json` con:
+
+```json
+{
+  "servers": [
+    {
+      "name": "Home Assistant locale",
+      "address": "http://<ip-home-assistant>:6969"
+    }
+  ]
+}
 ```
-Home Assistant
-https://tuodominio.com/anisette
-```
+
+e servilo da qualsiasi URL raggiungibile dal telefono.
 
 ## Aggiornamento
 
