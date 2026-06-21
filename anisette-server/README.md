@@ -49,14 +49,36 @@ Puoi pre-popolare `/share/anisette-v3/lib/` tramite Samba se hai già le libreri
 
 ## Configurazione SideStore / AltStore
 
-Imposta l'URL del server anisette su:
-
+L'URL del server anisette in locale sarà:
 ```
 http://<ip-home-assistant>:6969
 ```
 
 Se esposto tramite reverse proxy (es. Caddy):
 ```
+https://tuodominio.com/anisette
+```
+
+SideStore però non accetta un URL diretto al server anisette, vuole un URL che punti a un file JSON con la lista dei server in questo formato:
+```
+{
+  "servers": [
+    {
+      "name": "Il mio server",
+      "address": "https://tuodominio.com/anisette"
+    }
+  ]
+}
+```
+
+Nel Caddyfile inseriamo:
+```
+# Anisette server list per SideStore
+handle /anisette-servers.json {
+    header Content-Type "application/json"
+    respond `{"servers":[{"name":"Home Assistant","address":"https://tuodominio.com/anisette"}]}`
+}
+
 # ANISETTE v3 Server
 handle /anisette* {
     import security_headers
@@ -64,8 +86,10 @@ handle /anisette* {
     reverse_proxy http://127.0.0.1:6969
 }
 ```
-Imposta l'URL del server anisette su:
+Imposta l'URL `https://tuodominio.comanisette-servers.json` della lista server anisette su SideStore e dalla lista seleziona:
+
 ```
+Home Assistant
 https://tuodominio.com/anisette
 ```
 
