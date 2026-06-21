@@ -1,23 +1,23 @@
 ARG BUILD_ARCH
 
 ##
-## Stage 1 – Compila da sorgente su Debian arm64
-## (il Supervisor fa girare questo stage nativo su aarch64 grazie a buildx)
+## Stage 1 – Compila sulla stessa base HA (Alpine/musl)
+## così il binario è garantito compatibile con lo stage runtime
 ##
-FROM debian:stable-slim AS builder
+FROM ghcr.io/home-assistant/${BUILD_ARCH}-base:3.24 AS builder
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
-        ca-certificates \
-        ldc \
+RUN apk add --no-cache \
         git \
-        clang \
-        dub \
-        libz-dev \
-        libssl-dev \
+        curl \
+        bash \
+        build-base \
+        openssl-dev \
+        openssl-libs-static \
+        zlib-dev \
+        zlib-static \
         libplist-dev \
-        libplist-2.0-4 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+        ldc \
+        dub
 
 WORKDIR /opt/build
 RUN git clone --depth 1 https://github.com/Dadoum/anisette-v3-server.git . \
