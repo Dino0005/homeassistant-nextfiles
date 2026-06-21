@@ -56,7 +56,15 @@ http://<ip-home-assistant>:6969
 ```
 
 Se esposto tramite reverse proxy (es. Caddy):
-
+```
+# ANISETTE v3 Server
+handle /anisette* {
+    import security_headers
+    uri strip_prefix /anisette
+    reverse_proxy http://localhost:6969
+}
+```
+Imposta l'URL del server anisette su:
 ```
 https://tuodominio.com/anisette
 ```
