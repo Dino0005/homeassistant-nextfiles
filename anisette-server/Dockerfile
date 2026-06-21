@@ -1,20 +1,15 @@
-##
-## ARG globale: deve stare PRIMA di qualsiasi FROM per essere visibile
-## in tutti gli stage. Il Supervisor HA lo inietta via --build-arg.
-##
-ARG BUILD_FROM
+ARG BUILD_ARCH
 
 ##
-## Stage 1 – Estrai il binario già compilato dall'immagine ufficiale di Dadoum.
+## Stage 1 – Binario da immagine ufficiale Dadoum
 ##
 FROM dadoum/anisette-v3-server:latest AS upstream
 
 ##
-## Stage 2 – Runtime sulla base ufficiale Home Assistant.
+## Stage 2 – Runtime sulla base ufficiale Home Assistant
 ##
-FROM ${BUILD_FROM}
+FROM ghcr.io/home-assistant/${BUILD_ARCH}-base:3.24
 
-# Copia il binario statico dallo stage upstream.
 COPY --from=upstream /opt/anisette-v3-server /opt/anisette-v3-server
 
 RUN apk add --no-cache \
