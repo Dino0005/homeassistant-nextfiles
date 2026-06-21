@@ -1,0 +1,38 @@
+name: "Anisette v3 Server"
+description: "Anisette v3 server compatibile con SideStore e AltServer-Linux. Genera dati di autenticazione Apple."
+version: "1.0.0"
+slug: "anisette_v3"
+init: false
+
+arch:
+  - aarch64
+  - amd64
+
+# Porta esposta sulla rete HA
+ports:
+  6969/tcp: 6969
+ports_description:
+  6969/tcp: "Anisette v3 HTTP API"
+
+# /share è persistente tra aggiornamenti dell'add-on.
+# I dati di provisioning (librerie Apple, file ADI) vengono salvati in
+# /share/anisette-v3/lib e rimangono anche dopo un rebuild del container.
+map:
+  - type: share
+    path: /share
+    read_only: false
+
+options: {}
+schema: {}
+
+# Immagine pubblicata su ghcr.io (opzionale se si usa solo build locale).
+# Il Supervisor HA sostituisce {arch} con "aarch64" o "amd64".
+# image: "ghcr.io/{repository}/anisette-v3-{arch}"
+
+homeassistant_api: false
+hassio_api: false
+
+startup: services
+boot: auto
+
+url: "https://github.com/Dadoum/anisette-v3-server"
