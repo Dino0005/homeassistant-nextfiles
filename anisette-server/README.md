@@ -61,7 +61,7 @@ Se esposto tramite reverse proxy (es. Caddy):
 handle /anisette* {
     import security_headers
     uri strip_prefix /anisette
-    reverse_proxy http://localhost:6969
+    reverse_proxy http://127.0.0.1:6969
 }
 ```
 Imposta l'URL del server anisette su:
