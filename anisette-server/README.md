@@ -115,4 +115,7 @@ Per aggiornare il server all'ultima versione di Dadoum: incrementa il campo `ver
 
 Questa App è un wrapper per [anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) di Dadoum,
 che non specifica una licenza. Tutto il codice del server appartiene al rispettivo autore.
-Il codice specifico di questa App (Dockerfile, run.sh, config.yaml) è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
+Il codice sottostante [apple-private-apis](https://github.com/SideStore/apple-private-apis) è rilasciato
+sotto licenza [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/2.0/).
+
+Il codice specifico di questa App (Dockerfile, run.sh, config.yaml) è rilasciato sotto licenza MIT — vedi [LICENSE](../LICENSE).
