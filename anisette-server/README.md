@@ -1,6 +1,6 @@
 # Anisette v3 Server – App Home Assistant
 
-Esegue [Dadoum/anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) come add-on di Home Assistant.
+Esegue [Dadoum/anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) come App (add-on) di Home Assistant.
 
 Compatibile con **SideStore** (protocolli anisette-v1 e anisette-v3) e **AltServer-Linux**.
 
