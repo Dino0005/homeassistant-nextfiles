@@ -1,5 +1,12 @@
 # Anisette v3 Server – App Home Assistant
 
+![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fanisette-server%2Fconfig.yaml&query=%24.version&label=Version&color=blue) 
+![Home Assistant App](https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/anisette-server/icon.png" width="100"><br>
+</p>
+
 Esegue [Dadoum/anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) come App (add-on) di Home Assistant.
 
 Compatibile con **SideStore** (protocolli anisette-v1 e anisette-v3) e **AltServer-Linux**.
