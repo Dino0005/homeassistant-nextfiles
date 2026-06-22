@@ -111,9 +111,6 @@ e servilo da qualsiasi URL raggiungibile dal telefono.
 
 Per aggiornare il server all'ultima versione di Dadoum: incrementa il campo `version` nel `config.yaml` dell'add-on. Questo forza il Supervisor HA a ricostruire l'immagine, rieseguendo la compilazione da sorgente con il codice aggiornato.
 
-
-## License
-
 ## Licenza
 
 Questa App è un wrapper per [anisette-v3-server](https://github.com/Dadoum/anisette-v3-server) di Dadoum,
