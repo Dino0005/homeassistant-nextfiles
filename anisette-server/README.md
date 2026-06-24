@@ -1,3 +1,4 @@
+
 # Anisette v3 Server – App Home Assistant
 
 ![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fanisette-server%2Fconfig.yaml&query=%24.version&label=Version&color=blue) 
@@ -96,6 +97,10 @@ Poi in SideStore:
 2. Sostituisci l'URL della lista con `https://tuodominio.com/anisette-servers.json`
 3. Tap **Refresh Servers**
 4. Seleziona **Home Assistant** dalla lista
+
+<div align="center">
+  <img width="30%" alt="Server anisette" src="https://github.com/user-attachments/assets/53b29e49-382e-49a1-a572-3528884838ff" />
+</div>
 
 ### Configurazione solo rete locale
 
