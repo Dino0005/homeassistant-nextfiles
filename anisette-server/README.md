@@ -56,7 +56,7 @@ Puoi pre-popolare `/share/anisette-v3/lib/` tramite Samba se hai già le libreri
 
 ## Configurazione SideStore / AltStore
 
-SideStore non accetta un URL diretto al server anisette — richiede un URL che punti a un file JSON con la lista dei server in questo formato:
+SideStore non accetta un URL diretto al server anisette, ma richiede un URL che punti a un file JSON con la lista dei server in questo formato:
 
 ```json
 {
