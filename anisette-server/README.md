@@ -99,7 +99,7 @@ Poi in SideStore:
 4. Seleziona **Home Assistant** dalla lista
 
 <div align="center">
-  <img width="30%" alt="Server anisette" src="https://github.com/user-attachments/assets/53b29e49-382e-49a1-a572-3528884838ff" />
+  <img width="40%" alt="Server anisette" src="https://github.com/user-attachments/assets/282865c3-4279-4e5f-adea-47b972f57bee" />
 </div>
 
 ### Configurazione solo rete locale
