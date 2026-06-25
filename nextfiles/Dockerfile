@@ -88,6 +88,10 @@ RUN sed -i 's|/var/www/localhost/htdocs|/var/www/nextcloud|g' /etc/apache2/httpd
     sed -i 's|#LoadModule env_module|LoadModule env_module|g' /etc/apache2/httpd.conf && \
     sed -i 's|#LoadModule setenvif_module|LoadModule setenvif_module|g' /etc/apache2/httpd.conf
 
+# Set LimitRequestBody to unlimited — upload size is enforced by PHP (upload_max_filesize / post_max_size)
+# configured at runtime in 03_setup_php.sh from the add-on options (max_upload_size)
+RUN echo 'LimitRequestBody 0' >> /etc/apache2/httpd.conf
+
 # Add MIME types for Nextcloud
 RUN echo "AddType application/javascript .js .mjs" >> /etc/apache2/httpd.conf && \
     echo "AddType application/json .map" >> /etc/apache2/httpd.conf && \
