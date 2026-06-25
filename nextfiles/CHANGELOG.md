@@ -5,6 +5,16 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.4.0] - 2026-06-25
+
+### Updated
+- **Nextcloud** 33.0.5 → 33.0.6
+
+### Fixed
+- Set `LimitRequestBody 0` in Apache to remove the default 1GB cap on request body size.
+  Upload size is enforced at runtime by PHP (`upload_max_filesize` / `post_max_size`)
+  via `max_upload_size` in the add-on options.
+
 ## [1.3.9] - 2026-06-16
 
 ### Updated
