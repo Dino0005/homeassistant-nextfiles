@@ -22,7 +22,9 @@ https://github.com/Dino0005/homeassistant-nextfiles
 ## 🧩 App Disponibili
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="100"><br>
+  <a href="./nextfiles">
+    <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/nextfiles/icon.png" width="100">
+  </a><br>
   <strong>Nextfiles (Nextcloud)</strong><br>
   <a href="./nextfiles"> Esplora App</a> • 
   <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
@@ -34,7 +36,9 @@ https://github.com/Dino0005/homeassistant-nextfiles
 
 ---
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="100"><br>
+  <a href="./redis-lite">
+    <img src="https://raw.githubusercontent.com/Dino0005/homeassistant-nextfiles/main/redis-lite/icon.png" width="100">
+  </a><br>  
   <strong>Redis Lite</strong><br>
   <a href="./redis-lite"> Esplora App</a> • 
   <img src="https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fredis-lite%2Fconfig.yaml&query=%24.version&label=Version&color=blue" valign="middle">
