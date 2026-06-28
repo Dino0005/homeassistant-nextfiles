@@ -37,7 +37,10 @@ RUN apk add --no-cache \
 
 WORKDIR /tmp/source
 
+COPY translations/ /tmp/translations/
+
 RUN git clone -b master https://github.com/owntone/owntone-server.git ./ && \
+    cp /tmp/translations/* web-src/src/locales/ && \
     cd web-src && npm install && npm run build && cd .. && \
     autoreconf -fvi -I /usr/share/gettext/m4 && \
     ./configure \
@@ -51,7 +54,6 @@ RUN git clone -b master https://github.com/owntone/owntone-server.git ./ && \
         --enable-chromecast \
         --enable-silent-rules && \
     make DESTDIR=/tmp/build install && \
-    # Salva il file di configurazione di esempio
     cd /tmp/build && \
     install -D etc/owntone/owntone.conf usr/share/doc/owntone/owntone.conf && \
     rm -rf var etc
