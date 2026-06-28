@@ -11,6 +11,8 @@ startup: services
 boot: auto
 host_network: true
 audio: true
+cap_add:
+  - NET_BIND_SERVICE
 map:
   - media:ro
 options:
