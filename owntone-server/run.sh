@@ -43,6 +43,10 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         -e 's|.*directories = {.*}.*|\tdirectories = { "/media" }|' \
         -e 's|.*trusted_networks = {.*}.*|\ttrusted_networks = { "any" }|' \
         -e 's|#\ttype = "alsa"|\ttype = "disabled"|' \
+        -e 's|#airplay_shared {|airplay_shared {|' \
+        -e 's|#       control_port = 0|\tcontrol_port = 3690|' \
+        -e 's|#       timing_port = 0|\ttiming_port = 3691|' \
+        -e '/^#}$/s|#}|}|' \
         "${CONF}"
 fi
 
