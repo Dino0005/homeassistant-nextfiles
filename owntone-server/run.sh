@@ -42,6 +42,7 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         -e 's|.*logfile = .*|\tlogfile = "/var/log/owntone/owntone.log"|' \
         -e 's|.*directories = {.*}.*|\tdirectories = { "/media" }|' \
         -e 's|.*trusted_networks = {.*}.*|\ttrusted_networks = { "any" }|' \
+        -e 's|#\ttype = "alsa"|\ttype = "disabled"|' \
         "${CONF}"
 fi
 
