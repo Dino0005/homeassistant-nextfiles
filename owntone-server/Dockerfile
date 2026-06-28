@@ -40,6 +40,7 @@ WORKDIR /tmp/source
 COPY translations/ /tmp/translations/
 
 RUN git clone -b master https://github.com/owntone/owntone-server.git ./ && \
+    mkdir -p web-src/src/locales && \
     cp /tmp/translations/* web-src/src/locales/ && \
     cd web-src && npm install && npm run build && cd .. && \
     autoreconf -fvi -I /usr/share/gettext/m4 && \
