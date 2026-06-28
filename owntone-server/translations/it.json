@@ -1,1 +1,414 @@
-
+{
+  "actions": {
+    "add": "Aggiungi",
+    "add-next": "Aggiungi dopo",
+    "add-stream": "Aggiungi stream",
+    "cancel": "Annulla",
+    "clear": "Svuota",
+    "edit": "Modifica",
+    "hide-previous": "Nascondi precedenti",
+    "login": "Accedi",
+    "logout": "Esci",
+    "mark-all-played": "Segna tutti come riprodotti",
+    "mark-as-new": "Segna come nuovo",
+    "mark-as-played": "Segna come riprodotto",
+    "pair": "Abbina telecomando",
+    "play": "Riproduci",
+    "play-top-tracks": "Riproduci brani più ascoltati",
+    "remove": "Rimuovi",
+    "rescan": "Scansiona di nuovo",
+    "save": "Salva",
+    "show-more": "Mostra altro",
+    "shuffle": "Casuale",
+    "update": "Aggiorna",
+    "verify": "Verifica"
+  },
+  "data": {
+    "albums": "{count} album|{count} album|{count} album",
+    "artists": "{count} artista|{count} artista|{count} artisti",
+    "audiobooks": "{count} audiolibro|{count} audiolibro|{count} audiolibri",
+    "authors": "{count} autore|{count} autore|{count} autori",
+    "channels": "{count} canale|{count} canali",
+    "chapters": "{count} capitolo|{count} capitolo|{count} capitoli",
+    "composers": "{count} compositore|{count} compositore|{count} compositori",
+    "genres": "{count} genere|{count} genere|{count} generi",
+    "kind": {
+      "file": "File",
+      "pipe": "Stream",
+      "spotify": "Spotify",
+      "url": "URL"
+    },
+    "playlists": "{count} playlist|{count} playlist|{count} playlist",
+    "podcasts": "{count} podcast|{count} podcast|{count} podcast",
+    "stations": "{count} stazione|{count} stazione|{count} stazioni",
+    "tracks": "{count} brano|{count} brano|{count} brani"
+  },
+  "dialog": {
+    "add": {
+      "rss": {
+        "help": "L'aggiunta di un podcast include la creazione di una playlist RSS, che consentirà a OwnTone di gestire l'abbonamento al podcast.",
+        "placeholder": "https://url-del-feed-rss",
+        "processing": "Elaborazione…",
+        "title": "Aggiungi podcast"
+      },
+      "stream": {
+        "loading": "Caricamento…",
+        "placeholder": "https://url-dello-stream",
+        "processing": "Elaborazione…",
+        "title": "Aggiungi stream"
+      }
+    },
+    "playlist": {
+      "save": {
+        "playlist-name": "Nome playlist",
+        "saving": "Salvataggio…",
+        "title": "Salva coda nella playlist"
+      }
+    },
+    "podcast": {
+      "remove": {
+        "info": "Rimuovere definitivamente questo podcast dalla libreria?{separator}(Verrà rimossa anche la playlist RSS {name})",
+        "title": "Elimina il podcast"
+      }
+    },
+    "queue-item": {
+      "quality": "{format} {'|'} {samplerate} Hz {'|'} @:data.channels {'|'} {bitrate} kbit/s"
+    },
+    "remote-pairing": {
+      "pairing-code": "Codice di abbinamento",
+      "title": "Richiesta di abbinamento telecomando"
+    },
+    "track": {
+      "quality": "{format} {'|'} {samplerate} Hz {'|'} @:data.channels {'|'} {bitrate} kbit/s",
+      "rating": "{rating} / 10"
+    },
+    "update": {
+      "all": "Aggiorna tutto",
+      "feeds": "Aggiorna solo i feed RSS",
+      "info": "Cerca file nuovi, eliminati e modificati",
+      "local": "Aggiorna solo la libreria locale",
+      "progress": "Aggiornamento libreria in corso…",
+      "rescan-metadata": "Riscansiona i metadati dei file non modificati",
+      "spotify": "Aggiorna solo Spotify",
+      "title": "Aggiorna libreria"
+    }
+  },
+  "grouped-list": {
+    "last-month": "Mese scorso",
+    "last-week": "Settimana scorsa",
+    "today": "Oggi",
+    "undefined": "Non definito"
+  },
+  "language": {
+    "de": "Tedesco (Deutsch)",
+    "en": "Inglese (English)",
+    "fr": "Francese (Français)",
+    "it": "Italiano",
+    "zh-CN": "Cinese semplificato (簡體中文)",
+    "zh-TW": "Cinese tradizionale (繁體中文)"
+  },
+  "list": {
+    "albums": {
+      "info": "Rimuovere definitivamente questo podcast dalla libreria?{separator}(Verrà rimossa anche la playlist RSS {name})"
+    },
+    "spotify": {
+      "not-playable-track": "Brano non riproducibile",
+      "restriction-reason": ", motivo della restrizione: {reason}"
+    }
+  },
+  "media": {
+    "kind": {
+      "album": "Album",
+      "audiobook": "Audiolibro",
+      "music": "Musica",
+      "podcast": "Podcast"
+    }
+  },
+  "navigation": {
+    "about": "Informazioni",
+    "albums": "Album",
+    "artists": "Artisti",
+    "audiobooks": "Audiolibri",
+    "composers": "Compositori",
+    "files": "File",
+    "genres": "Generi",
+    "music": "Musica",
+    "outputs": "Uscite",
+    "playlists": "Playlist",
+    "podcasts": "Podcast",
+    "radio": "Radio",
+    "search": "Cerca",
+    "settings": "Impostazioni",
+    "spotify": "Spotify",
+    "stream": "Stream HTTP",
+    "update-library": "Aggiorna libreria",
+    "volume": "Volume"
+  },
+  "options": {
+    "filter": {
+      "hide-singles": "Nascondi singoli",
+      "hide-singles-help": "Se attivo, nasconde i singoli e tutto ciò che è associato ad essi.",
+      "hide-spotify": "Nascondi contenuti Spotify",
+      "hide-spotify-help": "Se attivo, nasconde i contenuti da Spotify.",
+      "title": "Filtro"
+    },
+    "sort": {
+      "artist-date": "Artista › Data di uscita",
+      "artist-name": "Artista › Nome",
+      "name": "Nome",
+      "rating": "Valutazione",
+      "recently-added": "Aggiunti di recente",
+      "recently-released": "Usciti di recente",
+      "release-date": "Data di uscita",
+      "title": "Ordina"
+    }
+  },
+  "page": {
+    "about": {
+      "built-with": "Interfaccia web realizzata con {bulma}, {mdi}, {vuejs}, {axios} e {others}.",
+      "compiled-with": "Compilato con supporto per {options}.",
+      "library": "Libreria",
+      "more": "altro",
+      "update": "Aggiorna",
+      "version": "Versione {version}"
+    },
+    "albums": {
+      "title": "Album"
+    },
+    "artists": {
+      "title": "Artisti"
+    },
+    "audiobooks": {
+      "albums": {
+        "title": "Audiolibri"
+      },
+      "artists": {
+        "title": "Autori"
+      },
+      "tabs": {
+        "audiobooks": "Audiolibri",
+        "authors": "Autori",
+        "genres": "Generi",
+        "spotify": "Spotify"
+      }
+    },
+    "composers": {
+      "title": "Compositori"
+    },
+    "files": {
+      "title": "File"
+    },
+    "genres": {
+      "title": "Generi"
+    },
+    "music": {
+      "recently-added": {
+        "title": "Aggiunti di recente"
+      },
+      "recently-played": {
+        "title": "Riprodotti di recente"
+      },
+      "tabs": {
+        "albums": "Album",
+        "artists": "Artisti",
+        "composers": "Compositori",
+        "genres": "Generi",
+        "history": "Cronologia",
+        "spotify": "Spotify"
+      }
+    },
+    "outputs": {
+      "title": "Uscite"
+    },
+    "player": {
+      "info": "Aggiungi brani sfogliando la tua libreria",
+      "time": "Live|{time}|{time}",
+      "title": "La coda di riproduzione è vuota"
+    },
+    "playlists": {
+      "title": "{name}|Playlist"
+    },
+    "podcasts": {
+      "new-episodes": "Nuovi episodi",
+      "title": "Podcast"
+    },
+    "queue": {
+      "title": "Coda"
+    },
+    "radio": {
+      "title": "Radio"
+    },
+    "search": {
+      "albums": "Album",
+      "artists": "Artisti",
+      "audiobooks": "Audiolibri",
+      "composers": "Compositori",
+      "expression": "espressione",
+      "help": "Suggerimento: puoi cercare usando il linguaggio delle smart playlist {help} aggiungendo il prefisso {query}.",
+      "no-results": "Nessun risultato trovato",
+      "placeholder": "Cerca",
+      "playlists": "Playlist",
+      "podcasts": "Podcast",
+      "show-albums": "Mostra l'album|Mostra tutti i {count} album",
+      "show-artists": "Mostra l'artista|Mostra tutti i {count} artisti",
+      "show-audiobooks": "Mostra l'audiolibro|Mostra tutti i {count} audiolibri",
+      "show-composers": "Mostra il compositore|Mostra tutti i {count} compositori",
+      "show-playlists": "Mostra la playlist|Mostra tutte le {count} playlist",
+      "show-podcasts": "Mostra il podcast|Mostra tutti i {count} podcast",
+      "show-tracks": "Mostra il brano|Mostra tutti i {count} brani",
+      "tabs": {
+        "library": "Libreria",
+        "spotify": "Spotify"
+      },
+      "tracks": "Brani"
+    },
+    "settings": {
+      "tabs": {
+        "artwork": "Copertine",
+        "devices": "Telecomandi e uscite",
+        "online-services": "Servizi online",
+        "webinterface": "Generale"
+      }
+    },
+    "spotify": {
+      "audiobooks": {
+        "saved-audiobooks": "Audiolibri salvati"
+      },
+      "music": {
+        "featured-playlists": "Playlist in evidenza",
+        "followed-artists": "Artisti seguiti",
+        "new-releases": "Nuove uscite"
+      }
+    }
+  },
+  "player": {
+    "button": {
+      "consume": "Cancella cronologia",
+      "pause": "Pausa",
+      "play": "Riproduci",
+      "repeat": "Ripeti tutti i brani",
+      "repeat-off": "Riproduci i brani una volta",
+      "repeat-once": "Ripeti il brano corrente",
+      "seek-backward": "Vai indietro nel brano",
+      "seek-forward": "Vai avanti nel brano",
+      "shuffle": "Riproduci i brani in ordine casuale",
+      "shuffle-disabled": "Riproduci i brani in ordine",
+      "skip-backward": "Vai al brano precedente",
+      "skip-forward": "Vai al brano successivo",
+      "stop": "Ferma",
+      "toggle-lyrics": "Mostra/nascondi testi"
+    }
+  },
+  "playlist": {
+    "type": {
+      "folder": "Cartella",
+      "plain": "Semplice",
+      "smart": "Intelligente"
+    }
+  },
+  "property": {
+    "added-on": "Aggiunto il",
+    "album": "Album",
+    "album-artist": "Artista dell'album",
+    "albums": "Album",
+    "artist": "Artista",
+    "artists": "Artisti",
+    "comment": "Commento",
+    "composer": "Compositore",
+    "duration": "Durata",
+    "folders": "Cartelle",
+    "genre": "Genere",
+    "genres": "Generi",
+    "name": "Nome",
+    "owner": "Proprietario",
+    "path": "Percorso",
+    "playlists": "Playlist",
+    "playtime": "Tempo di riproduzione",
+    "popularity": "Popolarità / Follower",
+    "position": "Disco / Traccia",
+    "quality": "Qualità",
+    "rating": "Valutazione",
+    "release-date": "Data di uscita",
+    "tracks": "Brani",
+    "type": "Tipo",
+    "updated": "Aggiornato",
+    "uptime": "Tempo di attività",
+    "year": "Anno"
+  },
+  "server": {
+    "appended-tracks": "{count} brano aggiunto alla coda|{count} brani aggiunti alla coda",
+    "connection-failed": "Connessione al server OwnTone fallita",
+    "queue-saved": "Coda salvata nella playlist {name}",
+    "request-failed": "Richiesta fallita (stato: {status} {cause} {url})"
+  },
+  "settings": {
+    "appearance": {
+      "auto": "Automatico",
+      "dark": "Scuro",
+      "light": "Chiaro",
+      "title": "Aspetto"
+    },
+    "artwork": {
+      "explanation-1": "OwnTone supporta copertine PNG e JPEG inserite come file immagine separati nella libreria, incorporate nei file multimediali o rese disponibili online dalle stazioni radio.",
+      "explanation-2": "Inoltre, puoi abilitare il recupero delle copertine dai seguenti provider:",
+      "show-cover-artwork-in-album-lists": "Mostra copertina nella lista album",
+      "streamurl-ignore": "Ignora le copertine fornite dalle stazioni radio",
+      "title": "Copertine",
+      "use-artwork-source-coverartarchive": "Cover Art Archive",
+      "use-artwork-source-discogs": "Discogs",
+      "use-artwork-source-spotify": "Spotify"
+    },
+    "devices": {
+      "no-active-pairing": "Nessuna richiesta di abbinamento attiva.",
+      "pairing": "Abbinamento telecomando",
+      "pairing-code": "Codice di abbinamento",
+      "pairing-request": "Richiesta di abbinamento telecomando da ",
+      "speaker-pairing": "Abbinamento speaker e verifica dispositivo",
+      "speaker-pairing-info": "Se il tuo speaker richiede l'abbinamento, inserisci il codice di verifica visualizzato. Puoi anche impostare una compensazione dell'offset (±2000 ms) per sincronizzare la riproduzione tra più speaker. Per applicare l'offset, riavvia lo stream.",
+      "verification-code": "Codice di verifica"
+    },
+    "services": {
+      "authorise": "Autorizza l'accesso al servizio {service}",
+      "authorised": "Accesso concesso per {user}",
+      "lastfm": {
+        "info": "Abilita Last.fm per tracciare i tuoi ascolti musicali. Accedi con il tuo nome utente e password di Last.fm. La password non viene memorizzata: viene conservato solo un token di sessione, che non scade mai.",
+        "title": "Last.fm"
+      },
+      "listenbrainz": {
+        "info": "Abilita ListenBrainz per tracciare i tuoi ascolti musicali. Fornisci il tuo token utente ListenBrainz, che puoi ottenere dalle impostazioni sul sito web di ListenBrainz.",
+        "title": "ListenBrainz",
+        "token-required": "Il token utente ListenBrainz è necessario per abilitare l'integrazione con ListenBrainz."
+      },
+      "no-support": "L'opzione {service} non è supportata.",
+      "password": "Password",
+      "spotify": {
+        "info": "Abilita l'accesso a Spotify per ascoltare i brani disponibili sul tuo account tramite OwnTone. È necessario un account Spotify Premium. Gli ambiti richiesti sono: {scopes}.",
+        "reauthorize": "Si prega di autorizzare nuovamente l'accesso API per concedere a OwnTone i seguenti diritti di accesso aggiuntivi: {scopes}.",
+        "title": "Spotify"
+      },
+      "username": "Nome utente",
+      "user-token": "Token utente"
+    },
+    "webinterface": {
+      "genres": "Generi",
+      "language": "Lingua",
+      "navigation-item-selection": "Seleziona le voci del menu nella barra di navigazione superiore",
+      "navigation-item-selection-info": "Sugli schermi dei dispositivi mobili viene visualizzato solo il menu hamburger.",
+      "navigation-items": "Barra di navigazione",
+      "player-page": "Pagina player",
+      "recently-added-limit": "Limita il numero di album visualizzati",
+      "recently-added-page": "Pagina aggiunti di recente",
+      "show-composer-for-genre": "Mostra il compositore solo per i generi elencati",
+      "show-composer-genres-help": "Elenco di generi separati da virgola, per i quali deve essere visualizzato il compositore.{0}Lascia vuoto per mostrare sempre il compositore.{0}Il tag del genere del brano corrente viene verificato controllando se uno dei generi definiti è incluso. Ad esempio impostando \"classica, colonna sonora\" verrà mostrato il compositore per i brani con un tag di genere \"Classica contemporanea\"",
+      "show-composer-now-playing": "Mostra compositore",
+      "show-filepath-now-playing": "Mostra percorso file",
+      "show-menu-item-audiobooks": "Audiolibri",
+      "show-menu-item-files": "File",
+      "show-menu-item-music": "Musica",
+      "show-menu-item-playlists": "Playlist",
+      "show-menu-item-podcasts": "Podcast",
+      "show-menu-item-radio": "Radio",
+      "show-menu-item-search": "Cerca"
+    }
+  }
+}
