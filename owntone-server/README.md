@@ -101,7 +101,7 @@ Questa cartella è interna al container. Se rimuovi e reinstalli l'add-on, il da
 
 - **Build lento**: OwnTone viene compilato dai sorgenti durante il build. La prima installazione richiede 10 minuti.
 - **AirPlay PTP non disponibile**: il Precision Time Protocol (PTP) richiede la porta privilegiata 319 che il Supervisor di HA non può assegnare per motivi di sicurezza. OwnTone ricade automaticamente su NTP per la sincronizzazione, che funziona correttamente per la maggior parte degli scenari domestici.
-- **Interfaccia web**: l'italiano non è tra le lingue supportate dall'interfaccia web di OwnTone. Le lingue disponibili sono inglese, tedesco, francese e cinese.
+- **Interfaccia web**: l'italiano non è tra le lingue supportate dall'interfaccia web di OwnTone, ma questa app l'aggiunge durante la build. Cosi l'interfaccia web ora è disponibile in italiano, inglese, tedesco, francese e cinese.
 
 ---
 
