@@ -45,6 +45,8 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         "${CONF}"
 fi
 
-# ─── 7. Avvia OwnTone in foreground come utente owntone ───────────────────────
+# ─── 7. Avvia OwnTone in foreground come utente owntone ──────────────────────
 bashio::log.info "Avvio di OwnTone Server (musica da /media)..."
+touch /var/log/owntone/owntone.log
+chown owntone:owntone /var/log/owntone/owntone.log
 exec su-exec owntone owntone -f -c "${CONF}"
