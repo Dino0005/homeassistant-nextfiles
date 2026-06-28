@@ -1,0 +1,16 @@
+name: "OwnTone Server"
+description: "Server multimediale DAAP (iTunes), AirPlay e Chromecast per la tua musica"
+version: "1.0.0"
+slug: "owntone_server"
+init: false
+arch:
+  - amd64
+  - aarch64
+host_network: true
+audio: true
+map:
+  - media:ro
+options:
+  log_level: "info"
+schema:
+  log_level: "trace|debug|info|warn|error"
