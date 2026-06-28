@@ -46,6 +46,11 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         "${CONF}"
 fi
 
+# Imposta logfile se non già configurato
+if ! grep -q '/var/log/owntone/owntone.log' "${CONF}"; then
+    sed -i 's|.*logfile = .*|\tlogfile = "/var/log/owntone/owntone.log"|' "${CONF}"
+fi
+
 # ─── 7. Avvia OwnTone in foreground come utente owntone ──────────────────────
 bashio::log.info "Avvio di OwnTone Server (musica da /media)..."
 touch /var/log/owntone/owntone.log
