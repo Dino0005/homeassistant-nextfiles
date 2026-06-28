@@ -4,6 +4,8 @@ bashio::log.info "Preparazione dell'ambiente OwnTone..."
 
 # ─── 1. Avvia D-Bus (richiesto da Avahi) ─────────────────────────────────────
 mkdir -p /run/dbus
+# Rimuovi il pid file residuo da eventuali riavvii
+rm -f /run/dbus/dbus.pid
 dbus-daemon --system --fork
 
 # ─── 2. Avvia Avahi per il discovery AirPlay/Chromecast ──────────────────────
@@ -33,7 +35,6 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         -e 's|.*db_path = .*|\tdb_path = "/var/cache/owntone/database.db"|' \
         -e 's|.*db_backup_path = .*|\tdb_backup_path = "/var/cache/owntone/database.bak"|' \
         -e 's|.*cache_path = .*|\tcache_path = "/var/cache/owntone/cache.db"|' \
-        -e 's|.*logfile = .*|\tlogfile = "/dev/stderr"|' \
         -e 's|.*directories = {.*}.*|\tdirectories = { "/media" }|' \
         -e 's|.*trusted_networks = {.*}.*|\ttrusted_networks = { "any" }|' \
         "${CONF}"
