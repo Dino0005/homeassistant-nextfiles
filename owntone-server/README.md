@@ -10,8 +10,6 @@
 - **Spotify Connect** — controllo remoto di Spotify (richiede account Spotify)
 - **MPD** — compatibile con client MPD (Music Player Daemon)
 
-L'interfaccia web integrata è accessibile direttamente dal browser sulla porta `3689`.
-
 ---
 
 ## Installazione
@@ -21,7 +19,18 @@ L'interfaccia web integrata è accessibile direttamente dal browser sulla porta 
 2. Cerca **OwnTone Server** nello store e clicca **Installa**.
 3. Attendi il completamento del build (la prima volta può richiedere 10–20 minuti, OwnTone viene compilato dai sorgenti).
 4. Avvia l'add-on.
-5. Apri l'interfaccia web sulla porta `3689`.
+5. Abilita **Mostra nella barra laterale** dalla pagina dell'add-on per accesso rapido.
+
+---
+
+## Interfaccia web
+
+L'interfaccia web di OwnTone è accessibile in due modi:
+
+- **Dalla barra laterale di HA** — se hai abilitato "Mostra nella barra laterale" (tramite ingress)
+- **Direttamente dal browser** — `http://<ip-di-HA>:3689`
+
+L'interfaccia web è disponibile in inglese, tedesco, francese e cinese.
 
 ---
 
@@ -60,7 +69,7 @@ L'add-on richiede **modalità rete host** (`host_network: true`) per il corretto
 - **mDNS / Avahi** — necessario per il discovery automatico di AirPlay e Chromecast sulla rete locale
 - **DAAP** — discovery automatico da iTunes e client compatibili
 
-> ⚠️ Con la rete host, l'add-on condivide lo stack di rete del host. Assicurati che le porte `3689` (DAAP/web) e `3688` (RSP) non siano già in uso.
+> ⚠️ Con la rete host, l'add-on condivide lo stack di rete del host. Assicurati che le porte elencate di seguito non siano già in uso.
 
 ---
 
@@ -69,7 +78,10 @@ L'add-on richiede **modalità rete host** (`host_network: true`) per il corretto
 | Porta | Protocollo | Descrizione |
 |---|---|---|
 | `3689` | TCP | Interfaccia web e DAAP |
-| `3688` | TCP | RSP (Remote Speaker Protocol) |
+| `3688` | TCP | Websocket |
+| `3690` | UDP | AirPlay Control |
+| `3691` | UDP | AirPlay Timing |
+| `6600` | TCP | MPD (Music Player Daemon) |
 
 ---
 
@@ -81,13 +93,15 @@ Il database di OwnTone (libreria, playlist, metadati) è salvato in:
 /var/cache/owntone/database.db
 ```
 
-Questa cartella è interna al container. Se rimuovi e reinstalli l'add-on, il database viene ricreato dalla scansione dei file in `/media`.
+Questa cartella è interna al container. Se rimuovi e reinstalli l'add-on, il database viene ricreato automaticamente dalla scansione dei file in `/media`.
 
 ---
 
 ## Problemi noti
 
-- **Build lento**: OwnTone viene compilato dai sorgenti durante il build. La prima installazione richiede 10–15 minuti.
+- **Build lento**: OwnTone viene compilato dai sorgenti durante il build. La prima installazione richiede 10 minuti.
+- **AirPlay PTP non disponibile**: il Precision Time Protocol (PTP) richiede la porta privilegiata 319 che il Supervisor di HA non può assegnare per motivi di sicurezza. OwnTone ricade automaticamente su NTP per la sincronizzazione, che funziona correttamente per la maggior parte degli scenari domestici.
+- **Interfaccia web**: l'italiano non è tra le lingue supportate dall'interfaccia web di OwnTone. Le lingue disponibili sono inglese, tedesco, francese e cinese.
 
 ---
 
