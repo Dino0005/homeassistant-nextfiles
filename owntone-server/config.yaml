@@ -16,4 +16,4 @@ map:
 options:
   log_level: "info"
 schema:
-  log_level: "trace|debug|info|warn|error"
+  log_level: "list(trace|debug|info|warn|error)"
