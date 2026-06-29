@@ -30,8 +30,6 @@ L'interfaccia web di OwnTone è accessibile in due modi:
 - **Dalla barra laterale di HA** — se hai abilitato "Mostra nella barra laterale" (tramite ingress)
 - **Direttamente dal browser** — `http://<ip-di-HA>:3689`
 
-L'interfaccia web è disponibile in inglese, tedesco, francese e cinese.
-
 ---
 
 ## Configurazione
@@ -94,6 +92,16 @@ Il database di OwnTone (libreria, playlist, metadati) è salvato in:
 ```
 
 Questa cartella è interna al container. Se rimuovi e reinstalli l'add-on, il database viene ricreato automaticamente dalla scansione dei file in `/media`.
+
+---
+
+## Integrazione in Home Assistant
+
+Dopo l'avvio del server, saranno inviati i pacchetti di discovery. Andando in Impostazioni > Dispositivi e servizi, nella sezione dei dispositivi scoperti, si vedrà l'integrazione OwnTone (My Music on 1960957c-owntone-server - OwnTone) e l'integrazione Apple TV del server OwnTone (My Music on 1960957c-owntone-server - Apple TV).
+
+<p align="center">
+  <img width="1059" height="569" alt="Screenshot 2026-06-29 alle 12 13 04" src="https://github.com/user-attachments/assets/188172de-9ab4-44cb-ac0d-7b4de82cb287" width="70%">
+</p>  
 
 ---
 
