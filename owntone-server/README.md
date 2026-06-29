@@ -107,14 +107,14 @@ Questa cartella è interna al container. Se rimuovi e reinstalli l'add-on, il da
 Dopo l'avvio del server, saranno inviati i pacchetti di discovery. Andando in Impostazioni > Dispositivi e servizi, nella sezione dei dispositivi scoperti, si vedrà l'integrazione OwnTone (My Music on 1960957c-owntone-server - OwnTone) e l'integrazione Apple TV del server OwnTone (My Music on 1960957c-owntone-server - Apple TV).
 
 <p align="center">
-  <img width="1059" height="569" alt="Screenshot 2026-06-29 alle 12 13 04" src="https://github.com/user-attachments/assets/188172de-9ab4-44cb-ac0d-7b4de82cb287" width="40%">
+  <img alt="Screenshot 2026-06-29 alle 12 13 04" src="https://github.com/user-attachments/assets/188172de-9ab4-44cb-ac0d-7b4de82cb287" width="70%">
 </p>  
 
 **Nota:**
 Aggiungendo l'integrazione Apple TV del server OwnTone verà mostrato un PIN da inserire nel'nterfacia web di OwnTone.
 
 <p align="center">
-  <img width="603" height="1214" alt="IMG_2103" src="https://github.com/user-attachments/assets/9e4eb7ac-0f28-4f90-aebd-baaa091f28e3" width="40%">
+  <img alt="IMG_2103" src="https://github.com/user-attachments/assets/9e4eb7ac-0f28-4f90-aebd-baaa091f28e3" width="30%">
 </p> 
 
 ---
