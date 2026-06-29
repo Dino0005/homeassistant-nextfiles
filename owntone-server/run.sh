@@ -35,23 +35,20 @@ fi
 
 if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
     bashio::log.info "Configurazione di owntone.conf per Home Assistant..."
-    sed -i \
-        -e 's|.*db_path = .*|\tdb_path = "/var/cache/owntone/database.db"|' \
-        -e 's|.*db_backup_path = .*|\tdb_backup_path = "/var/cache/owntone/database.bak"|' \
-        -e 's|.*cache_path = .*|\tcache_path = "/var/cache/owntone/cache.db"|' \
-        -e 's|.*logfile = .*|\tlogfile = "/var/log/owntone/owntone.log"|' \
-        -e 's|.*directories = {.*}.*|\tdirectories = { "/media" }|' \
-        -e 's|.*trusted_networks = {.*}.*|\ttrusted_networks = { "any" }|' \
-        -e 's|#\ttype = "alsa"|\ttype = "disabled"|' \
+    # Usiamo sed con -E (regex estese) e ancoriamo i parametri con ^ per evitare di
+    # colpire righe simili (es. logfile_size o logfile_number)
+    sed -i -E \
+        -e 's|^#?[[:space:]]*db_path[[:space:]]*=[[:space:]]*.*|db_path = "/var/cache/owntone/database.db"|' \
+        -e 's|^#?[[:space:]]*db_backup_path[[:space:]]*=[[:space:]]*.*|db_backup_path = "/var/cache/owntone/database.bak"|' \
+        -e 's|^#?[[:space:]]*cache_path[[:space:]]*=[[:space:]]*.*|cache_path = "/var/cache/owntone/cache.db"|' \
+        -e 's|^#?[[:space:]]*logfile[[:space:]]*=[[:space:]]*.*|logfile = "/var/log/owntone/owntone.log"|' \
+        -e 's|^#?[[:space:]]*directories[[:space:]]*=[[:space:]]*.*|directories = { "/media" }|' \
+        -e 's|^#?[[:space:]]*trusted_networks[[:space:]]*=[[:space:]]*.*|trusted_networks = { "any" }|' \
+        -e 's|^#?[[:space:]]*type[[:space:]]*=[[:space:]]*"alsa"|type = "disabled"|' \
         -e '/^#airplay_shared {/,/^#}/{s|^#airplay_shared {|airplay_shared {|; s|^#}|}|}' \
-        -e 's|#       control_port = 0|\tcontrol_port = 3690|' \
-        -e 's|#       timing_port = 0|\ttiming_port = 3691|' \
+        -e 's|^#?[[:space:]]*control_port[[:space:]]*=[[:space:]]*.*|control_port = 3690|' \
+        -e 's|^#?[[:space:]]*timing_port[[:space:]]*=[[:space:]]*.*|timing_port = 3691|' \
         "${CONF}"
-fi
-
-# Imposta logfile se non già configurato
-if ! grep -q '/var/log/owntone/owntone.log' "${CONF}"; then
-    sed -i 's|.*logfile = .*|\tlogfile = "/var/log/owntone/owntone.log"|' "${CONF}"
 fi
 
 # ─── 7. Avvia OwnTone in foreground come utente owntone ──────────────────────
