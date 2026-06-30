@@ -18,6 +18,9 @@ ingress_port: 3689
 webui: "http://[HOST]:[PORT:3689]/"
 options:
   log_level: "info"
+  admin_password: ""
+  library_password: ""
 schema:
   log_level: "list(trace|debug|info|warn|error)"
-  password: "str?"
+  admin_password: "password?"
+  library_password: "password?"
