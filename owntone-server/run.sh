@@ -29,7 +29,7 @@ CONF="/etc/owntone/owntone.conf"
 CONF_EXAMPLE="/usr/share/doc/owntone/owntone.conf"
 
 # Recuperiamo la password configurata dall'utente nelle opzioni dell'add-on
-OWNTONE_PASSWORD=$(bashio::config 'password')
+OWNTONE_PASSWORD=$(bashio::config 'admin_password')
 
 if [ ! -f "${CONF}" ]; then
     bashio::log.info "File di configurazione non trovato, creazione da template..."
@@ -54,8 +54,8 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         "${CONF}"
 fi
 
-# Gestione dinamica della password
-if bashio::config.has_value 'password'; then
+# Gestione dinamica della admin password
+if bashio::config.has_value 'admin_password'; then
     bashio::log.info "Applicazione della password per l'interfaccia web..."
     sed -i -E \
         -e "s|^#?[[:space:]]*admin_password[[:space:]]*=[[:space:]]*.*|admin_password = \"${OWNTONE_PASSWORD}\"|" \
