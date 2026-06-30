@@ -35,7 +35,7 @@
 L'interfaccia web di OwnTone è accessibile in due modi:
 
 - **Dalla barra laterale di HA** — se hai abilitato "Mostra nella barra laterale" (tramite ingress)
-- **Direttamente dal browser** — `http://<ip-di-HA>:3689`
+- **Direttamente dal browser** — `http://<ip-di-HA>:3689` oppure `owntone.local:3689`
 
 ---
 
