@@ -51,8 +51,11 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         "${CONF}"
 fi
 
-# ─── 7. Avvia OwnTone in foreground come utente owntone ──────────────────────
+# ─── 7. Avvia OwnTone in foreground come utente root ─────────────────────────
 bashio::log.info "Avvio di OwnTone Server (musica da /media)..."
+
+# Creiamo il file di log e assicuriamoci che root possa scriverci liberamente
 touch /var/log/owntone/owntone.log
-chown owntone:owntone /var/log/owntone/owntone.log
-exec su-exec owntone owntone -f -c "${CONF}"
+
+# Avvio diretto in foreground (eredita i permessi di rete e sblocca la porta 319)
+exec owntone -f -c "${CONF}"
