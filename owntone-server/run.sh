@@ -22,6 +22,7 @@ chown owntone:owntone /var/log/owntone
 
 # ─── 5. Rimuovi pid file residuo da riavvii precedenti ───────────────────────
 rm -f /var/run/owntone.pid /run/owntone.pid /tmp/owntone.pid
+killall -9 owntone 2>/dev/null || true
 
 # ─── 6. Adatta owntone.conf ──────────────────────────────────────────────────
 CONF="/etc/owntone/owntone.conf"
@@ -45,7 +46,7 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         -e 's|^#?[[:space:]]*directories[[:space:]]*=[[:space:]]*.*|directories = { "/media" }|' \
         -e 's|^#?[[:space:]]*trusted_networks[[:space:]]*=[[:space:]]*.*|trusted_networks = { "any" }|' \
         -e 's|^#?[[:space:]]*type[[:space:]]*=[[:space:]]*"alsa"|type = "disabled"|' \
-        -e '/^#airplay_shared {/,/^#}/{s|^#airplay_shared {|airplay_shared {|; s|^#}|}|}' \
+        -e '/^#airplay_shared \{/,/^#\}/{s|^#airplay_shared \{|airplay_shared \{|; s|^#\}|\}|}' \
         -e 's|^#?[[:space:]]*control_port[[:space:]]*=[[:space:]]*.*|control_port = 3690|' \
         -e 's|^#?[[:space:]]*timing_port[[:space:]]*=[[:space:]]*.*|timing_port = 3691|' \
         "${CONF}"
