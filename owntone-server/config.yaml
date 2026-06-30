@@ -21,4 +21,4 @@ options:
   admin_password: ""
 schema:
   log_level: "list(trace|debug|info|warn|error)"
-  admin_password: "password?"
+  admin_password: "str?"
