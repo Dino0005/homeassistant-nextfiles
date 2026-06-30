@@ -25,7 +25,7 @@ rm -f /var/run/owntone.pid /run/owntone.pid /tmp/owntone.pid
 killall -9 owntone 2>/dev/null || true
 
 # ─── 6. Adatta owntone.conf ──────────────────────────────────────────────────
-CONF="/etc/owntone/owntone.conf"
+CONF="/config/owntone/owntone.conf"
 CONF_EXAMPLE="/usr/share/doc/owntone/owntone.conf"
 
 if [ ! -f "${CONF}" ]; then
