@@ -28,6 +28,9 @@ killall -9 owntone 2>/dev/null || true
 CONF="/etc/owntone/owntone.conf"
 CONF_EXAMPLE="/usr/share/doc/owntone/owntone.conf"
 
+# Recuperiamo la password configurata dall'utente nelle opzioni dell'add-on
+OWNTONE_PASSWORD=$(bashio::config 'password')
+
 if [ ! -f "${CONF}" ]; then
     bashio::log.info "File di configurazione non trovato, creazione da template..."
     mkdir -p /etc/owntone
@@ -50,6 +53,15 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
         -e 's|^#?[[:space:]]*control_port[[:space:]]*=[[:space:]]*.*|control_port = 3690|' \
         -e 's|^#?[[:space:]]*timing_port[[:space:]]*=[[:space:]]*.*|timing_port = 3691|' \
         "${CONF}"
+fi
+
+# Se l'utente ha impostato una password, la iniettiamo nel file di configurazione
+if bashio::config.has_value 'password'; then
+    bashio::log.info "Applicazione della password per l'interfaccia Web..."
+    sed -i -E "s|^#?[[:space:]]*web_password[[:space:]]*=[[:space:]]*.*|web_password = \"${OWNTONE_PASSWORD}\"|" "${CONF}"
+else
+    # Se la password viene svuotata nelle opzioni, deve essere commentata/disattivata
+    sed -i -E "s|^[[:space:]]*web_password[[:space:]]*=[[:space:]]*.*|#web_password = \"\"|" "${CONF}"
 fi
 
 # ─── 7. Avvia OwnTone in foreground come utente root ─────────────────────────
