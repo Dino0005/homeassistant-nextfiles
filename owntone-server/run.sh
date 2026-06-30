@@ -60,10 +60,13 @@ fi
 if bashio::config.has_value 'password'; then
     bashio::log.info "Applicazione della password per l'interfaccia Web..."
     # Pulizia preventiva per evitare duplicati se la password cambia
+    sed -i '/[[:space:]]*admin_password[[:space:]]*=/d' "${CONF}"
     sed -i '/[[:space:]]*web_password[[:space:]]*=/d' "${CONF}"
-    echo "web_password = \"${OWNTONE_PASSWORD}\"" >> "${CONF}"
+    # Appendiamo la riga corretta accettata da OwnTone
+    echo "admin_password = \"${OWNTONE_PASSWORD}\"" >> "${CONF}"
 else
     bashio::log.info "Nessuna password impostata o rimossa per l'interfaccia Web..."
+    sed -i '/[[:space:]]*admin_password[[:space:]]*=/d' "${CONF}"
     sed -i '/[[:space:]]*web_password[[:space:]]*=/d' "${CONF}"
 fi
 
