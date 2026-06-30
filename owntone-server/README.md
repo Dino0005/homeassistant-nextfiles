@@ -67,6 +67,13 @@ Formati supportati: MP3, FLAC, AAC, OGG, ALAC, WAV, e molti altri tramite FFmpeg
 
 ---
 
+## AirPlay 2 con PTP
+
+Il server gira come root nel container, il che consente di agganciare la porta privilegiata 319 richiesta dal Precision Time Protocol (PTP). 
+La sincronizzazione audio tra più speaker AirPlay 2 è quindi completa, senza fallback su NTP.
+
+---
+
 ## Rete
 
 L'add-on richiede **modalità rete host** (`host_network: true`) per il corretto funzionamento di:
