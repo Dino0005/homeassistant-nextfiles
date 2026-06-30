@@ -13,6 +13,7 @@ host_network: true
 audio: true
 map:
   - media:ro
+  - config:rw
 ingress: true
 ingress_port: 3689
 webui: "http://[HOST]:[PORT:3689]/"
