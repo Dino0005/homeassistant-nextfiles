@@ -30,7 +30,7 @@ CONF_EXAMPLE="/usr/share/doc/owntone/owntone.conf"
 
 if [ ! -f "${CONF}" ]; then
     bashio::log.info "File di configurazione non trovato, creazione da template..."
-    mkdir -p /etc/owntone
+    mkdir -p /config/owntone
     cp "${CONF_EXAMPLE}" "${CONF}"
 fi
 
