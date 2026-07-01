@@ -40,7 +40,7 @@ if ! grep -q '/config/owntone/cache/database.db' "${CONF}"; then
     sed -i -E \
         -e 's|^#?[[:space:]]*db_path[[:space:]]*=[[:space:]]*.*|db_path = "/config/owntone/cache/database.db"|' \
         -e 's|^#?[[:space:]]*db_backup_path[[:space:]]*=[[:space:]]*.*|db_backup_path = "/config/owntone/cache/database.bak"|' \
-        -e 's|^#?[[:space:]]*cache_dir[[:space:]]*=[[:space:]]*.*|cache_dir = "/config/owntone/cache/cache.db"|' \
+        -e 's|^#?[[:space:]]*cache_dir[[:space:]]*=[[:space:]]*.*|cache_dir = "/config/owntone/cache"|' \
         -e 's|^#?[[:space:]]*logfile[[:space:]]*=[[:space:]]*.*|logfile = "/var/log/owntone/owntone.log"|' \
         -e 's|^#?[[:space:]]*directories[[:space:]]*=[[:space:]]*.*|directories = { "/media" }|' \
         -e 's|^#?[[:space:]]*trusted_networks[[:space:]]*=[[:space:]]*.*|trusted_networks = { "any" }|' \
