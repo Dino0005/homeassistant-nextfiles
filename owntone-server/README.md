@@ -147,4 +147,4 @@ Questa App è un add-on (wrapper) per **OwnTone Server**, il quale è rilasciato
 In conformità e rispetto della licenza originale dell'autore, tutto il codice specifico di questo add-on (inclusi `Dockerfile`, `run.sh` e `config.yaml`) è rilasciato sotto licenza **GPL-2.0**. 
 
 * Tutto il codice di OwnTone Server appartiene ai rispettivi autori.
-* Il testo completo della licenza è disponibile nel file `LICENSE`.
+* Il testo completo della licenza è disponibile nel file [LICENSE](./LICENSE).
