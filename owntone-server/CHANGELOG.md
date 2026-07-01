@@ -22,4 +22,6 @@ Questa è la prima release dell'App **OwnTone Server** per Home Assistant. Offre
 * Supporto nativo per la scansione della cartella `/media` di Home Assistant in modalità sola lettura (`ro`).
 * Integrazione localizzazione Italiana per la UI (viene incorporata direttamente durante la build del container).
 * Ottimizzazione della cache multimediale (`cache_dir`) e disattivazione del backend ALSA nativo per prevenire conflitti hardware.
+* Rimozione del file build.yaml deprecato e migrazione a Docker BuildKit.
+* Utilizzo dell'immagine di base multi-piattaforma nativa (versione 3.24-2026.06.1).
   
