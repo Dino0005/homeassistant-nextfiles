@@ -11,6 +11,7 @@ Questa è la prima release dell'App **OwnTone Server** per Home Assistant. Offre
 * **Autodiscovery (mDNS):** Integrazione nativa di D-Bus e Avahi-Daemon nel container per il rilevamento istantaneo di speaker AirPlay, Apple TV, HomePod e dispositivi Chromecast.
 * **Isolamento e Sicurezza:** Rete configurata in modalità `host` per garantire prestazioni ottimali di streaming e accesso alla porta DAAP standard `3689` sulla LAN.
 * **AirPlay 2 con PTP**: esecuzione come root per abilitare il binding sulla porta privilegiata 319, consentendo la sincronizzazione PTP completa tra speaker AirPlay 2.
+* **Porte AirPlay fisse**: control port 3690/udp e timing port 3691/udp configurate staticamente per facilitare eventuali regole firewall.
 
 ### Architetture supportate
 * `amd64`
