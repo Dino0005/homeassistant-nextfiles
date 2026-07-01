@@ -19,3 +19,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+--------------------------------------------------------------------------------
+Component License Exceptions:
+This repository contains multiple applications (add-ons). While the global project 
+and the specified modules are released under the MIT License, the add-on located 
+in the "owntone-server/" directory is released exclusively under the GNU General 
+Public License v2.0 (GPL-2.0), in compliance with the original software's license. 
+Please refer to the following file for the respective terms:
+owntone-server/LICENSE
