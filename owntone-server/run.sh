@@ -13,8 +13,8 @@ chown avahi:avahi /run/avahi-daemon
 avahi-daemon --no-chroot -D
 
 # ─── 3. Prepara la directory del database ────────────────────────────────────
-mkdir -p /var/cache/owntone
-chown -R owntone:owntone /var/cache/owntone
+mkdir -p /config/owntone/cache
+chown -R owntone:owntone /config/owntone/cache
 
 # ─── 4. Prepara directory log scrivibile da owntone ──────────────────────────
 mkdir -p /var/log/owntone
@@ -39,9 +39,9 @@ if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
     # Usiamo sed con -E (regex estese) e ancoriamo i parametri con ^ per evitare di
     # colpire righe simili (es. logfile_size o logfile_number)
     sed -i -E \
-        -e 's|^#?[[:space:]]*db_path[[:space:]]*=[[:space:]]*.*|db_path = "/var/cache/owntone/database.db"|' \
-        -e 's|^#?[[:space:]]*db_backup_path[[:space:]]*=[[:space:]]*.*|db_backup_path = "/var/cache/owntone/database.bak"|' \
-        -e 's|^#?[[:space:]]*cache_path[[:space:]]*=[[:space:]]*.*|cache_path = "/var/cache/owntone/cache.db"|' \
+        -e 's|^#?[[:space:]]*db_path[[:space:]]*=[[:space:]]*.*|db_path = "/config/owntone/cache/database.db"|' \
+        -e 's|^#?[[:space:]]*db_backup_path[[:space:]]*=[[:space:]]*.*|db_backup_path = "/config/owntone/cache/database.bak"|' \
+        -e 's|^#?[[:space:]]*cache_path[[:space:]]*=[[:space:]]*.*|cache_path = "/config/owntone/cache/cache.db"|' \
         -e 's|^#?[[:space:]]*logfile[[:space:]]*=[[:space:]]*.*|logfile = "/var/log/owntone/owntone.log"|' \
         -e 's|^#?[[:space:]]*directories[[:space:]]*=[[:space:]]*.*|directories = { "/media" }|' \
         -e 's|^#?[[:space:]]*trusted_networks[[:space:]]*=[[:space:]]*.*|trusted_networks = { "any" }|' \
