@@ -99,13 +99,12 @@ L'add-on richiede **modalità rete host** (`host_network: true`) per il corretto
 
 ## Persistenza dei dati
 
-Il database di OwnTone (libreria, playlist, metadati) è salvato in:
+I dati di OwnTone (database della libreria, playlist, cache e metadati delle copertine) sono salvati nella cartella di configurazione di Home Assistant, garantendo la persistenza anche in caso di aggiornamento o reinstallazione dell'add-on:
 
-```
-/var/cache/owntone/database.db
-```
+- **File di configurazione**: `/config/owntone/owntone.conf`
+- **Database e Cache**: `/config/owntone/cache/`
 
-Questa cartella è interna al container. Se rimuovi e reinstalli l'add-on, il database viene ricreato automaticamente dalla scansione dei file in `/media`.
+A differenza della configurazione standard interna al container, questa struttura mantiene intatti i tuoi dati e le tue playlist personalizzate. Se l'add-on viene rimosso o reinstallato, OwnTone si riconnetterà automaticamente al database esistente senza dover rieseguire da capo la scansione completa dei file multimediali in `/media`.
 
 ---
 
