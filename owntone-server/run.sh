@@ -34,7 +34,7 @@ if [ ! -f "${CONF}" ]; then
     cp "${CONF_EXAMPLE}" "${CONF}"
 fi
 
-if ! grep -q '/var/cache/owntone/database.db' "${CONF}"; then
+if ! grep -q '/config/owntone/cache/database.db' "${CONF}"; then
     bashio::log.info "Configurazione di owntone.conf per Home Assistant..."
     # Usiamo sed con -E (regex estese) e ancoriamo i parametri con ^ per evitare di
     # colpire righe simili (es. logfile_size o logfile_number)
