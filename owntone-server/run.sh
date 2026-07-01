@@ -12,7 +12,7 @@ mkdir -p /run/avahi-daemon
 chown avahi:avahi /run/avahi-daemon
 avahi-daemon --no-chroot -D
 
-# ─── 3. Prepara la directory del database ────────────────────────────────────
+# ─── 3. Prepara la struttura delle directory nella cartella config ───────────
 mkdir -p /config/owntone/cache
 chown -R owntone:owntone /config/owntone/cache
 
@@ -30,7 +30,6 @@ CONF_EXAMPLE="/usr/share/doc/owntone/owntone.conf"
 
 if [ ! -f "${CONF}" ]; then
     bashio::log.info "File di configurazione non trovato, creazione da template..."
-    mkdir -p /config/owntone
     cp "${CONF_EXAMPLE}" "${CONF}"
 fi
 
