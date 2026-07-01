@@ -22,7 +22,7 @@
 ## Installazione
 
 1. Aggiungi questo repository come **repository personalizzato** in Home Assistant:
-   **Impostazioni → Add-on → Store → ⋮ → Repository**
+   **Impostazioni → Applicazioni → Installa App → ⋮ → Repository**
 2. Cerca **OwnTone Server** nello store e clicca **Installa**.
 3. Attendi il completamento del build (la prima volta può richiedere 10 minuti, OwnTone viene compilato dai sorgenti).
 4. Avvia l'add-on.
