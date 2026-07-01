@@ -137,3 +137,14 @@ Aggiungendo l'integrazione Apple TV del server OwnTone verà mostrato un PIN da 
 - [Sito ufficiale OwnTone](https://owntone.github.io/owntone-server/)
 - [Repository GitHub OwnTone](https://github.com/owntone/owntone-server)
 - [owntone-container](https://github.com/owntone/owntone-container) — immagine Docker ufficiale, riferimento usato per il Dockerfile di questo add-on
+
+---
+
+## Licenza e Crediti
+
+Questa App è un add-on (wrapper) per **OwnTone Server**, il quale è rilasciato sotto licenza **GNU General Public License v2.0 (GPL-2.0)**. 
+
+In conformità e rispetto della licenza originale dell'autore, tutto il codice specifico di questo add-on (inclusi `Dockerfile`, `run.sh` e `config.yaml`) è rilasciato sotto licenza **GPL-2.0**. 
+
+* Tutto il codice di OwnTone Server appartiene ai rispettivi autori.
+* Il testo completo della licenza è disponibile nel file `LICENSE`.
