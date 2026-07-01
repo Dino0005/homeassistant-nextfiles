@@ -377,6 +377,7 @@ Rielaborato per:
 ## Licenza
 
 Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
+*Nextfiles è un wrapper di Nextcloud.*
 
 ## Supporto
 
