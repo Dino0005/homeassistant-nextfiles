@@ -25,8 +25,8 @@
    **Impostazioni → Applicazioni → Installa App → ⋮ → Repository**
 2. Cerca **OwnTone Server** nello store e clicca **Installa**.
 3. Attendi il completamento del build (la prima volta può richiedere 10 minuti, OwnTone viene compilato dai sorgenti).
-4. Avvia l'add-on.
-5. Abilita **Mostra nella barra laterale** dalla pagina dell'add-on per accesso rapido.
+4. Avvia l'App.
+5. Abilita **Mostra nella barra laterale** dalla pagina dell'App per accesso rapido.
 
 ---
 
@@ -55,7 +55,7 @@ log_level: info
 
 ## Musica
 
-L'add-on legge la musica dalla cartella `/media` di Home Assistant, che corrisponde alla cartella **Media** visibile nel file browser di HA.
+L'App legge la musica dalla cartella `/media` di Home Assistant, che corrisponde alla cartella **Media** visibile nel file browser di HA.
 
 Per aggiungere musica:
 
@@ -76,12 +76,12 @@ La sincronizzazione audio tra più speaker AirPlay 2 è quindi completa, senza f
 
 ## Rete
 
-L'add-on richiede **modalità rete host** (`host_network: true`) per il corretto funzionamento di:
+L'App richiede **modalità rete host** (`host_network: true`) per il corretto funzionamento di:
 
 - **mDNS / Avahi** — necessario per il discovery automatico di AirPlay e Chromecast sulla rete locale
 - **DAAP** — discovery automatico da iTunes e client compatibili
 
-> ⚠️ Con la rete host, l'add-on condivide lo stack di rete del host. Assicurati che le porte elencate di seguito non siano già in uso.
+> ⚠️ Con la rete host, l'App condivide lo stack di rete del host. Assicurati che le porte elencate di seguito non siano già in uso.
 
 ---
 
@@ -99,12 +99,12 @@ L'add-on richiede **modalità rete host** (`host_network: true`) per il corretto
 
 ## Persistenza dei dati
 
-I dati di OwnTone (database della libreria, playlist, cache e metadati delle copertine) sono salvati nella cartella di configurazione di Home Assistant, garantendo la persistenza anche in caso di aggiornamento o reinstallazione dell'add-on:
+I dati di OwnTone (database della libreria, playlist, cache e metadati delle copertine) sono salvati nella cartella di configurazione di Home Assistant, garantendo la persistenza anche in caso di aggiornamento o reinstallazione dell'App:
 
 - **File di configurazione**: `/config/owntone/owntone.conf`
 - **Database e Cache**: `/config/owntone/cache/`
 
-A differenza della configurazione standard interna al container, questa struttura mantiene intatti i tuoi dati e le tue playlist personalizzate. Se l'add-on viene rimosso o reinstallato, OwnTone si riconnetterà automaticamente al database esistente senza dover rieseguire da capo la scansione completa dei file multimediali in `/media`.
+A differenza della configurazione standard interna al container, questa struttura mantiene intatti i tuoi dati e le tue playlist personalizzate. Se l'App viene rimossa o reinstallata, OwnTone si riconnetterà automaticamente al database esistente senza dover rieseguire da capo la scansione completa dei file multimediali in `/media`.
 
 ---
 
@@ -128,7 +128,6 @@ Aggiungendo l'integrazione Apple TV del server OwnTone verà mostrato un PIN da 
 ## Problemi noti
 
 - **Build lento**: OwnTone viene compilato dai sorgenti durante il build. La prima installazione richiede 10 minuti.
-- **AirPlay PTP non disponibile**: il Precision Time Protocol (PTP) richiede la porta privilegiata 319 che il Supervisor di HA non può assegnare per motivi di sicurezza. OwnTone ricade automaticamente su NTP per la sincronizzazione, che funziona correttamente per la maggior parte degli scenari domestici.
 - **Interfaccia web**: le lungue supportate sono inglese, tedesco, francese e cinese. L'italiano non è tra le lingue supportate ma questa App l'aggiunge durante la build. Cosi l'interfaccia web ora è disponibile in italiano, inglese, tedesco, francese e cinese.
 
 ---
