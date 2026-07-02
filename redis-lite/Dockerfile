@@ -1,5 +1,4 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM ghcr.io/home-assistant/base:3.24-2026.06.1
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
