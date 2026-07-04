@@ -64,7 +64,8 @@ https://github.com/Dino0005/homeassistant-nextfiles
 ## Licenza
 
 MIT License - vedi [LICENSE](LICENSE) per dettagli.
-
+Eccezioni: 
+- l'add-on `owntone-server/`, distribuito sotto GPL-2.0 (vedi `owntone-server/LICENSE`).
 ---
 
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-production-green.svg
