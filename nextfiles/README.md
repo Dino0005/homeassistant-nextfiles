@@ -382,16 +382,15 @@ docker exec -it -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ me
 ```
 **Nota**: Potrebbero essere necessari più tentativi per riuscire a completare il download, a causa "MariaDB che va in crash/stallo sotto carico concorrente".
 In modalità manutenzione nessun altro processo tocca il DB e l'import è riuscito a completare senza interruzioni:
-1) Attivare la modaità manutezione
+
 ```bash
+# 1) Attivare la modaità manutezione
 docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --on
-```
-2) Download del database geografico per il Reverse Geocoding di Memories
-```bash
+
+# 2) Download del database geografico per il Reverse Geocoding di Memories
 docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
-```
-3) Disattivare la modalità di manutenzioe
-```bash
+
+# 3) Disattivare la modalità di manutenzioe
 docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --off
 ```
 
