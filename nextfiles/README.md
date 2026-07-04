@@ -381,10 +381,17 @@ Per avviare il downlod, digitare il comado dal Terminale di Home Assistant
 docker exec -it -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
 ```
 **Nota**: Potrebbero essere necessari più tentativi per riuscire a completare il download, a causa "MariaDB che va in crash/stallo sotto carico concorrente".
-In modalità manutenzione nessun altro processo tocca il DB e l'import è riuscito a completare senza interruzioni:
+1) In modalità manutenzione nessun altro processo tocca il DB e l'import è riuscito a completare senza interruzioni:
+Attivare la modaità manutezione
 ```bash
 docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --on
+```
+2) Download del database geografico per il Reverse Geocoding di Memories
+```bash
 docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
+```
+3) Disattivare la modalità di manutenzioe
+```bash
 docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --off
 ```
 
