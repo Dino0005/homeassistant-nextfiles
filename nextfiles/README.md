@@ -380,7 +380,13 @@ Per avviare il downlod, digitare il comado dal Terminale di Home Assistant
 ```bash
 docker exec -it -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
 ```
-Nota: Potrebbero essere necessari più tentativi per riuscire a completare il download.
+Nota: Potrebbero essere necessari più tentativi per riuscire a completare il download, a causa "MariaDB che va in crash/stallo sotto carico concorrente".
+In modalità manutenzione nessun altro processo tocca il DB e l'import è riuscito a completare senza interruzioni:
+```bash
+docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --on
+docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
+docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --off
+```
 
 ## Licenza
 
