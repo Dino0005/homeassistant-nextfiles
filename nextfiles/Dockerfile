@@ -1,13 +1,19 @@
-ARG BUILD_FROM
-FROM $BUILD_FROM
+# Base image: Now manifest multi-platform (aarch64+amd64)
+FROM ghcr.io/home-assistant/base:3.24-2026.06.1
+
+LABEL \
+    org.opencontainers.image.title="Nextfiles" \
+    org.opencontainers.image.description="Self-hosted file storage solution with MariaDB database, APCu cache, Redis support for Home Assistant" \
+    org.opencontainers.image.source="https://github.com/Dino0005/homeassistant-nextfiles" \
+    org.opencontainers.image.licenses="MIT"
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG NEXTCLOUD_VERSION=33.0.6
+ARG NEXTCLOUD_VERSION="33.0.6"
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
-ARG PHP_VERSION=85
+ARG PHP_VERSION="85"
 ENV PHP_VERSION=${PHP_VERSION}
 
 # Install requirements (MariaDB support included + APCu for caching + Redis support + igbinary + SMB)
