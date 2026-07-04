@@ -1,8 +1,10 @@
 # Nextfiles (Nextcloud) - Home Assistant App
 
 ![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fconfig.yaml&query=%24.version&label=Version&color=blue) 
-![Nextcloud Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2Fbuild.yaml&query=%24.args.NEXTCLOUD_VERSION&label=Nextcloud&color=blue&logo=nextcloud)
+![Nextcloud Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2FDockerfile&search=ARG%20NEXTCLOUD_VERSION%3D%22(.*)%22&replace=%241&label=Nextcloud&color=blue&logo=nextcloud)
+![PHP Version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fnextfiles%2FDockerfile&search=ARG%20PHP_VERSION%3D%22(%5Cd)(%5Cd)%22&replace=%241.%242&label=PHP&color=blue&logo=php)
 ![Home Assistant App](https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant)
+
 
 Self-hosted file storage solution with Nextcloud for Home Assistant. 
 Designed to work with external MariaDB and Redis/Valkey services for maximum flexibility and performance.
