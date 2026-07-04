@@ -374,6 +374,14 @@ Rielaborato per:
 - Storage su `/share/nextfiles`
 - Configurazione semplificata
 
+## Download del database geografico per il Reverse Geocoding di Memories
+
+Per avviare il downlod, digitare il comado dal Terminale di Home Assistant
+```bash
+docker exec -it -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
+```
+Nota: Potrebbero essere necessari più tentativi per riuscire a completare il download.
+
 ## Licenza
 
 Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
