@@ -64,6 +64,7 @@ https://github.com/Dino0005/homeassistant-nextfiles
 ## Licenza
 
 MIT License - vedi [LICENSE](LICENSE) per dettagli.
+
 Eccezioni: 
 - l'add-on `owntone-server/`, distribuito sotto GPL-2.0 (vedi `owntone-server/LICENSE`).
 ---
