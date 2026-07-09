@@ -1,0 +1,24 @@
+name: "Whisper CPP per ARM"
+version: "1.1.0"
+slug: "whisper_cpp_arm"
+description: "Riprogettazione di Whisper in C++ ottimizzato per core ARM NEON del Pi 4 senza istruzioni AVX."
+url: "https://github.com/tuo-username/tuo-repo"
+arch:
+  - aarch64
+startup: services
+boot: auto
+init: false
+discovery:
+  - wyoming
+map:
+  - addon_config:rw
+options:
+  model: "base-q5_1"
+  language: "it"
+schema:
+  model: |
+    list(tiny-q5_1|tiny-q8_0|base-q5_1|base-q8_0|small-q5_1|small-q8_0)
+  language: |
+    list(auto|af|am|ar|as|az|ba|be|bg|bn|bo|br|bs|ca|cs|cy|da|de|el|en|es|et|eu|fa|fi|fo|fr|gl|gu|ha|haw|he|hi|hr|ht|hu|hy|id|is|it|ja|jw|ka|kk|km|kn|ko|la|lb|ln|lo|lt|lv|mg|mi|mk|ml|mn|mr|ms|mt|my|ne|nl|nn|no|oc|pa|pl|ps|pt|ro|ru|sa|sd|si|sk|sl|sn|so|sq|sr|su|sv|sw|ta|te|tg|th|tk|tl|tr|tt|uk|ur|uz|vi|yi|yo|zh|yue)
+ports:
+  10300/tcp: 10300
