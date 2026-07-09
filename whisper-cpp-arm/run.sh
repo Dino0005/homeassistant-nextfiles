@@ -76,6 +76,17 @@ fi
 
 rm -f "$SANITY_LOG"
 
+# --- Registrazione discovery ---
+# Dichiarare "discovery: - wyoming" in config.yaml non basta da solo:
+# è solo un'abilitazione. Il servizio va registrato attivamente presso
+# il Supervisor (stesso meccanismo usato dall'add-on Whisper ufficiale,
+# che ha un servizio s6 dedicato proprio per questa chiamata). Senza
+# questo passaggio, Home Assistant non lo mostra mai come opzione
+# nell'integrazione Wyoming Protocol / nella pipeline Assist.
+DISCOVERY_HOST="$(hostname)"
+bashio::log.info "Registro il servizio Wyoming presso il Supervisor (${DISCOVERY_HOST}:10300)..."
+bashio::discovery "wyoming" "{\"uri\": \"tcp://${DISCOVERY_HOST}:10300\"}"
+
 bashio::log.info "Avvio del ponte Wyoming verso whisper.cpp (lingua di default: ${LANGUAGE})..."
 
 python3 /wyoming_whisper_cpp.py \
