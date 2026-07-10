@@ -1,5 +1,8 @@
 # Whisper CPP per ARM
 
+![Version](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2FDino0005%2Fhomeassistant-nextfiles%2Fmain%2Fwhisper-cpp-arm%2Fconfig.yaml&query=%24.version&label=Version&color=blue) 
+![Home Assistant App](https://img.shields.io/badge/Home%20Assistant-App-blue.svg?logo=home-assistant)
+
 App per Home Assistant che sostituisce il motore Speech-to-Text ufficiale di Whisper con una versione basata su [whisper.cpp](https://github.com/ggml-org/whisper.cpp), compilata nativamente per sfruttare le istruzioni **ARM NEON**.
 
 ## Perché questo App esiste
