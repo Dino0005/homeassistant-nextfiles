@@ -34,7 +34,7 @@ In ogni caso, questa App risolve il problema alla radice, usando
 sull'hardware di destinazione e pensato per sfruttare NEON, l'equivalente
 ARM delle estensioni SIMD x86, senza dipendere da PyTorch.
 
-## Perché restare comunque su questa App custom
+## Perché restare su questa App custom
 
 Anche con l'App ufficiale fixata, `whisper_cpp_arm` resta una scelta
 valida, non solo un cerotto temporaneo:
