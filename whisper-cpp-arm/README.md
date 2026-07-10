@@ -6,21 +6,25 @@ compilata nativamente per sfruttare le istruzioni **ARM NEON**.
 
 ## Perché questo App esiste
 
-L'App ufficiale Whisper, a partire dalla versione 3.3.1, richiede
-istruzioni **AVX/AVX2** nei binari PyTorch che usa internamente, che sono istruzioni
-disponibili solo su CPU x86 desktop. Su hardware ARM (es. Raspberry Pi 4/5,
-schede aarch64) questo causa un crash immediato all'avvio:
+A partire dalla versione 3.3.1, l'App ufficiale Whisper ha iniziato a
+crashare all'avvio su hardware ARM (es. Raspberry Pi 4/5, schede aarch64):
 
 ```
 [hh:mm:ss] INFO: Service exited with code 256 (by signal 4)
 ```
 
-`Signal 4` è `SIGILL` (istruzione illegale): la CPU riceve un'istruzione che
-fisicamente non supporta.
+`Signal 4` è `SIGILL` (istruzione illegale): la CPU riceve un'istruzione
+che non è in grado di eseguire. Sul momento la causa sembrava un
+requisito di istruzioni AVX/AVX2 nei binari PyTorch usati internamente
+dall'App — istruzioni tipiche delle CPU x86 desktop, assenti su ARM. La
+causa esatta si è chiarita solo più avanti (vedi nota sotto): si trattava
+in realtà di una regressione di PyTorch specifica per architettura ARM,
+non di un vero requisito x86.
 
-Questa App risolve il problema alla radice, usando `whisper.cpp`:
-leggero, scritto in C/C++, compilato direttamente sull'hardware di
-destinazione e in grado di sfruttare NEON invece di AVX/AVX2.
+In ogni caso, questa App risolve il problema alla radice, usando
+`whisper.cpp`: leggero, scritto in C/C++, compilato direttamente
+sull'hardware di destinazione e pensato per sfruttare NEON, l'equivalente
+ARM delle estensioni SIMD x86, senza dipendere da PyTorch.
 
 > **Aggiornamento**: a partire dalla versione **3.5.0** dell'App
 > ufficiale Whisper, il problema risulta corretto a monte. Il changelog
