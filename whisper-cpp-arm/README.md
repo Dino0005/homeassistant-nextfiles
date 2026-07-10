@@ -22,6 +22,31 @@ Questa App risolve il problema alla radice, usando `whisper.cpp`:
 leggero, scritto in C/C++, compilato direttamente sull'hardware di
 destinazione e in grado di sfruttare NEON invece di AVX/AVX2.
 
+> **Aggiornamento**: a partire dalla versione **3.5.0** dell'App
+> ufficiale Whisper, il problema risulta corretto a monte. Il changelog
+> riporta un bump di `torch` per evitare una regressione
+> ([pytorch/pytorch#146792](https://github.com/pytorch/pytorch/issues/146792)),
+> che descrive esattamente un `Illegal instruction (core dumped)` su
+> Raspberry Pi 4 introdotto in torch 2.6.0 — lo stesso sintomo (`SIGILL`,
+> signal 4) visto qui.
+
+## Perché restare comunque su questa App custom
+
+Anche con l'App ufficiale fixata, `whisper_cpp_arm` resta una scelta
+valida, non solo un cerotto temporaneo:
+
+- **Accuratezza**: a parità di modello e livello di quantizzazione,
+  whisper.cpp e faster-whisper (usato dall'App ufficiale) eseguono
+  gli stessi pesi Whisper, il riconoscimento vocale in sé non cambia.
+- **Efficienza**: whisper.cpp, compilato nativamente con NEON, è più
+  leggero di uno stack Python/PyTorch/CTranslate2 sulla stessa CPU ARM.
+  Questo margine si può reinvestire usando un modello più grande (es.
+  `small` invece di `base`) a parità di tempo di risposta, ottenendo così
+  un'accuratezza superiore nella pratica.
+- **Resilienza**: non dipendendo da PyTorch, questa App non è esposta a
+  future regressioni introdotte da aggiornamenti di quella libreria su
+  architettura ARM.
+
 ## Caratteristiche
 
 - Compilazione nativa di whisper.cpp ad ogni build dell'immagine (nessun
