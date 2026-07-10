@@ -16,8 +16,9 @@ crashare all'avvio su hardware ARM (es. Raspberry Pi 4/5, schede aarch64):
 `Signal 4` è `SIGILL` (istruzione illegale): la CPU riceve un'istruzione
 che non è in grado di eseguire. Sul momento la causa sembrava un
 requisito di istruzioni AVX/AVX2 nei binari PyTorch usati internamente
-dall'App — istruzioni tipiche delle CPU x86 desktop, assenti su ARM. La
-causa esatta si è chiarita solo più avanti (vedi nota sotto): si trattava
+dall'App — istruzioni tipiche delle CPU x86 desktop, assenti su ARM. 
+
+La causa esatta si è chiarita solo più avanti (vedi nota sotto): si trattava
 in realtà di una regressione di PyTorch specifica per architettura ARM,
 non di un vero requisito x86.
 
