@@ -22,18 +22,17 @@ La causa esatta si è chiarita solo più avanti (vedi nota sotto): si trattava
 in realtà di una regressione di PyTorch specifica per architettura ARM,
 non di un vero requisito x86.
 
-In ogni caso, questa App risolve il problema alla radice, usando
-`whisper.cpp`: leggero, scritto in C/C++, compilato direttamente
-sull'hardware di destinazione e pensato per sfruttare NEON, l'equivalente
-ARM delle estensioni SIMD x86, senza dipendere da PyTorch.
-
 > **Aggiornamento**: a partire dalla versione **3.5.0** dell'App
 > ufficiale Whisper, il problema risulta corretto a monte. Il changelog
 > riporta un bump di `torch` per evitare una regressione
 > ([pytorch/pytorch#146792](https://github.com/pytorch/pytorch/issues/146792)),
 > che descrive esattamente un `Illegal instruction (core dumped)` su
-> Raspberry Pi 4 introdotto in torch 2.6.0 — lo stesso sintomo (`SIGILL`,
-> signal 4) visto qui.
+> Raspberry Pi 4 introdotto in torch 2.6.0.
+
+In ogni caso, questa App risolve il problema alla radice, usando
+`whisper.cpp`: leggero, scritto in C/C++, compilato direttamente
+sull'hardware di destinazione e pensato per sfruttare NEON, l'equivalente
+ARM delle estensioni SIMD x86, senza dipendere da PyTorch.
 
 ## Perché restare comunque su questa App custom
 
