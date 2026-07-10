@@ -1,6 +1,14 @@
 ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base:latest
 FROM ${BUILD_FROM}
 
+# Se non pubblichi tramite la GitHub Action ufficiale del builder HA,
+# queste label vanno dichiarate a mano: il Supervisor le legge per
+# riconoscere l'immagine come add-on valido.
+LABEL \
+    io.hass.version="1.2.0" \
+    io.hass.type="app" \
+    io.hass.arch="aarch64"
+
 ENV LANG=C.UTF-8
 
 # Versione di whisper.cpp pinnata: whisper.cpp ha abbandonato il vecchio
