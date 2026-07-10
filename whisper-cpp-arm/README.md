@@ -84,3 +84,8 @@ porta `10300`.
 ## Crediti
 
 Basato su [whisper.cpp](https://github.com/ggml-org/whisper.cpp) di ggerganov e sul protocollo [Wyoming](https://github.com/OHF-Voice/wyoming) dell'Open Home Foundation.
+
+
+## License
+
+Questo progetto è rilasciato sotto licenza MIT - vedi [LICENSE](../LICENSE).
