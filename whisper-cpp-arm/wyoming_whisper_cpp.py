@@ -51,28 +51,28 @@ class WhisperCppEventHandler(AsyncEventHandler):
         # Home Assistant interroga il servizio con Describe per scoprire
         # nome, modelli e lingue supportate: senza questa risposta la
         # discovery/integrazione Wyoming non riconosce correttamente il servizio.
-        if Describe.is_event(event):
+        if Describe.is_type(event.type):
             await self.write_event(self.wyoming_info_event)
             return True
 
         # Ogni richiesta di trascrizione può specificare una lingua diversa
         # da quella di default passata via riga di comando.
-        if Transcribe.is_event(event):
+        if Transcribe.is_type(event.type):
             transcribe = Transcribe.from_event(event)
             if transcribe.language:
                 self.language = transcribe.language
             return True
 
-        if AudioStart.is_event(event):
+        if AudioStart.is_type(event.type):
             self.audio_data = bytearray()
             return True
 
-        if AudioChunk.is_event(event):
+        if AudioChunk.is_type(event.type):
             chunk = AudioChunk.from_event(event)
             self.audio_data.extend(chunk.audio)
             return True
 
-        if AudioStop.is_event(event):
+        if AudioStop.is_type(event.type):
             text = await self._run_whisper()
             await self.write_event(Transcript(text=text).event())
             # Chiude la connessione dopo aver inviato la trascrizione
