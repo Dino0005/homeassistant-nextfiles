@@ -9,9 +9,9 @@
 Self-hosted file storage solution with Nextcloud for Home Assistant. 
 Designed to work with external MariaDB and Redis/Valkey services for maximum flexibility and performance.
 
-<div align="center">
-  <img width="817" height="600" alt="Screenshot 2025-11-20 alle 22 16 07" src="https://github.com/user-attachments/assets/026775ec-5371-4d6c-b37d-efd859223d92" />
-</div>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/026775ec-5371-4d6c-b37d-efd859223d92" width="800"><br>
+</p>
 
 ## Caratteristiche
 
