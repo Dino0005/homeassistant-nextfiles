@@ -117,7 +117,7 @@ Dopo l'avvio del server, saranno inviati i pacchetti di discovery. Andando in Im
 </p>  
 
 **Nota:**
-Aggiungendo l'integrazione Apple TV del server OwnTone verà mostrato un PIN da inserire nel'nterfacia web di OwnTone.
+Aggiungendo l'integrazione Apple TV del server OwnTone verrà mostrato un PIN da inserire nel'nterfacia web di OwnTone.
 
 <p align="center">
   <img alt="IMG_2103" src="https://github.com/user-attachments/assets/9e4eb7ac-0f28-4f90-aebd-baaa091f28e3" width="30%">
