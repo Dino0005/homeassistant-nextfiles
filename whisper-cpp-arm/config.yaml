@@ -1,5 +1,5 @@
 name: "Whisper CPP per ARM"
-version: "1.1.5"
+version: "1.1.6"
 slug: "whisper_cpp_arm"
 description: "Riprogettazione di Whisper in C++ ottimizzato per core ARM NEON del Pi 4 senza istruzioni AVX."
 url: "https://github.com/Dino0005/homeassistant-nextfiles/tree/main/whisper-cpp-arm"
