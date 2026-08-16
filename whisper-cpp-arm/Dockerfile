@@ -5,7 +5,7 @@ FROM ${BUILD_FROM}
 # queste label vanno dichiarate a mano: il Supervisor le legge per
 # riconoscere l'immagine come add-on valido.
 LABEL \
-    io.hass.version="1.1.6" \
+    io.hass.version="1.1.7" \
     io.hass.type="app" \
     io.hass.arch="aarch64"
 
