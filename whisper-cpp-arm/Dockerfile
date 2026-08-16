@@ -5,7 +5,7 @@ FROM ${BUILD_FROM}
 # queste label vanno dichiarate a mano: il Supervisor le legge per
 # riconoscere l'immagine come add-on valido.
 LABEL \
-    io.hass.version="1.1.5" \
+    io.hass.version="1.1.6" \
     io.hass.type="app" \
     io.hass.arch="aarch64"
 
@@ -15,7 +15,7 @@ ENV LANG=C.UTF-8
 # Makefile/binario "main" in favore di CMake, con binari rinominati
 # (es. "whisper-cli") in build/bin/. Pinnare la versione evita che un
 # futuro cambiamento upstream rompa di nuovo l'add-on senza preavviso.
-ARG WHISPER_CPP_VERSION=v1.9.1
+ARG WHISPER_CPP_VERSION=v1.9.2
 
 # Dipendenze di sistema e compilazione
 RUN apk add --no-cache \
