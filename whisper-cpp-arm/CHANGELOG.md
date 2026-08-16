@@ -12,6 +12,10 @@ Tutte le modifiche rilevanti a questa App sono documentate in questo file.
   di comando usati in `run.sh` (`-m`, `-f`, `-nt`, `-l`) sono invariati.
   Anche i modelli GGML già scaricati in `/config/addons_config/whisper_cpp_arm`
   restano compatibili e non vengono riscaricati.
+- Sostituito il mapping `addon_config` con `app_config` in `config.yaml`,
+  deprecato dal Supervisor 2026.07 nell'ambito della rinomina add-on → app.
+  Il punto di mount resta `/config`, quindi `run.sh` e i percorsi dei modelli
+  già scaricati non cambiano.  
 - Fra le modifiche upstream rilevanti: sincronizzazione di `ggml`, correzioni
   al parsing degli argomenti del VAD e rimozione dello spazio iniziale
   nell'output testuale (`Fix #587`). Quest'ultima non impatta il bridge
