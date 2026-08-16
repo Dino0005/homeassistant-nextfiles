@@ -1,7 +1,11 @@
 ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.06.1
+ARG OWNTONE_VERSION=29.3
 
 # ─── Stage 1: Compilazione ───────────────────────────────────────────────────
 FROM ${BUILD_FROM} AS build
+
+# Gli ARG globali vanno ridichiarati per essere visibili dentro lo stage
+ARG OWNTONE_VERSION
 
 # Dipendenze di compilazione
 RUN apk add --no-cache \
@@ -39,9 +43,9 @@ WORKDIR /tmp/source
 
 COPY translations/ /tmp/translations/
 
-RUN git clone -b master https://github.com/owntone/owntone-server.git ./ && \
+RUN git clone --depth 1 -b "${OWNTONE_VERSION}" https://github.com/owntone/owntone-server.git ./ && \
     mkdir -p web-src/src/i18n && \
-    cp /tmp/translations/* web-src/src/i18n/ && \
+    cp /tmp/translations/*.json web-src/src/i18n/ && \
     cd web-src && npm install && npm run build && cd .. && \
     autoreconf -fvi -I /usr/share/gettext/m4 && \
     ./configure \
@@ -61,6 +65,8 @@ RUN git clone -b master https://github.com/owntone/owntone-server.git ./ && \
 
 # ─── Stage 2: Runtime ────────────────────────────────────────────────────────
 FROM ${BUILD_FROM}
+
+ARG OWNTONE_VERSION
 
 # Copia i binari compilati
 COPY --from=build /tmp/build/ /
@@ -92,3 +98,8 @@ RUN apk add --no-cache \
 # Copia lo script di avvio nella posizione s6-overlay
 COPY run.sh /etc/services.d/owntone/run
 RUN chmod a+x /etc/services.d/owntone/run
+
+LABEL io.hass.type="addon" \
+      org.opencontainers.image.title="OwnTone Server" \
+      org.opencontainers.image.version="${OWNTONE_VERSION}" \
+      org.opencontainers.image.source="https://github.com/owntone/owntone-server"

@@ -1,5 +1,5 @@
 name: "OwnTone Server"
-version: "1.0.0"
+version: "1.0.1"
 description: "Server multimediale DAAP (iTunes), AirPlay e Chromecast per la tua musica"
 slug: "owntone_server"
 url: "https://github.com/Dino0005/homeassistant-nextfiles/tree/main/owntone-server"
