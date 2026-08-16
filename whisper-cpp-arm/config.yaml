@@ -11,7 +11,7 @@ init: false
 discovery:
   - wyoming
 map:
-  - addon_config:rw
+  - app_config:rw
 options:
   model: "base-q5_1"
   language: "it"
