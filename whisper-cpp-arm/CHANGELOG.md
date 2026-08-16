@@ -2,6 +2,21 @@
 
 Tutte le modifiche rilevanti a questa App sono documentate in questo file.
 
+
+## 1.1.6 - 2026-08-16
+
+### Modificato
+- Aggiornata la versione pinnata di `whisper.cpp` da `v1.9.1` a `v1.9.2`.
+  L'aggiornamento non richiede modifiche al resto dell'App: il build system
+  resta CMake, il binario resta `build/bin/whisper-cli` e i flag della riga
+  di comando usati in `run.sh` (`-m`, `-f`, `-nt`, `-l`) sono invariati.
+  Anche i modelli GGML già scaricati in `/config/addons_config/whisper_cpp_arm`
+  restano compatibili e non vengono riscaricati.
+- Fra le modifiche upstream rilevanti: sincronizzazione di `ggml`, correzioni
+  al parsing degli argomenti del VAD e rimozione dello spazio iniziale
+  nell'output testuale (`Fix #587`). Quest'ultima non impatta il bridge
+  Wyoming, che applica già `.strip()` all'output di `whisper-cli`.
+
 ## 1.1.5 - 2026-07-10
 
 ### Corretto
