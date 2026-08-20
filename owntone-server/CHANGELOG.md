@@ -1,6 +1,15 @@
 # Changelog
 
- Changelog
+
+## 1.1.1
+
+Piccole rifiniture all'integrazione con l'interfaccia di Home Assistant.
+
+### Interfaccia
+* **Icona dedicata nella barra laterale:** l'App utilizza ora `mdi:music-box-multiple` al posto del generico pezzo di puzzle mostrato per default.
+* **Etichetta più compatta:** nella barra laterale compare "OwnTone" anziché "OwnTone Server", che risultava eccessivamente lungo per lo spazio disponibile. Il nome completo resta invariato nella pagina dell'App e nello store.
+
+Nessuna modifica funzionale: dati, configurazione e versione di OwnTone Server restano invariati.
 
 ## 1.1.0
 
