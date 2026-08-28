@@ -1,5 +1,5 @@
 # Base image: Now manifest multi-platform (aarch64+amd64)
-FROM ghcr.io/home-assistant/base:3.24-2026.06.1
+FROM ghcr.io/home-assistant/base:3.24-2026.08.0
 
 LABEL \
     org.opencontainers.image.title="Nextfiles" \
