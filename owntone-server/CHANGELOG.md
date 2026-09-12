@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.1.2
+Immagine base aggiornata a v3.24-2026.08.0
 
 ## 1.1.1
 
