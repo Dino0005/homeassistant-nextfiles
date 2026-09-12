@@ -14,7 +14,7 @@ from wyoming.server import AsyncEventHandler, AsyncServer
 
 _LOGGER = logging.getLogger(__name__)
 
-WHISPER_CPP_VERSION = "1.9.1"
+WHISPER_CPP_VERSION = "1.9.4"
 WHISPER_CPP_URL = "https://github.com/ggml-org/whisper.cpp"
 
 SUPPORTED_LANGUAGES = [
