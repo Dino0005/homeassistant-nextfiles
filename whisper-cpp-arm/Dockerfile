@@ -17,6 +17,11 @@ ENV LANG=C.UTF-8
 # futuro cambiamento upstream rompa di nuovo l'add-on senza preavviso.
 ARG WHISPER_CPP_VERSION=v1.9.4
 
+# L'ARG vive solo durante la build. Questo ENV la rende leggibile anche
+# al runtime dal bridge Wyoming, così la versione mostrata in Home Assistant
+# non può divergere da quella effettivamente compilata.
+ENV WHISPER_CPP_VERSION=${WHISPER_CPP_VERSION}
+
 # Dipendenze di sistema e compilazione
 RUN apk add --no-cache \
     build-base \
