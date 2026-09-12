@@ -1,4 +1,4 @@
-FROM ghcr.io/home-assistant/base:3.24-2026.06.1
+FROM ghcr.io/home-assistant/base:3.24-2026.08.0
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
