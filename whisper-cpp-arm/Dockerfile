@@ -1,11 +1,11 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/aarch64-base:latest
+ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.08.0
 FROM ${BUILD_FROM}
 
 # Se non pubblichi tramite la GitHub Action ufficiale del builder HA,
 # queste label vanno dichiarate a mano: il Supervisor le legge per
 # riconoscere l'immagine come add-on valido.
 LABEL \
-    io.hass.version="1.1.7" \
+    io.hass.version="1.1.8" \
     io.hass.type="app" \
     io.hass.arch="aarch64"
 
@@ -15,7 +15,7 @@ ENV LANG=C.UTF-8
 # Makefile/binario "main" in favore di CMake, con binari rinominati
 # (es. "whisper-cli") in build/bin/. Pinnare la versione evita che un
 # futuro cambiamento upstream rompa di nuovo l'add-on senza preavviso.
-ARG WHISPER_CPP_VERSION=v1.9.2
+ARG WHISPER_CPP_VERSION=v1.9.4
 
 # Dipendenze di sistema e compilazione
 RUN apk add --no-cache \
