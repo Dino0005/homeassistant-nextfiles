@@ -2,6 +2,21 @@
 
 Tutte le modifiche rilevanti a questa App sono documentate in questo file.
 
+## 1.1.8 - 2026-09-12
+
+### Modificato
+- Aggiornata la versione pinnata di `whisper.cpp` da `v1.9.2` a `v1.9.4`,
+  saltando la `v1.9.3`. Nessuna modifica necessaria al resto dell'App.
+- Immagine base aggiornata alla v3.24-2026.08.0
+
+### Corretto
+- Incluse le correzioni upstream della `v1.9.3`: lettura fuori dai limiti in
+  `log_mel_spectrogram` su audio molto corto (#3956), che poteva manifestarsi
+  con le clip brevi inviate dall'assistente vocale, e rifiuto dei tensori con
+  `n_dims` non valido nell'header dei modelli (#3957).
+- Sempre dalla `v1.9.3`, correzioni ggml specifiche per aarch64: fallback su
+  HWCAP e rilevamento corretto della variante fp16.
+
 ## 1.1.7 - 2026-08-16
 
 ### Modificato
