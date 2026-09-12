@@ -1,5 +1,10 @@
 # Registro delle modifiche - Redis Lite
 
+## [1.0.5] 2026-09-12
+
+#### Updated
+- Updated base image to v3.24-2026.08.0
+
 ## [1.0.4] 2026-06-16
 
 #### Updated
