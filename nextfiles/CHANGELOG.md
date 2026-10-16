@@ -5,6 +5,11 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.4.5] - 2026-10-16
+
+### Updated
+- **Nextcloud** 34.0.4 → 34.0.5
+- **Updated base image** to v3.24-2026.10.0
 
 ## [1.4.4] - 2026-09-12
 
