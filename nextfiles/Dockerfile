@@ -1,5 +1,5 @@
 # Base image: Now manifest multi-platform (aarch64+amd64)
-FROM ghcr.io/home-assistant/base:3.24-2026.08.0
+FROM ghcr.io/home-assistant/base:3.24-2026.10.0
 
 LABEL \
     org.opencontainers.image.title="Nextfiles" \
@@ -11,7 +11,7 @@ LABEL \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
-ARG NEXTCLOUD_VERSION="34.0.4"
+ARG NEXTCLOUD_VERSION="34.0.5"
 ENV NEXTCLOUD_VERSION=${NEXTCLOUD_VERSION}
 ARG PHP_VERSION="85"
 ENV PHP_VERSION=${PHP_VERSION}
