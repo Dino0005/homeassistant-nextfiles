@@ -5,6 +5,19 @@ Tutte le modifiche importanti a questo progetto saranno documentate in questo fi
 Il formato è basato su [Keep a Changelog](https://keepachangelog.com/it/1.0.0/),
 e questo progetto aderisce al [Semantic Versioning](https://semver.org/lang/it/).
 
+## [1.4.7] - 2026-10-22
+
+### Security
+- **PHP** 8.5.11 → 8.5.12: fixes two critical vulnerabilities (CVSS 9.2)
+  announced by the PHP team on 2026-10-20 and patched on 2026-10-21.
+  See the [PHP advisory](https://www.php.net/archive/2026.php#2026-10-21-5)
+  and [nextcloud/server#65754](https://github.com/nextcloud/server/issues/65754).
+
+### Changed
+- Pinned `php85>=8.5.12` in the Dockerfile: this invalidates the Docker layer
+  cache on rebuild and makes the build fail instead of silently installing a
+  vulnerable PHP version.
+
 ## [1.4.6] - 2026-10-17
 
 ### Updated
