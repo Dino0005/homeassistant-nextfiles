@@ -20,7 +20,8 @@ ENV PHP_VERSION=${PHP_VERSION}
 RUN apk add --no-cache \
     apache2 \
     apache2-ssl \
-    php${PHP_VERSION} \
+#    php${PHP_VERSION} \ Pinned below to >=8.5.12 (security fix, 1.4.7)
+    php${PHP_VERSION}>=8.5.12 \
     php${PHP_VERSION}-apache2 \
 #    php${PHP_VERSION}-cli \ Removed in PHP 8.5: integrated in core
     php${PHP_VERSION}-ctype \
