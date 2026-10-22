@@ -323,6 +323,14 @@ trusted_proxies:
 - Verifica che `memory_limit` sia almeno la metà di `max_upload_size`
 - Se usi Caddy, controlla che i timeout siano configurati correttamente nel Caddyfile
 
+### Nome del container
+
+Nelle versioni recenti di Home Assistant il container si chiama `app_1960957c_nextfiles` (prima era `addon_1960957c_nextfiles`). Il prefisso `1960957c` dipende dal repository. Per trovare il nome esatto:
+
+```bash
+docker ps -a --format '{{.Names}}' | grep -i nextfiles
+```
+
 ### Problemi di permessi
 
 L'add-on gestisce automaticamente i permessi, ma se necessario puoi accedere via SSH e eseguire:
@@ -335,36 +343,36 @@ chown -R apache:apache /share/nextfiles
 - ⚠️ Installare/Aggiornare app da Web UI causa instabilità che blocca Nextcloud. Dopo il riavvio di Nextfiles comunque l'app è installata e abilitata. Oppure basta riavviare Apache:
 ```bash
 # Per riaviare Apache
-docker exec -it addon_1960957c_nextfiles bash -c "httpd -k restart"
+docker exec -it app_1960957c_nextfiles bash -c "httpd -k restart"
 ```
 - ✅ Installare/Aggiornre app da CLI funziona senza problemi
 
 Installazione
 ```bash
 # Per installare un'App da CLI
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install nome_app
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ app:install nome_app
 
 # Installa Calendar
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ app:install calendar
 
 # Installa Contacts
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ app:install contacts
 ```
 Aggiornamento
 ```bash
 # Per aggiornare un'App da CLI
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:update nome_app
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ app:update nome_app
 
 # Aggiornare Calendar
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:update calendar
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ app:update calendar
 
 # Aggiornare Contacts
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ app:update contacts
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ app:update contacts
 ```
 
 Riparazione del database e della cache:
 ```bash
-docker exec -u apache -it addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:repair
+docker exec -u apache -it app_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:repair
 ```
 
 ## Crediti
@@ -380,20 +388,20 @@ Rielaborato per:
 
 Per avviare il downlod, digitare il comado dal Terminale di Home Assistant
 ```bash
-docker exec -it -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
+docker exec -it -u apache app_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
 ```
 **Nota**: Potrebbero essere necessari più tentativi per riuscire a completare il download, a causa "MariaDB che va in crash/stallo sotto carico concorrente".
 In modalità manutenzione nessun altro processo tocca il DB e l'import è riuscito a completare senza interruzioni:
 
 ```bash
 # 1) Attivare la modaità manutezione
-docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --on
+docker exec -u apache app_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --on
 
 # 2) Download del database geografico per il Reverse Geocoding di Memories
-docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
+docker exec -u apache app_1960957c_nextfiles php /var/www/nextcloud/occ memories:places-setup
 
 # 3) Disattivare la modalità di manutenzioe
-docker exec -u apache addon_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --off
+docker exec -u apache app_1960957c_nextfiles php /var/www/nextcloud/occ maintenance:mode --off
 ```
 
 ## Licenza
