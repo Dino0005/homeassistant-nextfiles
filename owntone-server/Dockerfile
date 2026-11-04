@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.08.0
+ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.10.3
 ARG OWNTONE_VERSION=29.3
 
 # ─── Stage 1: Compilazione ───────────────────────────────────────────────────
