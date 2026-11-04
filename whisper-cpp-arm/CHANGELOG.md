@@ -2,6 +2,12 @@
 
 Tutte le modifiche rilevanti a questa App sono documentate in questo file.
 
+## 1.1.9 - 2026-11-04
+
+### Modificato
+- Aggiornata la versione pinnata di `whisper.cpp` da `v1.9.4` a `v1.9.5`.
+- Immagine base aggiornata alla v3.24-2026.10.3
+
 ## 1.1.8 - 2026-09-12
 
 ### Modificato
