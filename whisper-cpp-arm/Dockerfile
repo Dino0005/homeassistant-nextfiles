@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.10.3
+ARG BUILD_FROM=ghcr.io/home-assistant/base:3.24-2026.11.0
 FROM ${BUILD_FROM}
 
 # Se non pubblichi tramite la GitHub Action ufficiale del builder HA,
