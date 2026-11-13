@@ -2,6 +2,11 @@
 
 Tutte le modifiche rilevanti a questa App sono documentate in questo file.
 
+## 1.2.0 - 2026-11-13
+
+### Modificato
+- Immagine base aggiornata alla v3.24-2026.11.0
+
 ## 1.1.9 - 2026-11-04
 
 ### Modificato
